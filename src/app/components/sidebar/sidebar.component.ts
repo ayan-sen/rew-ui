@@ -43,7 +43,8 @@ export class SidebarComponent implements OnInit,AfterViewInit {
   @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
   //item: SideBarItem;
   depth: number = 0;
-  sideBarItems: SideBarItem[] = [
+  sideBarItems: SideBarItem[] = [];
+  /* sideBarItems: SideBarItem[] = [
     {
       displayName: 'Speakers',
       iconName: 'group',
@@ -53,22 +54,29 @@ export class SidebarComponent implements OnInit,AfterViewInit {
           displayName: 'Michael Prentice',
           iconName: 'person',
           route: 'devfestfl/speakers/michael-prentice',
-          children: [
-            {
-              displayName: 'Create Enterprise UIs',
-              iconName: 'star_rate',
-              route: '/dashboard'
-            }
-          ]
+          
+        },
+        {
+          displayName: 'Create Enterprise UIs',
+          iconName: 'star_rate',
+          route: '/dashboard'
         }
       ]
     }
-  ];
+  ]; */
 
   menuItems: any[];
 
   constructor(public sidebarService: SidebarService,
-    public router: Router) { }
+    public router: Router) { 
+
+      this.sidebarService.getMenu().subscribe(
+        items => {
+          this.sideBarItems = items;
+        }
+      );
+
+    }
   
   ngAfterViewInit(): void {
       this.sidebarService.appDrawer = this.appDrawer;
@@ -76,7 +84,7 @@ export class SidebarComponent implements OnInit,AfterViewInit {
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
-
+    
     
   }
   isMobileMenu() {
