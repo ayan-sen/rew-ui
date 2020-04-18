@@ -34,8 +34,17 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
   padding: 8px 0;
   display: flex;
   width: auto;
-  flex-direction: row; box-sizing: border-box; display: flex;
   .routeIcon {
     margin-right: 40px;
   }
 }
+.mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 16px;
+  position: relative;
+  
+}
+
