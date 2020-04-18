@@ -25,7 +25,7 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
   &:hover,
   &:focus {
     >.mat-list-item:not(.expanded) {
-      background-color: mat-color($app-primary, 100) !important;
+      background-color:#17a2b8 !important;
     }
   }
 }
@@ -38,13 +38,3 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     margin-right: 40px;
   }
 }
-.mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  box-sizing: border-box;
-  padding: 0 16px;
-  position: relative;
-  
-}
-

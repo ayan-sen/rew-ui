@@ -17,12 +17,3 @@
     position: absolute;
     width: 260px;
   }
-  .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    box-sizing: border-box;
-    padding: 0 16px;
-    position: relative;
-    
-  }
