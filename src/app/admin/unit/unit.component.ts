@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Unit } from './unit';
+import { UnitService } from './unit.service';
 
 @Component({
   selector: 'app-unit',
@@ -13,7 +14,7 @@ export class UnitComponent implements OnInit {
 
   unit : Unit;
 
-  constructor() { }
+  constructor(private unitService : UnitService) { }
 
   ngOnInit(): void {
      this.unitForm = new FormGroup({
@@ -27,6 +28,11 @@ export class UnitComponent implements OnInit {
     if(this.unitForm.valid) {
       this.unit = this.unitForm.value;
       console.log(this.unit);
+      this.unitService.addUnit(this.unit).subscribe(
+        response => {
+          console.log(response);
+        }
+      );
     }
    
   }
