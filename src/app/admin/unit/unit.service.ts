@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Unit } from './unit';
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 @Injectable({
@@ -17,6 +17,9 @@ export class UnitService {
     );
   }
 
+  getAllUnits() : Observable<Unit[]> {
+    return this.http.get<Unit[]>("http://localhost:8080/rew-portal/admin/units");
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

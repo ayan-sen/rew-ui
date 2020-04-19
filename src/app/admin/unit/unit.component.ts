@@ -20,6 +20,8 @@ export class UnitComponent implements OnInit {
 
   unit : Unit;
 
+  units : Unit[];
+
   constructor(private unitService : UnitService, private notificationService : NotificationService) { }
 
   ngOnInit(): void {
@@ -27,21 +29,30 @@ export class UnitComponent implements OnInit {
       'unitId': new FormControl('', Validators.required),
       'unitName': new FormControl('', Validators.required)
     });
+
+    this.getAllUnits();
   }
   
   onSubmit() {
-     
     if(this.unitForm.valid) {
       this.unit = this.unitForm.value;
       console.log(this.unit);
       this.unitService.addUnit(this.unit).subscribe(
         (response:Response) => {
           this.notificationService.openSnackBar(response.message, response.status);
+          this.getAllUnits();
           console.log(response);
         }
       );
     }
-   
+  }
+
+  getAllUnits() {
+    this.unitService.getAllUnits().subscribe(
+      units => {
+        this.units = units;
+      }
+    );
   }
 
   public hasError = (controlName: string, errorName: string) =>{
