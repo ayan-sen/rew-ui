@@ -8,7 +8,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -29,7 +29,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     FooterComponent,
     DashboardComponent,
     MenuListItemComponent,
-    UnitComponent
+    UnitComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +42,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
