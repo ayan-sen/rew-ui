@@ -17,6 +17,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MenuListItemComponent } from './components/menu-list-item/menu-list-item.component';
 import { HttpClientModule }    from '@angular/common/http';
+import { UnitComponent } from './admin/unit/unit.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { HttpClientModule }    from '@angular/common/http';
     SidebarComponent,
     FooterComponent,
     DashboardComponent,
-    MenuListItemComponent
+    MenuListItemComponent,
+    UnitComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,9 @@ import { HttpClientModule }    from '@angular/common/http';
     MatInputModule,
     MatSidenavModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

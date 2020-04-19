@@ -1,0 +1,34 @@
+<div class="main-content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="card">
+					<div class="card-header card-header-success">
+						<h4 class="card-title">Add/Update Unit</h4>
+						<p class="card-category">Declere units of different meterials here</p>
+					</div>
+					<div class="card-body">
+						<form (ngSubmit)="onSubmit()" [formGroup]="unitForm">
+							<div class="row">
+								<div class="col-md-3">
+									<mat-form-field class="example-full-width"> 
+										<input matInput placeholder="Name" formControlName="unitId"> 
+										<mat-error *ngIf="hasError('unitId', 'required')">Unit Name is required</mat-error>
+									</mat-form-field>
+								</div>
+								<div class="col-md-4">
+									<mat-form-field class="example-full-width"> 
+										<input matInput placeholder="Description" formControlName="unitName"> 
+										<mat-error *ngIf="hasError('unitName', 'required')">Unit Description is required</mat-error>
+									</mat-form-field>
+								</div>
+							</div>
+							<button mat-raised-button type="submit" class="btn btn-success pull-right">Save</button>
+							<div class="clearfix"></div> 
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

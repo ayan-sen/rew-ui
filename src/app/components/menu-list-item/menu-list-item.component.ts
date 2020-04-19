@@ -1,8 +1,9 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { SidebarService } from '../sidebar.service';
+
 import { SideBarItem } from '../sidebar/sidebar-item';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { SidebarService } from '../sidebar/sidebar.service'; 
 
 @Component({
   selector: 'app-menu-list-item',
@@ -24,7 +25,7 @@ export class MenuListItemComponent implements OnInit {
   @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
   @Input() item: SideBarItem;
   @Input() depth: number;
-
+ 
   constructor(public navService: SidebarService,
               public router: Router) {
     if (this.depth === undefined) {
@@ -46,11 +47,14 @@ export class MenuListItemComponent implements OnInit {
   onItemSelected(item: SideBarItem) {
     if (!item.children || !item.children.length) {
       this.router.navigate([item.route]);
+      
     //  this.navService.closeNav();
     }
     if (item.children && item.children.length) {
       this.expanded = !this.expanded;
     }
+    
+    this.navService.setCurrentItem(item);
   }
 
 }
