@@ -31,6 +31,7 @@ export class RawMaterialComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllUnits();
+    this.findAll();
     this.rmForm = new FormGroup({
       'code': new FormControl('', Validators.required),
       'name': new FormControl('', Validators.required),

@@ -56,4 +56,38 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-plain">
+          <div class="card-header card-header-info">
+            <h4 class="card-title ">Available Raw Materials</h4>
+            <p class="card-category"></p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="text-primary">
+                  <th>Code</th>
+                  <th>Name</th>
+                  <th>Unit</th>
+                  <th>Description</th>
+                  <th>Active</th>
+                </thead>
+                <tbody *ngFor="let rm of rawMaterials">
+                  <tr>
+                    <td>{{rm.code}}</td>
+                    <td>{{rm.name}}</td>
+                    <td>{{rm.unitName}}</td>
+                    <td>{{rm.description}}</td>
+                    <td>{{rm.isActive}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+</div>
