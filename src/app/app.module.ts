@@ -19,7 +19,9 @@ import { MenuListItemComponent } from './components/menu-list-item/menu-list-ite
 import { HttpClientModule }    from '@angular/common/http';
 import { UnitComponent } from './admin/unit/unit.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { RawMaterialComponent } from './admin/raw-material/raw-material.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +32,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     DashboardComponent,
     MenuListItemComponent,
     UnitComponent,
+    RawMaterialComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatRadioModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

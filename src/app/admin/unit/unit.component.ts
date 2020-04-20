@@ -3,11 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Unit } from './unit';
 import { UnitService } from './unit.service';
 import { NotificationService } from 'src/app/components/notification/notification.service';
-
-class Response {
-  message : string;
-  status : string;
-}
+import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
 
 @Component({
   selector: 'app-unit',
@@ -38,7 +34,7 @@ export class UnitComponent implements OnInit {
       this.unit = this.unitForm.value;
       console.log(this.unit);
       this.unitService.addUnit(this.unit).subscribe(
-        (response:Response) => {
+        (response:ServerResponse) => { 
           this.notificationService.openSnackBar(response.message, response.status);
           this.getAllUnits();
           console.log(response);

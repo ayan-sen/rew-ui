@@ -1,0 +1,59 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">Create/Update Raw Material</h4>
+            <p class="card-category">Declere raw material here</p>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmit()" [formGroup]="rmForm">
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Code" formControlName="code">
+                    <mat-error *ngIf="hasError('code', 'required')">Code is required</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Name" formControlName="name">
+                    <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Unit" formControlName="unitId">
+                      <mat-option *ngFor="let unit of units" [value]="unit.unitId">
+                        {{unit.unitName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Description" formControlName="description">
+                    <mat-error *ngIf="hasError('description', 'required')">Description is required</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Active?" formControlName="isActive">
+                      <mat-option *ngFor="let value of activeValues" [value]="value.value">
+                        {{value.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <button mat-raised-button type="submit" class="btn btn-success pull-right">Save</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
