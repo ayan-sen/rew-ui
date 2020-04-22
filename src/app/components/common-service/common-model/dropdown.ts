@@ -1,4 +1,5 @@
 export class Dropdown {
-  value : boolean;
+  value : any;
   viewValue : string;
 }
+

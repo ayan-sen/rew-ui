@@ -3,13 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UnitComponent } from './admin/unit/unit.component';
 import { RawMaterialComponent } from './admin/raw-material/raw-material.component';
+import { ClientComponent } from './admin/client/client.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'unit', component: UnitComponent },
-  { path: 'raw-material', component: RawMaterialComponent }
+  { path: 'raw-material', component: RawMaterialComponent },
+  { path: 'client/add', component: ClientComponent }
 ];
 
 @NgModule({

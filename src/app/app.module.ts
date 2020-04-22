@@ -9,6 +9,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -22,6 +23,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RawMaterialComponent } from './admin/raw-material/raw-material.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { ClientComponent } from './admin/client/client.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +35,7 @@ import { MatSelectModule } from '@angular/material/select';
     MenuListItemComponent,
     UnitComponent,
     RawMaterialComponent,
+    ClientComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,8 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     MatSnackBarModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
