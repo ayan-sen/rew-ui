@@ -9,5 +9,5 @@ export class Client {
     primaryEmailId : string;
     comments : string;
     isActive : string;
-    details : ClientDetails[];
+    details : ClientDetails[] = [];
 }

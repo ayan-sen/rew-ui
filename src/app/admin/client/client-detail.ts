@@ -6,7 +6,7 @@ export class ClientDetails {
     state : string;
     identifier : string;
     emailId : string;
-    contactNo : string;
+    contactNo : number;
     comments : string;
 
 }

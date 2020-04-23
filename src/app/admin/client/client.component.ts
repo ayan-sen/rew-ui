@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Dropdown } from 'src/app/components/common-service/common-model/dropdown';
+import { Client } from './client';
+import { ClientDetails } from './client-detail';
+import { ClientService } from './client.service';
+import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
+import { NotificationService } from 'src/app/components/notification/notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-client',
@@ -11,6 +17,8 @@ export class ClientComponent implements OnInit {
 
   clientForm: FormGroup;
   clientDetailsForm: FormGroup;
+  client : Client;
+  details : ClientDetails[] = [];
 
   activeValues: Dropdown[] = [
     {value: true, viewValue: 'Yes'},
@@ -23,7 +31,7 @@ export class ClientComponent implements OnInit {
     {value: 'Transporter', viewValue: 'Transporter'}
   ];
   
-  constructor() { }
+  constructor(private clientService : ClientService, private notificationService : NotificationService) { }
 
   ngOnInit(): void {
 
@@ -40,11 +48,10 @@ export class ClientComponent implements OnInit {
     this.clientDetailsForm = new FormGroup({
       'address': new FormControl('', Validators.required),
       'pincode': new FormControl('', Validators.required),
-      'state': new FormControl('', Validators.required),
       'identifier': new FormControl('', [Validators.required, Validators.maxLength(15)]),
       'emailId': new FormControl('', [Validators.required, ,Validators.email]),
       'contactNo': new FormControl(''),
-      'comments': new FormControl('', Validators.required)
+      'comments': new FormControl('')
     });
   }
 
@@ -58,12 +65,28 @@ export class ClientComponent implements OnInit {
   } 
 
   onSubmit() {
-    console.log(">>>>>>");
+    if(this.clientForm.valid) {
+      this.client = this.clientForm.value;
+      this.client.details = this.details;
+      this.clientService.save(this.client).subscribe(
+        (response:ServerResponse) => {
+          this.notificationService.openSnackBar(response.message, response.status);
+          console.log(response);
+        },
+        (errorMsg:HttpErrorResponse) => {
+          this.notificationService.openSnackBar(errorMsg.error.message, errorMsg.error.status);
+          console.log(errorMsg);
+        }
+      );
+
+    }
     console.log(this.clientForm.value);
   }
 
   onDetailsSubmit() {
-    console.log(">>>>>>");
+    if(this.clientDetailsForm.valid) {
+      this.details.push(this.clientDetailsForm.value);
+    }
     console.log(this.clientDetailsForm.value);
   }
 }
