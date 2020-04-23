@@ -14,6 +14,10 @@
                                     <form [formGroup]="clientForm">
                                         <div class="row">
                                             <div class="col-md-6">
+                                                <mat-form-field class="invisible example-full-width">
+                                                    <input matInput placeholder="clientId" formControlName="clientId">
+                                                 </mat-form-field>
+
                                                 <mat-form-field class="example-full-width">
                                                     <input matInput placeholder="Partner Name"
                                                         formControlName="clientName">
@@ -65,11 +69,11 @@
                                                     <input matInput placeholder="Comments" formControlName="comments">
                                                 </mat-form-field>
                                             </div>
-
+ 
                                             <div class="col-md-2">
                                                 <mat-form-field class="example-full-width">
-                                                    <mat-select placeholder="Active?" formControlName="isActive">
-                                                        <mat-option *ngFor="let value of activeValues"
+                                                    <mat-select placeholder="Active?" formControlName="isActive" >
+                                                        <mat-option *ngFor="let value of activeValues" 
                                                             [value]="value.value">
                                                             {{value.viewValue}}
                                                         </mat-option>
@@ -98,6 +102,14 @@
                                     <form [formGroup]="clientDetailsForm">
                                         <div class="row">
                                             <div class="col-md-3">
+                                                <mat-form-field class="invisible example-full-width">
+                                                    <input matInput placeholder="clientId" formControlName="clientId">
+                                                 </mat-form-field>
+
+                                                 <mat-form-field class="invisible example-full-width">
+                                                    <input matInput placeholder="detailId" formControlName="detailId">
+                                                 </mat-form-field>
+
                                                 <mat-form-field class="example-full-width">
                                                     <input matInput placeholder="Address Identifier"
                                                         formControlName="identifier">
@@ -162,13 +174,12 @@
                                         <table class="table table-hover">
                                             <thead class="text-primary">
                                                 <th>Identifier</th>
-
                                                 <th *ngIf="!isMobileMenu()">Address</th>
                                                 <th>Email Id</th>
                                                 <th>Contact No</th>
                                             </thead>
                                             <tbody *ngFor="let dtl of details">
-                                                <tr>
+                                                <tr (click)="editDetail(dtl)" style="cursor: pointer;">
                                                     <td>{{dtl.identifier}}</td>
                                                     <td *ngIf="!isMobileMenu()">{{dtl.address}}{{dtl.pincoder}}</td>
                                                     <td>{{dtl.emailId}}</td>

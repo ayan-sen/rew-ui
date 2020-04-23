@@ -1,0 +1,36 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+              <div class="card card-plain">
+                <div class="card-header card-header-info">
+                  <h4 class="card-title ">Partners details</h4>
+                  <p class="card-category"></p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="text-primary">
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>GSTIN</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                      </thead>
+                      <tbody *ngFor="let cli of clients">
+                        <tr [routerLink]="['/clients', cli.clientId]">
+                          <td>{{cli.clientName}}</td>
+                          <td>{{cli.clientType}}</td>
+                          <td>{{cli.gstinNo}}</td>
+                          <td>{{cli.primanyContactNo}}</td>
+                          <td>{{cli.primaryEmailId}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>

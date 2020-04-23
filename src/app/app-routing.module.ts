@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UnitComponent } from './admin/unit/unit.component';
 import { RawMaterialComponent } from './admin/raw-material/raw-material.component';
 import { ClientComponent } from './admin/client/client.component';
+import { ClientShowComponent } from './admin/client/client-show/client-show.component';
 
 
 const routes: Routes = [
@@ -11,7 +12,9 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'unit', component: UnitComponent },
   { path: 'raw-material', component: RawMaterialComponent },
-  { path: 'client/add', component: ClientComponent }
+  { path: 'client/add', component: ClientComponent },
+  { path: 'clients', component: ClientShowComponent },
+  { path: 'clients/:clientId', component: ClientComponent }
 ];
 
 @NgModule({

@@ -24,6 +24,7 @@ import { RawMaterialComponent } from './admin/raw-material/raw-material.componen
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { ClientComponent } from './admin/client/client.component';
+import { ClientShowComponent } from './admin/client/client-show/client-show.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +37,7 @@ import { ClientComponent } from './admin/client/client.component';
     UnitComponent,
     RawMaterialComponent,
     ClientComponent,
+    ClientShowComponent,
   ],
   imports: [
     BrowserModule,

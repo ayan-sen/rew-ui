@@ -14,13 +14,13 @@ export class ClientService {
 
   save(client : Client) {
     return this.http.post("http://localhost:8080/rew-portal/admin/client", client);
-    
-    // .pipe(
-    //    catchError(this.errorHandler.handleError)
-    //  );
    }
  
    findAll() : Observable<Client[]> {
      return this.http.get<Client[]>("http://localhost:8080/rew-portal/admin/clients");
+   }
+
+   findById(clientId : string) : Observable<Client> {
+    return this.http.get<Client>("http://localhost:8080/rew-portal/admin/clients/" +clientId );
    }
 }

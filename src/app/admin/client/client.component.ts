@@ -7,6 +7,7 @@ import { ClientService } from './client.service';
 import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
 import { NotificationService } from 'src/app/components/notification/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 declare const $: any;
 
@@ -33,7 +34,9 @@ export class ClientComponent implements OnInit {
     {value: 'Transporter', viewValue: 'Transporter'}
   ];
   
-  constructor(private clientService : ClientService, private notificationService : NotificationService) { }
+  constructor(private clientService : ClientService, 
+              private notificationService : NotificationService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
@@ -44,7 +47,8 @@ export class ClientComponent implements OnInit {
       'primanyContactNo': new FormControl('', [Validators.required, Validators.maxLength(15)]),
       'primaryEmailId': new FormControl('', [Validators.required, ,Validators.email]),
       'comments': new FormControl(''),
-      'isActive': new FormControl('', Validators.required)
+      'isActive': new FormControl('', Validators.required),
+      'clientId': new FormControl('') 
     });
 
     this.clientDetailsForm = new FormGroup({
@@ -53,8 +57,20 @@ export class ClientComponent implements OnInit {
       'identifier': new FormControl('', [Validators.required, Validators.maxLength(15)]),
       'emailId': new FormControl('', [Validators.required, ,Validators.email]),
       'contactNo': new FormControl(''),
-      'comments': new FormControl('')
+      'comments': new FormControl(''),
+      'clientId': new FormControl(''),
+      'detailId': new FormControl('')
     });
+
+    this.route.paramMap.subscribe(param => {
+      this.clientService.findById(param.get('clientId')).subscribe((client:Client) =>{
+        this.client = client;
+        this.details = client.details;
+        this.clientForm.setValue(this.client);
+        this.clientDetailsForm.setValue(this.client.details);
+      })
+    });
+
   }
 
 
@@ -102,5 +118,10 @@ export class ClientComponent implements OnInit {
         return false;
     }
     return true;
-}
+  }
+
+  editDetail(clientDetail : ClientDetails) {
+    this.clientDetailsForm.setValue(clientDetail);
+  }
+
 }

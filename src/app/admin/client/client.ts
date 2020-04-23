@@ -8,6 +8,6 @@ export class Client {
     primanyContactNo : string;
     primaryEmailId : string;
     comments : string;
-    isActive : string;
+    isActive : boolean;
     details : ClientDetails[] = [];
 }
