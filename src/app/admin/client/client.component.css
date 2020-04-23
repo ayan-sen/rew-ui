@@ -1,4 +1,9 @@
 .row-overflow {
-    height: 350px;
-    overflow: hidden;
+    height: 400px;
+    overflow-y: scroll; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
 }
+
+::-webkit-scrollbar {
+    display: none;
+    }

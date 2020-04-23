@@ -8,13 +8,15 @@ import { ServerResponse } from 'src/app/components/common-service/common-model/s
 import { NotificationService } from 'src/app/components/notification/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
+declare const $: any;
+
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.css']
 })
 export class ClientComponent implements OnInit {
-
+  
   clientForm: FormGroup;
   clientDetailsForm: FormGroup;
   client : Client;
@@ -71,11 +73,12 @@ export class ClientComponent implements OnInit {
       this.clientService.save(this.client).subscribe(
         (response:ServerResponse) => {
           this.notificationService.openSnackBar(response.message, response.status);
-          console.log(response);
+          console.log("success response >" + response);
+          this.clientForm.reset();
         },
         (errorMsg:HttpErrorResponse) => {
           this.notificationService.openSnackBar(errorMsg.error.message, errorMsg.error.status);
-          console.log(errorMsg);
+          console.log("error response >" + errorMsg);
         }
       );
 
@@ -86,7 +89,18 @@ export class ClientComponent implements OnInit {
   onDetailsSubmit() {
     if(this.clientDetailsForm.valid) {
       this.details.push(this.clientDetailsForm.value);
+      this.notificationService.openSnackBar("Address details added successfully", "success");
+      this.clientDetailsForm.reset();
+    } else {
+      this.notificationService.openSnackBar("Error occurred, please review and submit again", "danger");
     }
-    console.log(this.clientDetailsForm.value);
+    console.log("Client Details >" + this.clientDetailsForm.value);
   }
+
+  isMobileMenu() {
+    if ($(window).width() > 991) {
+        return false;
+    }
+    return true;
+}
 }
