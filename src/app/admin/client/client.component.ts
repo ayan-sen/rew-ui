@@ -47,7 +47,7 @@ export class ClientComponent implements OnInit {
       'primanyContactNo': new FormControl('', [Validators.required, Validators.maxLength(15)]),
       'primaryEmailId': new FormControl('', [Validators.required, ,Validators.email]),
       'comments': new FormControl(''),
-      'isActive': new FormControl(false, Validators.required),
+      'isActive': new FormControl(true, Validators.required),
       'clientId': new FormControl(''),
       'details': new FormControl(''),
       'active': new FormControl('')
@@ -107,7 +107,13 @@ export class ClientComponent implements OnInit {
   onDetailsSubmit() {
     if(this.clientDetailsForm.valid) {
       let newDetail:ClientDetails = this.clientDetailsForm.value;
-      let index:number = this.details.findIndex(detail => detail.identifier == newDetail.identifier);
+      let clientId = newDetail.clientId;
+      let index:number = -1;
+      if(clientId != null && clientId.length > 0) {
+        index = this.details.findIndex(detail => detail.clientId == clientId);
+      } else {
+        index = this.details.findIndex(detail => detail.identifier == newDetail.identifier);
+      }
       console.log("last index >>" + index);
       if(index != -1) {
         this.details[index] = this.clientDetailsForm.value;

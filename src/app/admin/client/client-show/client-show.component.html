@@ -18,7 +18,7 @@
                         <th>Email</th>
                       </thead>
                       <tbody *ngFor="let cli of clients">
-                        <tr [routerLink]="['/clients', cli.clientId]">
+                        <tr [routerLink]="['/clients', cli.clientId]" style="cursor: pointer;">
                           <td>{{cli.clientName}}</td>
                           <td>{{cli.clientType}}</td>
                           <td>{{cli.gstinNo}}</td>
