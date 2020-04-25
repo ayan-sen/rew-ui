@@ -47,13 +47,15 @@ export class ClientComponent implements OnInit {
       'primanyContactNo': new FormControl('', [Validators.required, Validators.maxLength(15)]),
       'primaryEmailId': new FormControl('', [Validators.required, ,Validators.email]),
       'comments': new FormControl(''),
-      'isActive': new FormControl('', Validators.required),
-      'clientId': new FormControl('') 
+      'isActive': new FormControl(false, Validators.required),
+      'clientId': new FormControl(''),
+      'details': new FormControl(''),
+      'active': new FormControl('')
     });
 
     this.clientDetailsForm = new FormGroup({
       'address': new FormControl('', Validators.required),
-      'pincode': new FormControl('', Validators.required),
+      'pincode': new FormControl('', [Validators.required, Validators.maxLength(6)]),
       'identifier': new FormControl('', [Validators.required, Validators.maxLength(15)]),
       'emailId': new FormControl('', [Validators.required, ,Validators.email]),
       'contactNo': new FormControl(''),
@@ -64,10 +66,8 @@ export class ClientComponent implements OnInit {
 
     this.route.paramMap.subscribe(param => {
       this.clientService.findById(param.get('clientId')).subscribe((client:Client) =>{
-        this.client = client;
         this.details = client.details;
-        this.clientForm.setValue(this.client);
-        this.clientDetailsForm.setValue(this.client.details);
+        this.clientForm.setValue(client); 
       })
     });
 
@@ -89,28 +89,39 @@ export class ClientComponent implements OnInit {
       this.clientService.save(this.client).subscribe(
         (response:ServerResponse) => {
           this.notificationService.openSnackBar(response.message, response.status);
-          console.log("success response >" + response);
+          console.log("success response ::");
+          console.log(response);
           this.clientForm.reset();
+          this.details = [];
         },
         (errorMsg:HttpErrorResponse) => {
           this.notificationService.openSnackBar(errorMsg.error.message, errorMsg.error.status);
-          console.log("error response >" + errorMsg);
+          console.log("error response ::");
+          console.log(errorMsg.message);
         }
       );
-
     }
     console.log(this.clientForm.value);
   }
 
   onDetailsSubmit() {
     if(this.clientDetailsForm.valid) {
-      this.details.push(this.clientDetailsForm.value);
-      this.notificationService.openSnackBar("Address details added successfully", "success");
+      let newDetail:ClientDetails = this.clientDetailsForm.value;
+      let index:number = this.details.findIndex(detail => detail.identifier == newDetail.identifier);
+      console.log("last index >>" + index);
+      if(index != -1) {
+        this.details[index] = this.clientDetailsForm.value;
+        this.notificationService.openSnackBar("Address details updated successfully", "success");
+      } else {
+        this.details.push(this.clientDetailsForm.value);
+        this.notificationService.openSnackBar("Address details added successfully", "success");
+      }
       this.clientDetailsForm.reset();
     } else {
       this.notificationService.openSnackBar("Error occurred, please review and submit again", "danger");
     }
-    console.log("Client Details >" + this.clientDetailsForm.value);
+    console.log("Client Details ::" + this.clientDetailsForm.value);
+    console.log(this.clientDetailsForm.value);
   }
 
   isMobileMenu() {
