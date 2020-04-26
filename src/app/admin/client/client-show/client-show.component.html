@@ -13,18 +13,18 @@
                       <thead class="text-primary">
                         <th>Name</th>
                         <th>Type</th>
-                        <th>GSTIN</th>
                         <th>Contact</th>
-                        <th>Email</th>
+                        <th *ngIf="!isMobileMenu()">Email</th>
+                        <th *ngIf="!isMobileMenu()">GSTIN</th>
                         <th>Action</th>
                       </thead>
                       <tbody *ngFor="let cli of clients">
                         <tr>
                           <td>{{cli.clientName}}</td>
                           <td>{{cli.clientType}}</td>
-                          <td>{{cli.gstinNo}}</td>
                           <td>{{cli.primanyContactNo}}</td>
-                          <td>{{cli.primaryEmailId}}</td>
+                          <td *ngIf="!isMobileMenu()">{{cli.primaryEmailId}}</td>
+                          <td *ngIf="!isMobileMenu()">{{cli.gstinNo}}</td>
                           <td>
                             <a [routerLink]="['/clients', cli.clientId]" class="edit" title="" data-toggle="tooltip" data-original-title="Edit">
                               <mat-icon class="routeIcon">edit</mat-icon>

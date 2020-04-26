@@ -6,6 +6,8 @@ import { ServerResponse } from 'src/app/components/common-service/common-model/s
 import { MatDialog } from '@angular/material/dialog';
 import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
 
+declare const $: any;
+
 @Component({
   selector: 'app-client-show',
   templateUrl: './client-show.component.html',
@@ -52,5 +54,12 @@ export class ClientShowComponent implements OnInit {
         this.delete(client);
       }
     });
+  }
+
+  isMobileMenu() {
+    if ($(window).width() > 991) {
+      return false;
+    }
+    return true;
   }
 }
