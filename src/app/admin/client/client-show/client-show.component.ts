@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../client';
 import { ClientService } from '../client.service';
+import { NotificationService } from 'src/app/components/notification/notification.service';
+import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
 
 @Component({
   selector: 'app-client-show',
@@ -11,7 +13,7 @@ export class ClientShowComponent implements OnInit {
 
   clients: Client[];
   
-  constructor(private clientService : ClientService) { }
+  constructor(private clientService : ClientService, private notificationService : NotificationService) { }
 
   ngOnInit(): void {
     this.findAll();
@@ -23,7 +25,13 @@ export class ClientShowComponent implements OnInit {
     });
   }
 
-  edit(client : Client) {
-    
+  delete(client : Client) {
+    this.clientService.deleteClient(client.clientId).subscribe(
+      (response : ServerResponse) => {
+        console.log("Delete Response >>>>");
+        console.log(response);
+        this.notificationService.openSnackBar(response.message, response.status);
+        this.findAll();
+    });
   }
 }

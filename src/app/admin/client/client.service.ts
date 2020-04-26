@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { ErrorHandlerService } from 'src/app/components/common-service/error-handler.service';
 import { HttpClient } from '@angular/common/http';
-import { Client } from './client';
-import { catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ErrorHandlerService } from 'src/app/components/common-service/error-handler.service';
+import { Client } from './client';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +21,14 @@ export class ClientService {
 
    findById(clientId : string) : Observable<Client> {
     return this.http.get<Client>("http://localhost:8080/rew-portal/admin/clients/" +clientId );
+   }
+
+   deleteClient(clientId : string) {
+    return this.http.delete("http://localhost:8080/rew-portal/admin/clients/" +clientId );
+   }
+
+   deleteClientDetail(clientId : string, detailId : number) {
+     let url = "http://localhost:8080/rew-portal/admin/clients/"+clientId + "/detail/" + detailId;
+    return this.http.delete(url);
    }
 }

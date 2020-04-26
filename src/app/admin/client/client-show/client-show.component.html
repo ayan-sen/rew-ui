@@ -16,14 +16,23 @@
                         <th>GSTIN</th>
                         <th>Contact</th>
                         <th>Email</th>
+                        <th>Action</th>
                       </thead>
                       <tbody *ngFor="let cli of clients">
-                        <tr [routerLink]="['/clients', cli.clientId]" style="cursor: pointer;">
+                        <tr>
                           <td>{{cli.clientName}}</td>
                           <td>{{cli.clientType}}</td>
                           <td>{{cli.gstinNo}}</td>
                           <td>{{cli.primanyContactNo}}</td>
                           <td>{{cli.primaryEmailId}}</td>
+                          <td>
+                            <a [routerLink]="['/clients', cli.clientId]" class="edit" title="" data-toggle="tooltip" data-original-title="Edit">
+                              <mat-icon class="routeIcon">edit</mat-icon>
+                            </a>
+                            <a (click)="delete(cli)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip" data-original-title="Delete">
+                              <mat-icon class="routeIcon">delete</mat-icon>
+                            </a>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
