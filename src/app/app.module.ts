@@ -17,7 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MenuListItemComponent } from './components/menu-list-item/menu-list-item.component';
-import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS }    from '@angular/common/http';
 import { UnitComponent } from './admin/unit/unit.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RawMaterialComponent } from './admin/raw-material/raw-material.component';
@@ -26,6 +26,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { ClientComponent } from './admin/client/client.component';
 import { ClientShowComponent } from './admin/client/client-show/client-show.component';
 import { CommonDialogComponent } from './components/common-commponents/common-dialog/common-dialog.component';
+import { environment } from 'src/environments/environment';
+import { ApiInceptorService } from './components/common-service/api-inceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +61,10 @@ import { CommonDialogComponent } from './components/common-commponents/common-di
     MatTabsModule,
     MatDialogModule
   ],
-  providers: [],
+  providers: [
+    { provide: "BASE_API_URL", useValue: environment.baseUrl },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

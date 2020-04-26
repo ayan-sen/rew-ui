@@ -13,12 +13,12 @@ export class RawMaterialService {
   constructor(private http: HttpClient, private errorHandler : ErrorHandlerService) { }
 
   save(rawMaterial : RawMaterial) {
-    return this.http.post("http://localhost:8080/rew-portal/admin/raw-material", rawMaterial).pipe(
+    return this.http.post("admin/raw-material", rawMaterial).pipe(
        catchError(this.errorHandler.handleError)
      );
    }
  
    findAll() : Observable<RawMaterial[]> {
-     return this.http.get<RawMaterial[]>("http://localhost:8080/rew-portal/admin/raw-materials");
+     return this.http.get<RawMaterial[]>("admin/raw-materials");
    }
 }

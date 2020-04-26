@@ -32,7 +32,7 @@ export class SidebarService {
 
   getMenu() : Observable<SideBarItem[]> {
 
-    return this.http.get<SideBarItem[]>("http://localhost:8080/rew-portal/admin/menu");
+    return this.http.get<SideBarItem[]>("admin/menu");
   }
 
   

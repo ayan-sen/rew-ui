@@ -12,13 +12,13 @@ export class UnitService {
   constructor(private http: HttpClient) { }
 
   addUnit(unit : Unit) {
-   return this.http.put("http://localhost:8080/rew-portal/admin/unit", unit).pipe(
+   return this.http.put("admin/unit", unit).pipe(
       catchError(this.handleError)
     );
   }
 
   getAllUnits() : Observable<Unit[]> {
-    return this.http.get<Unit[]>("http://localhost:8080/rew-portal/admin/units");
+    return this.http.get<Unit[]>("admin/units");
   }
 
   private handleError(error: HttpErrorResponse) {
