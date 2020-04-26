@@ -4,6 +4,7 @@ import { Unit } from './unit';
 import { UnitService } from './unit.service';
 import { NotificationService } from 'src/app/components/notification/notification.service';
 import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-unit',
@@ -37,7 +38,11 @@ export class UnitComponent implements OnInit {
         (response:ServerResponse) => { 
           this.notificationService.openSnackBar(response.message, response.status);
           this.getAllUnits();
-          console.log(response);
+          this.unitForm.reset();
+        }, (errorMsg: HttpErrorResponse) => { 
+          this.notificationService.openSnackBar(errorMsg.error.message, errorMsg.error.status);
+          console.log("error response ::");
+          console.log(errorMsg.message);
         }
       );
     }

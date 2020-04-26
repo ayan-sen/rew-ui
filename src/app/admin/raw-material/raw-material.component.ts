@@ -7,6 +7,7 @@ import { UnitService } from '../unit/unit.service';
 import { Unit } from '../unit/unit';
 import { Dropdown } from 'src/app/components/common-service/common-model/dropdown';
 import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-raw-material',
@@ -49,7 +50,11 @@ export class RawMaterialComponent implements OnInit {
         (response:ServerResponse) => {
           this.notificationService.openSnackBar(response.message, response.status);
           this.findAll();
-          console.log(response);
+          this.rmForm.reset();
+        }, (errorMsg: HttpErrorResponse) => { 
+          this.notificationService.openSnackBar(errorMsg.error.message, errorMsg.error.status);
+          console.log("error response ::");
+          console.log(errorMsg.message);
         }
       );
     }

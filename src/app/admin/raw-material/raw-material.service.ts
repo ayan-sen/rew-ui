@@ -13,9 +13,7 @@ export class RawMaterialService {
   constructor(private http: HttpClient, private errorHandler : ErrorHandlerService) { }
 
   save(rawMaterial : RawMaterial) {
-    return this.http.post("admin/raw-material", rawMaterial).pipe(
-       catchError(this.errorHandler.handleError)
-     );
+    return this.http.post("admin/raw-material", rawMaterial);
    }
  
    findAll() : Observable<RawMaterial[]> {
