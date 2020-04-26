@@ -8,6 +8,8 @@ import { ServerResponse } from 'src/app/components/common-service/common-model/s
 import { NotificationService } from 'src/app/components/notification/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
 
 declare const $: any;
 
@@ -36,7 +38,8 @@ export class ClientComponent implements OnInit {
 
   constructor(private clientService: ClientService,
     private notificationService: NotificationService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -168,6 +171,21 @@ export class ClientComponent implements OnInit {
       index = this.details.findIndex(detail => detail.identifier == clientDetail.identifier);
     }
     return index;
+  }
+
+  openDialog(clientDetail: ClientDetails): void {
+    const dialogRef = this.dialog.open(CommonDialogComponent, {
+      width: '250px',
+      data: { header : "Confirm",
+              content : "Are you sure to delete?" 
+            }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.deleteDetail(clientDetail);
+      }
+    });
   }
 
 }

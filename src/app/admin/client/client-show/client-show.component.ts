@@ -3,6 +3,8 @@ import { Client } from '../client';
 import { ClientService } from '../client.service';
 import { NotificationService } from 'src/app/components/notification/notification.service';
 import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
+import { MatDialog } from '@angular/material/dialog';
+import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
 
 @Component({
   selector: 'app-client-show',
@@ -13,7 +15,9 @@ export class ClientShowComponent implements OnInit {
 
   clients: Client[];
   
-  constructor(private clientService : ClientService, private notificationService : NotificationService) { }
+  constructor(private clientService : ClientService, 
+              private notificationService : NotificationService,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.findAll();
@@ -32,6 +36,21 @@ export class ClientShowComponent implements OnInit {
         console.log(response);
         this.notificationService.openSnackBar(response.message, response.status);
         this.findAll();
+    });
+  }
+
+  openDialog(client : Client): void {
+    const dialogRef = this.dialog.open(CommonDialogComponent, {
+      width: '250px',
+      data: { header : "Confirm",
+              content : "Are you sure to delete?" 
+            }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.delete(client);
+      }
     });
   }
 }

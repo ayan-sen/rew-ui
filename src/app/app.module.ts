@@ -10,7 +10,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import {MatTabsModule} from '@angular/material/tabs';
-
+import {MatDialogModule} from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,6 +25,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { ClientComponent } from './admin/client/client.component';
 import { ClientShowComponent } from './admin/client/client-show/client-show.component';
+import { CommonDialogComponent } from './components/common-commponents/common-dialog/common-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import { ClientShowComponent } from './admin/client/client-show/client-show.comp
     RawMaterialComponent,
     ClientComponent,
     ClientShowComponent,
+    CommonDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +56,8 @@ import { ClientShowComponent } from './admin/client/client-show/client-show.comp
     MatSnackBarModule,
     MatRadioModule,
     MatSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
