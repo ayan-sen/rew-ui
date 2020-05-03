@@ -28,6 +28,10 @@ import { ClientShowComponent } from './admin/client/client-show/client-show.comp
 import { CommonDialogComponent } from './components/common-commponents/common-dialog/common-dialog.component';
 import { environment } from 'src/environments/environment';
 import { ApiInceptorService } from './components/common-service/api-inceptor.service';
+import { OrderPlacementComponent } from './transaction/order-placement/order-placement.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angular-bootstrap-md'
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +46,7 @@ import { ApiInceptorService } from './components/common-service/api-inceptor.ser
     ClientComponent,
     ClientShowComponent,
     CommonDialogComponent,
+    OrderPlacementComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +64,13 @@ import { ApiInceptorService } from './components/common-service/api-inceptor.ser
     MatRadioModule,
     MatSelectModule,
     MatTabsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    MatDatepickerModule,
+    [ModalModule.forRoot()],
+    TooltipModule,
+    PopoverModule,
+    ButtonsModule
   ],
   providers: [
     { provide: "BASE_API_URL", useValue: environment.baseUrl },

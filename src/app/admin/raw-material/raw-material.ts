@@ -1,7 +1,7 @@
 export class RawMaterial {
   code : string;
   name : string;
-  description : string;
+  hsnSacCode : string;
   unitId : string;
   unitName : string;
   isActive : boolean;

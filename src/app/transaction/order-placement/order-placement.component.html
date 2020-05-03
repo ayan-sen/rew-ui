@@ -1,0 +1,108 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">Raw material order placement</h4>
+            <p class="card-category">Enter order placement details for raw materials</p>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmit()" [formGroup]="opForm">
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Description" formControlName="notes">
+                    <mat-error *ngIf="hasError('notes', 'required')">Description is required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details Grid : Start -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-plain">
+          <div class="card-header card-header-info">
+            <table width="100%"><tr><td width="90%"> 
+            <h4 class="card-title ">Order Placement Dteails</h4>
+            </td><td  style="align-content: justify-content-right">
+            <button type="button" mdbBtn color="unique" rounded="true" data-toggle="modal" data-target="#basicExample"
+              (click)="frame.show()" mdbWavesEffect>
+              Add
+            </button>
+          </td></tr></table>
+            <p class="card-category"></p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="text-primary">
+                  <th>Raw Material</th>
+                  <th>Quantity</th>
+                  <th>Unit</th>
+                </thead>
+                <tbody *ngFor="let dtl of details">
+                  <tr>
+                    <td>{{dtl.rmId}}</td>
+                    <td>{{dtl.quantity}}</td>
+                    <td>{{dtl.unitId}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Details Grid : End -->
+    <!-- MODAL -->
+
+
+    <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+      aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width:100%">
+          <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">Order Placement Details</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close(frame)">
+              <span aria-hidden="true">&times;</span><!--frame.hide()-->
+            </button>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="onDetailSubmit()" [formGroup]="opDetailForm">
+              <div class="row">
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Raw Material" formControlName="rmId">
+                    <mat-error *ngIf="hasDetailError('rmId', 'required')">Raw material is required</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Unit" formControlName="unitId">
+                    <mat-error *ngIf="hasDetailError('unitId', 'required')">Unit is required</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Quantity" formControlName="quantity">
+                    <mat-error *ngIf="hasDetailError('quantity', 'required')">Quantity is required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer d-flex justify-content-right">
+            <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect>Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL-->
+  </div>
+</div>

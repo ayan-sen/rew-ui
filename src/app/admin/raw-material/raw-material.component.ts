@@ -36,7 +36,7 @@ export class RawMaterialComponent implements OnInit {
     this.rmForm = new FormGroup({
       'code': new FormControl('', Validators.required),
       'name': new FormControl('', Validators.required),
-      'description': new FormControl('', Validators.required),
+      'hsnSacCode': new FormControl('', Validators.required), 
       'unitId': new FormControl('', Validators.required),
       'isActive': new FormControl('', Validators.required)
     });

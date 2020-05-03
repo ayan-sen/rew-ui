@@ -22,21 +22,13 @@
                     <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
                   </mat-form-field>
                 </div>
-                <div class="col-md-3">
-                  <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Unit" formControlName="unitId">
-                      <mat-option *ngFor="let unit of units" [value]="unit.unitId">
-                        {{unit.unitName}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
+                0
               </div>
               <div class="row">
                 <div class="col-md-6">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Description" formControlName="description">
-                    <mat-error *ngIf="hasError('description', 'required')">Description is required</mat-error>
+                    <input matInput placeholder="HSN/SAC Code" formControlName="hsnSacCode">
+                    <mat-error *ngIf="hasError('hsnSacCode', 'required')">HSN/SAC Code is required</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
@@ -70,7 +62,7 @@
                   <th>Code</th>
                   <th>Name</th>
                   <th>Unit</th>
-                  <th>Description</th>
+                  <th>HSN/SAC Code</th>
                   <th>Active</th>
                 </thead>
                 <tbody *ngFor="let rm of rawMaterials">
@@ -78,7 +70,7 @@
                     <td>{{rm.code}}</td>
                     <td>{{rm.name}}</td>
                     <td>{{rm.unitName}}</td>
-                    <td>{{rm.description}}</td>
+                    <td>{{rm.hsnSacCode}}</td>
                     <td>{{rm.isActive}}</td>
                   </tr>
                 </tbody>
