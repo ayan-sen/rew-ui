@@ -1,10 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalDirective } from 'angular-bootstrap-md';
+import { OrderPlacement } from './order-placement';
 import { OrderPlacementDetails } from './order-placement-details';
 import { rowsAnimation } from './template.animations';
-import { MatTableDataSource } from '@angular/material/table';
-import { OrderPlacement } from './order-placement';
-import { ModalDirective } from 'angular-bootstrap-md';
+import { NotificationService } from 'src/app/components/notification/notification.service';
+import { RawMaterialService } from 'src/app/admin/raw-material/raw-material.service';
+import { RawMaterial } from 'src/app/admin/raw-material/raw-material';
+import { ClientService } from 'src/app/admin/client/client.service';
+import { Client } from 'src/app/admin/client/client';
+import { OrderPlacementService } from './order-placement.service';
+import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Dropdown } from 'src/app/components/common-service/common-model/dropdown';
 
 @Component({
   selector: 'app-order-placement',
@@ -24,11 +32,28 @@ export class OrderPlacementComponent implements OnInit {
   
   displayedColumns = ['rmId', 'quantity', 'unitId'];
 
-  constructor() { 
+  rawMaterials : RawMaterial[] = [];
+
+  suppliers : Client[] = [];
+
+  statusValues: Dropdown[] = [
+    {value: 'draft', viewValue: 'Draft'},
+    {value: 'in_progress', viewValue: 'In Progress'},
+    {value: 'submit', viewValue: 'Submit'}
+  ];
+
+  constructor(private orderPlacementService : OrderPlacementService,
+              private notificationService : NotificationService,
+              private rawMaterialService : RawMaterialService,
+              private clientService : ClientService) { 
   }
   
 
   ngOnInit(): void {
+
+    this.getRawMaterials();
+    this.getSuppliers();
+
     this.opForm = new FormGroup({
       'orderId': new FormControl(''),
       'supplierId': new FormControl(''),
@@ -43,8 +68,10 @@ export class OrderPlacementComponent implements OnInit {
       'orderId': new FormControl(''),
       'orderDetailsId': new FormControl(''),
       'rmId': new FormControl('', Validators.required),
+      'rmName': new FormControl('', Validators.required),
       'unitId': new FormControl('', Validators.required),
-      'quantity': new FormControl('', Validators.required)
+      'unitName': new FormControl('', Validators.required),
+      'quantity': new FormControl(0, Validators.required)
     });
   }
 
@@ -59,12 +86,66 @@ export class OrderPlacementComponent implements OnInit {
   
 
   onSubmit() {
-
+    if (this.opForm.valid) {
+      this.orderPlacement = this.opForm.value;
+      this.orderPlacement.details = this.details;
+      this.orderPlacementService.save(this.orderPlacement).subscribe(
+        (response: ServerResponse) => {
+          this.notificationService.openSnackBar(response.message, response.status);
+          console.log("success response ::");
+          console.log(response);
+          this.opForm.reset();
+          this.details = [];
+        },
+        (errorMsg: HttpErrorResponse) => {
+          this.notificationService.openSnackBar(errorMsg.error.message, errorMsg.error.status);
+          console.log("error response ::");
+          console.log(errorMsg.message);
+        }
+      );
+    }
+    console.log(this.opForm.value);
   }
 
-  onDetailSubmit() {
+  onDetailSubmit(frame : ModalDirective) {
+    if (this.opDetailForm.valid) {
+      let newDetail: OrderPlacementDetails = this.opDetailForm.value;
+      let orderId = newDetail.orderId;
+      let index: number = -1;
+      if (orderId != null && orderId.length > 0) {
+        index = this.details.findIndex(detail => detail.orderId == orderId);
+      } else {
+        index = this.details.findIndex(detail => detail.rmId == newDetail.rmId);
+      }
+      console.log("last index >>" + index);
+      if (index != -1) {
+        this.details[index] = this.opDetailForm.value;
+        this.notificationService.openSnackBar("Order details updated successfully", "success");
+      } else {
+        this.details.push(this.opDetailForm.value);
+        this.notificationService.openSnackBar("Order details added successfully", "success");
+      }
+      this.opDetailForm.reset();
+      frame.hide();
+    } else {
+      this.notificationService.openSnackBar("Error occurred, please review and submit again", "danger");
+    }
+  }
 
+  getRawMaterials() {
+    this.rawMaterialService.findAll().subscribe(
+      rawMaterials => {
+        this.rawMaterials = rawMaterials;
+      }
+    );
+  }
 
+  getSuppliers() {
+    this.clientService.findAll().subscribe(
+      suppliers => {
+        this.suppliers = suppliers;
+      }
+    );
   }
 
   close(frame : ModalDirective )  {

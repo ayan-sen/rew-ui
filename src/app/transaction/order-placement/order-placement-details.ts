@@ -4,4 +4,6 @@ export class OrderPlacementDetails {
     rmId : string;
     unitId : string;
     quantity : string;
+    rmName : string;
+    unitName : string;
 }

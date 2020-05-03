@@ -31,6 +31,7 @@ import { ApiInceptorService } from './components/common-service/api-inceptor.ser
 import { OrderPlacementComponent } from './transaction/order-placement/order-placement.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angular-bootstrap-md'
 @NgModule({
   declarations: [
@@ -70,7 +71,9 @@ import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angula
     [ModalModule.forRoot()],
     TooltipModule,
     PopoverModule,
-    ButtonsModule
+    ButtonsModule,
+    MatNativeDateModule,
+    MatRippleModule
   ],
   providers: [
     { provide: "BASE_API_URL", useValue: environment.baseUrl },
