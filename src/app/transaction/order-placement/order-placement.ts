@@ -10,5 +10,7 @@ export class OrderPlacement {
     actualDeliveryDate : Date;
     status : string;
     notes : string;
+    projectId : string;
+    projectName : string;
     details : OrderPlacementDetails[] = [];
 }

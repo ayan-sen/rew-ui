@@ -13,6 +13,8 @@ import { OrderPlacementService } from './order-placement.service';
 import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Dropdown } from 'src/app/components/common-service/common-model/dropdown';
+import { ProjectService } from '../project/project.service';
+import { Project } from '../project/project';
 
 @Component({
   selector: 'app-order-placement',
@@ -36,6 +38,8 @@ export class OrderPlacementComponent implements OnInit {
 
   suppliers : Client[] = [];
 
+  projects : Project[] = [];
+
   statusValues: Dropdown[] = [
     {value: 'draft', viewValue: 'Draft'},
     {value: 'in_progress', viewValue: 'In Progress'},
@@ -45,7 +49,8 @@ export class OrderPlacementComponent implements OnInit {
   constructor(private orderPlacementService : OrderPlacementService,
               private notificationService : NotificationService,
               private rawMaterialService : RawMaterialService,
-              private clientService : ClientService) { 
+              private clientService : ClientService,
+              private projectService : ProjectService) { 
   }
   
 
@@ -53,6 +58,7 @@ export class OrderPlacementComponent implements OnInit {
 
     this.getRawMaterials();
     this.getSuppliers();
+    this.getProjects();
 
     this.opForm = new FormGroup({
       'orderId': new FormControl(''),
@@ -144,6 +150,14 @@ export class OrderPlacementComponent implements OnInit {
     this.clientService.findAll().subscribe(
       suppliers => {
         this.suppliers = suppliers;
+      }
+    );
+  }
+
+  getProjects() {
+    this.projectService.findAll().subscribe(
+      projects => {
+        this.projects = projects;
       }
     );
   }
