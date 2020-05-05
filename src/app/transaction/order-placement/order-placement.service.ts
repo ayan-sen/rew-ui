@@ -26,7 +26,7 @@ export class OrderPlacementService {
     return this.http.delete("transaction/orders/" +orderId );
    }
 
-   deleteClientDetail(orderId : string, detailId : number) {
+   deleteDetail(orderId : string, detailId : number) {
     let url = "transaction/orders/"+orderId + "/detail/" + detailId;
     return this.http.delete(url);
    }

@@ -17,6 +17,8 @@ import { ProjectService } from '../project/project.service';
 import { Project } from '../project/project';
 import { Unit } from 'src/app/admin/unit/unit';
 import { UnitService } from 'src/app/admin/unit/unit.service';
+import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-order-placement',
@@ -63,7 +65,8 @@ export class OrderPlacementComponent implements OnInit {
               private rawMaterialService : RawMaterialService,
               private clientService : ClientService,
               private projectService : ProjectService,
-              private unitService : UnitService) { 
+              private unitService : UnitService,
+              public dialog: MatDialog) { 
   }
   
 
@@ -196,5 +199,55 @@ export class OrderPlacementComponent implements OnInit {
 
     this.unitId = material.unit.unitId;
     this.unitName = material.unit.unitName;
+  }
+
+  editDetail(orderPlacementDetail: OrderPlacementDetails, frame : ModalDirective) {
+    this.opDetailForm.setValue(orderPlacementDetail);
+    frame.show();
+  }
+
+  openDialog(orderPlacementDetail: OrderPlacementDetails): void {
+    const dialogRef = this.dialog.open(CommonDialogComponent, {
+      width: '250px',
+      data: { header : "Confirm",
+              content : "Are you sure to delete?" 
+            }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.deleteDetail(orderPlacementDetail);
+      }
+    });
+  }
+
+  deleteDetail(orderPlacementDetail: OrderPlacementDetails) {
+    let index = this.calculateDetailIndex(orderPlacementDetail);
+    if (orderPlacementDetail.orderId) {
+      this.orderPlacementService.deleteDetail(orderPlacementDetail.orderId, orderPlacementDetail.orderDetailsId)
+      .subscribe((response: ServerResponse) => {
+        this.details.splice(index, 1);
+        this.notificationService.openSnackBar(response.message, response.status);
+      }, (errorMsg: HttpErrorResponse) => {
+        this.notificationService.openSnackBar(errorMsg.error.message, errorMsg.error.status);
+        console.log("error response ::");
+        console.log(errorMsg.message);
+      });
+    } else {
+      if (index !== -1) {
+        this.details.splice(index, 1);
+        this.notificationService.openSnackBar("Order details removed successfully", "success");
+      }
+    }
+  }
+
+  calculateDetailIndex(orderPlacementDetail: OrderPlacementDetails): number {
+    let index: number = -1;
+    if (orderPlacementDetail.orderId != null && orderPlacementDetail.orderId.length > 0) {
+      index = this.details.findIndex(detail => detail.orderId == orderPlacementDetail.orderId);
+    } else {
+      index = this.details.findIndex(detail => detail.rmId == orderPlacementDetail.rmId);
+    }
+    return index;
   }
 }

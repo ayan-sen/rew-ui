@@ -1,6 +1,6 @@
 export class OrderPlacementDetails {
     orderId : string;
-    orderDetailsId : string;
+    orderDetailsId : number;
     rmId : string;
     unitId : string;
     quantity : string;

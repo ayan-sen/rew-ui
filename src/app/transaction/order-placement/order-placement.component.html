@@ -103,12 +103,25 @@
                   <th>Raw Material</th>
                   <th>Quantity</th>
                   <th>Unit</th>
+                  <th>Action</th>
                 </thead>
                 <tbody *ngFor="let dtl of details">
                   <tr>
                     <td>{{dtl.rmId}}</td>
                     <td>{{dtl.quantity}}</td>
                     <td>{{dtl.unitId}}</td>
+                    <td>
+                      <a (click)="editDetail(dtl, frame)" style="cursor: pointer;"
+                          class="edit" title="" data-toggle="tooltip"
+                          data-original-title="Edit">
+                          <mat-icon class="routeIcon">edit</mat-icon>
+                      </a>
+                      <a (click)="openDialog(dtl)" style="cursor: pointer;"
+                          class="delete" title="" data-toggle="tooltip"
+                          data-original-title="Delete">
+                          <mat-icon class="routeIcon">delete</mat-icon>
+                      </a>
+                  </td>
                   </tr>
                 </tbody>
               </table>
