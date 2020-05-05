@@ -1,4 +1,4 @@
 export class Unit {
-  unitId : String;
-  unitName : String;
+  unitId : string;
+  unitName : string;
 }

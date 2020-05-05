@@ -8,9 +8,9 @@
             <p class="card-category">Enter order placement details for raw materials</p>
           </div>
           <div class="card-body">
-            <form (ngSubmit)="onSubmit()" [formGroup]="opForm">
+            <form [formGroup]="opForm">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Project" formControlName="projectId">
                       <mat-option *ngFor="let value of projects" [value]="value.projectId">
@@ -33,7 +33,16 @@
                     <input matInput placeholder="Supplier Address" formControlName="identifier">
                   </mat-form-field>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Work Unit" formControlName="siteId">
+                      <mat-option *ngFor="let value of workUnits" [value]="value.value">
+                        {{value.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
                   <mat-form-field>
                     <mat-label>Expected Delivary Date</mat-label>
                     <input matInput [matDatepicker]="picker1" formControlName="expectedDeliveryDate">
@@ -109,6 +118,8 @@
       </div>
     </div>
     <!-- Details Grid : End -->
+    <button mat-raised-button type="submit" (click)="onSubmit()" class="btn btn-success pull-right">Save</button>
+    <div class="clearfix"></div>
     <!-- MODAL -->
 
 
@@ -126,15 +137,24 @@
             <form [formGroup]="opDetailForm">
               <div class="row">
                 <div class="col-md-4">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Raw Material" formControlName="rmId">
-                    <mat-error *ngIf="hasDetailError('rmId', 'required')">Raw material is required</mat-error>
-                  </mat-form-field>
-                </div>
+                  
+                    <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Raw Material" formControlName="rmId">
+                        <mat-option *ngFor="let value of rawMaterials" [value]="value.code" 
+                            (onSelectionChange)="populateUnit(value)"> 
+                          {{value.name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="hasDetailError('rmId', 'required')">Raw material is required</mat-error>
+                    </mat-form-field>
+                </div> 
                 <div class="col-md-4">
+                  <mat-form-field class="invisible example-full-width">
+                    <input matInput placeholder="Unit" formControlName="unitId" [(ngModel)]='unitId' >
+                </mat-form-field>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Unit" formControlName="unitId">
-                    <mat-error *ngIf="hasDetailError('unitId', 'required')">Unit is required</mat-error>
+                    <input matInput placeholder="Unit" formControlName="unitName" [readonly]="true" [(ngModel)]='unitName' >
+                    <mat-error *ngIf="hasDetailError('unitName', 'required')">Unit is required</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">

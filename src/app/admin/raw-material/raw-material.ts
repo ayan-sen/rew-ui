@@ -1,3 +1,5 @@
+import { Unit } from '../unit/unit';
+
 export class RawMaterial {
   code : string;
   name : string;
@@ -5,4 +7,5 @@ export class RawMaterial {
   unitId : string;
   unitName : string;
   isActive : boolean;
+  unit : Unit;
 }

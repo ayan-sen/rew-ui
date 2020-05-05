@@ -11,6 +11,7 @@ export class OrderPlacement {
     status : string;
     notes : string;
     projectId : string;
-    projectName : string;
+    description : string;
+    siteId : string;
     details : OrderPlacementDetails[] = [];
 }

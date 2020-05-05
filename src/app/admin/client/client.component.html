@@ -111,22 +111,28 @@
                                                 </mat-form-field>
 
                                                 <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Address Identifier" formControlName="identifier">
-                                                    <mat-error *ngIf="hasDetailError('identifier', 'required')">Address identifier is required</mat-error>
-                                                    <mat-error *ngIf="hasDetailError('identifier', 'maxLength')">Max length is 15</mat-error>
+                                                    <input matInput placeholder="Address Identifier"
+                                                        formControlName="identifier">
+                                                    <mat-error *ngIf="hasDetailError('identifier', 'required')">Address
+                                                        identifier is required</mat-error>
+                                                    <mat-error *ngIf="hasDetailError('identifier', 'maxLength')">Max
+                                                        length is 15</mat-error>
                                                 </mat-form-field>
                                             </div>
                                             <div class="col-md-7">
                                                 <mat-form-field class="example-full-width">
                                                     <input matInput placeholder="Address" formControlName="address">
-                                                    <mat-error *ngIf="hasDetailError('address', 'required')">Address is required</mat-error>
+                                                    <mat-error *ngIf="hasDetailError('address', 'required')">Address is
+                                                        required</mat-error>
                                                 </mat-form-field>
                                             </div>
                                             <div class="col-md-2">
                                                 <mat-form-field class="example-full-width">
                                                     <input matInput placeholder="Pincode" formControlName="pincode">
-                                                    <mat-error *ngIf="hasDetailError('pincode', 'required')">Pincode is required</mat-error>
-                                                    <mat-error *ngIf="hasDetailError('pincode', 'maxLength')">Max length is 6</mat-error>
+                                                    <mat-error *ngIf="hasDetailError('pincode', 'required')">Pincode is
+                                                        required</mat-error>
+                                                    <mat-error *ngIf="hasDetailError('pincode', 'maxLength')">Max length
+                                                        is 6</mat-error>
                                                 </mat-form-field>
                                             </div>
                                         </div>
@@ -134,7 +140,8 @@
                                             <div class="col-md-2">
                                                 <mat-form-field class="example-full-width">
                                                     <input matInput placeholder="Contact" formControlName="contactNo">
-                                                    <mat-error *ngIf="hasDetailError('contactNo', 'required')">Contact Number is required</mat-error>
+                                                    <mat-error *ngIf="hasDetailError('contactNo', 'required')">Contact
+                                                        Number is required</mat-error>
                                                 </mat-form-field>
                                             </div>
 
@@ -184,13 +191,17 @@
                                                     <td>{{dtl.emailId}}</td>
                                                     <td>{{dtl.contactNo}}</td>
                                                     <td>
-                                                        <a (click)="editDetail(dtl)" style="cursor: pointer;" class="edit" title="" data-toggle="tooltip" data-original-title="Edit">
-                                                          <mat-icon class="routeIcon">edit</mat-icon>
+                                                        <a (click)="editDetail(dtl)" style="cursor: pointer;"
+                                                            class="edit" title="" data-toggle="tooltip"
+                                                            data-original-title="Edit">
+                                                            <mat-icon class="routeIcon">edit</mat-icon>
                                                         </a>
-                                                        <a (click)="openDialog(dtl)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip" data-original-title="Delete">
-                                                          <mat-icon class="routeIcon">delete</mat-icon>
+                                                        <a (click)="openDialog(dtl)" style="cursor: pointer;"
+                                                            class="delete" title="" data-toggle="tooltip"
+                                                            data-original-title="Delete">
+                                                            <mat-icon class="routeIcon">delete</mat-icon>
                                                         </a>
-                                                      </td>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>

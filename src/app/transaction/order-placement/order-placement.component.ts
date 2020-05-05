@@ -15,6 +15,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Dropdown } from 'src/app/components/common-service/common-model/dropdown';
 import { ProjectService } from '../project/project.service';
 import { Project } from '../project/project';
+import { Unit } from 'src/app/admin/unit/unit';
+import { UnitService } from 'src/app/admin/unit/unit.service';
 
 @Component({
   selector: 'app-order-placement',
@@ -30,7 +32,7 @@ export class OrderPlacementComponent implements OnInit {
 
   orderPlacement : OrderPlacement;
 
-  details : OrderPlacementDetails[];
+  details : OrderPlacementDetails[] =[];
   
   displayedColumns = ['rmId', 'quantity', 'unitId'];
 
@@ -40,17 +42,28 @@ export class OrderPlacementComponent implements OnInit {
 
   projects : Project[] = [];
 
+  units : Unit[] =[];
+
+  unitId : string;
+  unitName : string;
+
   statusValues: Dropdown[] = [
     {value: 'draft', viewValue: 'Draft'},
     {value: 'in_progress', viewValue: 'In Progress'},
     {value: 'submit', viewValue: 'Submit'}
   ];
 
+  workUnits: Dropdown[] = [
+    {value: 'DUMDUM', viewValue: 'Dum dum unit'},
+    {value: 'SINGUR', viewValue: 'Singur Unit'}
+  ];
+
   constructor(private orderPlacementService : OrderPlacementService,
               private notificationService : NotificationService,
               private rawMaterialService : RawMaterialService,
               private clientService : ClientService,
-              private projectService : ProjectService) { 
+              private projectService : ProjectService,
+              private unitService : UnitService) { 
   }
   
 
@@ -59,6 +72,7 @@ export class OrderPlacementComponent implements OnInit {
     this.getRawMaterials();
     this.getSuppliers();
     this.getProjects();
+    this.getUnits();
 
     this.opForm = new FormGroup({
       'orderId': new FormControl(''),
@@ -67,15 +81,19 @@ export class OrderPlacementComponent implements OnInit {
       'expectedDeliveryDate': new FormControl(null, Validators.required),
       'actualDeliveryDate': new FormControl(null),
       'status': new FormControl('', Validators.required),
-      'notes': new FormControl('', Validators.required)
+      'notes': new FormControl('', Validators.required),
+      'projectId' : new FormControl('', Validators.required),
+      'description' : new FormControl(''),
+      'identifier': new FormControl(''),
+      'siteId': new FormControl('', Validators.required)
     });
 
     this.opDetailForm = new FormGroup({
       'orderId': new FormControl(''),
       'orderDetailsId': new FormControl(''),
       'rmId': new FormControl('', Validators.required),
-      'rmName': new FormControl('', Validators.required),
-      'unitId': new FormControl('', Validators.required),
+      'rmName': new FormControl(''),
+      'unitId': new FormControl(''),
       'unitName': new FormControl('', Validators.required),
       'quantity': new FormControl(0, Validators.required)
     });
@@ -162,7 +180,21 @@ export class OrderPlacementComponent implements OnInit {
     );
   }
 
+  getUnits() {
+    this.unitService.getAllUnits().subscribe(
+      units => {
+        this.units = units;
+      }
+    );
+  }
+
   close(frame : ModalDirective )  {
     frame.hide();
+  }
+
+  populateUnit(material : RawMaterial) {
+
+    this.unitId = material.unit.unitId;
+    this.unitName = material.unit.unitName;
   }
 }

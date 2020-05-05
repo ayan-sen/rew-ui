@@ -33,3 +33,6 @@
   position: absolute;
   width: 260px;
 }
+.cdk-overlay-container{
+  z-index: 2000;
+}
