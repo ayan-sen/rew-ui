@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { Client } from '../client';
-import { ClientService } from '../client.service';
+import { OrderPlacementService } from '../order-placement.service';
 import { NotificationService } from 'src/app/components/notification/notification.service';
-import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
 import { MatDialog } from '@angular/material/dialog';
+import { OrderPlacement } from '../order-placement';
+import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
 import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
 
 declare const $: any;
 
 @Component({
-  selector: 'app-client-show',
-  templateUrl: './client-show.component.html', 
-  styleUrls: ['./client-show.component.css']
+  selector: 'app-order-placement-show',
+  templateUrl: './order-placement-show.component.html',
+  styleUrls: ['./order-placement-show.component.css']
 })
-export class ClientShowComponent implements OnInit {
+export class OrderPlacementShowComponent implements OnInit {
 
-  clients: Client[];
-  
-  constructor(private clientService : ClientService, 
+  orders : OrderPlacement[] = [];
+
+
+  constructor(private orderPlacementService : OrderPlacementService, 
               private notificationService : NotificationService,
               public dialog: MatDialog) { }
 
@@ -26,13 +27,13 @@ export class ClientShowComponent implements OnInit {
   }
 
   findAll() {
-    this.clientService.findAll().subscribe(clients => {
-      this.clients = clients;
+    this.orderPlacementService.findAll().subscribe(orders => {
+      this.orders = orders;
     });
   }
 
-  delete(client : Client) {
-    this.clientService.deleteClient(client.clientId).subscribe(
+  delete(order : OrderPlacement) {
+    this.orderPlacementService.delete(order.orderId).subscribe(
       (response : ServerResponse) => {
         console.log("Delete Response >>>>");
         console.log(response);
@@ -41,7 +42,7 @@ export class ClientShowComponent implements OnInit {
     });
   }
 
-  openDialog(client : Client): void {
+  openDialog(order : OrderPlacement): void {
     const dialogRef = this.dialog.open(CommonDialogComponent, {
       width: '250px',
       data: { header : "Confirm",
@@ -51,7 +52,7 @@ export class ClientShowComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
-        this.delete(client);
+        this.delete(order);
       }
     });
   }

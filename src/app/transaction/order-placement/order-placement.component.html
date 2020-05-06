@@ -11,6 +11,11 @@
             <form [formGroup]="opForm">
               <div class="row">
                 <div class="col-md-3">
+                  <mat-form-field class="invisible example-full-width">
+                    <input matInput placeholder="orderId" formControlName="orderId">
+                    <input matInput placeholder="isActive" formControlName="isActive">
+                  </mat-form-field>
+
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Project" formControlName="projectId">
                       <mat-option *ngFor="let value of projects" [value]="value.projectId">
@@ -150,7 +155,10 @@
             <form [formGroup]="opDetailForm">
               <div class="row">
                 <div class="col-md-4">
-                  
+                  <mat-form-field class="invisible example-full-width">
+                    <input matInput placeholder="orderId" formControlName="orderId">
+                    <input matInput placeholder="orderDetailsId" formControlName="orderDetailsId">
+                  </mat-form-field>
                     <mat-form-field class="example-full-width">
                       <mat-select placeholder="Raw Material" formControlName="rmId">
                         <mat-option *ngFor="let value of rawMaterials" [value]="value.code" 

@@ -18,11 +18,11 @@ export class OrderPlacementService {
      return this.http.get<OrderPlacement[]>("transaction/orders");
    }
 
-   findById(orderId : string) : Observable<OrderPlacement> {
-    return this.http.get<OrderPlacement>("transaction/orders/" +orderId );
+   findById(orderId : string) : Observable<OrderPlacement> {   
+    return this.http.get<OrderPlacement>("transaction/orders/find" , {"params": {"id": orderId}} );
    }
 
-   deleteClient(orderId : string) {
+   delete(orderId : string) {
     return this.http.delete("transaction/orders/" +orderId );
    }
 

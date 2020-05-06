@@ -7,11 +7,14 @@ export class OrderPlacement {
     supplierDetailsId : string;
     identifier : string;
     expectedDeliveryDate : Date;
+    expectedDeliveryDateString : string;
     actualDeliveryDate : Date;
+    actualDeliveryDateString : string;
     status : string;
     notes : string;
     projectId : string;
     description : string;
     siteId : string;
     details : OrderPlacementDetails[] = [];
+    isActive : boolean;
 }

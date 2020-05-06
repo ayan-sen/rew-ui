@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { OrderPlacement } from './order-placement';
 import { OrderPlacementDetails } from './order-placement-details';
-import { rowsAnimation } from './template.animations';
 import { NotificationService } from 'src/app/components/notification/notification.service';
 import { RawMaterialService } from 'src/app/admin/raw-material/raw-material.service';
 import { RawMaterial } from 'src/app/admin/raw-material/raw-material';
@@ -19,12 +18,13 @@ import { Unit } from 'src/app/admin/unit/unit';
 import { UnitService } from 'src/app/admin/unit/unit.service';
 import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { OrderPlacementShowComponent } from './order-placement-show/order-placement-show.component';
 
 @Component({
   selector: 'app-order-placement',
   templateUrl: './order-placement.component.html',
-  styleUrls: ['./order-placement.component.css'],
-  animations: [rowsAnimation]
+  styleUrls: ['./order-placement.component.css']
 })
 export class OrderPlacementComponent implements OnInit {
 
@@ -66,7 +66,8 @@ export class OrderPlacementComponent implements OnInit {
               private clientService : ClientService,
               private projectService : ProjectService,
               private unitService : UnitService,
-              public dialog: MatDialog) { 
+              public dialog: MatDialog,
+              private route: ActivatedRoute) { 
   }
   
 
@@ -88,7 +89,11 @@ export class OrderPlacementComponent implements OnInit {
       'projectId' : new FormControl('', Validators.required),
       'description' : new FormControl(''),
       'identifier': new FormControl(''),
-      'siteId': new FormControl('', Validators.required)
+      'siteId': new FormControl('', Validators.required),
+      'details': new FormControl(''),
+      'expectedDeliveryDateString': new FormControl(''),
+      'actualDeliveryDateString': new FormControl(''),
+      'isActive': new FormControl('')
     });
 
     this.opDetailForm = new FormGroup({
@@ -98,8 +103,25 @@ export class OrderPlacementComponent implements OnInit {
       'rmName': new FormControl(''),
       'unitId': new FormControl(''),
       'unitName': new FormControl('', Validators.required),
-      'quantity': new FormControl(0, Validators.required)
+      'quantity': new FormControl(0, Validators.required) 
     });
+
+    this.route.queryParams.subscribe(param => {
+      this.orderPlacementService.findById(param.id).subscribe((order: OrderPlacement) => {
+        this.details = order.details;
+        order.expectedDeliveryDate = this.convertToDate(order.expectedDeliveryDateString);
+        order.actualDeliveryDate = this.convertToDate(order.actualDeliveryDateString);
+        this.opForm.setValue(order); 
+      })
+    });
+  }
+
+  convertToDate(dt : string) : Date {
+    let d : Date = null;
+    if(dt!= null && dt.length > 0) {
+      d =  new Date(dt);
+    }
+    return d;
   }
 
   public hasError = (controlName: string, errorName: string) =>{
@@ -116,6 +138,11 @@ export class OrderPlacementComponent implements OnInit {
     if (this.opForm.valid) {
       this.orderPlacement = this.opForm.value;
       this.orderPlacement.details = this.details;
+      if(this.opForm.value.isActive == null || this.opForm.value.isActive == '') {
+        this.orderPlacement.isActive = true;
+      }
+      this.orderPlacement.expectedDeliveryDateString = this.orderPlacement.expectedDeliveryDate.toLocaleDateString();
+      this.orderPlacement.actualDeliveryDateString = this.orderPlacement.actualDeliveryDate.toLocaleDateString();
       this.orderPlacementService.save(this.orderPlacement).subscribe(
         (response: ServerResponse) => {
           this.notificationService.openSnackBar(response.message, response.status);

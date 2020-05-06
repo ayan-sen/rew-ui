@@ -33,7 +33,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angular-bootstrap-md';
-import { ProjectComponent } from './transaction/project/project.component'
+import { ProjectComponent } from './transaction/project/project.component';
+import { OrderPlacementShowComponent } from './transaction/order-placement/order-placement-show/order-placement-show.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +51,7 @@ import { ProjectComponent } from './transaction/project/project.component'
     CommonDialogComponent,
     OrderPlacementComponent,
     ProjectComponent,
+    OrderPlacementShowComponent,
   ],
   imports: [
     BrowserModule,
