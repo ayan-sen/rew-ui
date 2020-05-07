@@ -20,6 +20,8 @@ import { CommonDialogComponent } from 'src/app/components/common-commponents/com
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { OrderPlacementShowComponent } from './order-placement-show/order-placement-show.component';
+import { ClientDetails } from 'src/app/admin/client/client-detail';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-order-placement',
@@ -45,6 +47,8 @@ export class OrderPlacementComponent implements OnInit {
   projects : Project[] = [];
 
   units : Unit[] =[];
+
+  supplierDetails : ClientDetails[] = [];
 
   unitId : string;
   unitName : string;
@@ -108,12 +112,15 @@ export class OrderPlacementComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe(param => {
-      this.orderPlacementService.findById(param.id).subscribe((order: OrderPlacement) => {
-        this.details = order.details;
-        order.expectedDeliveryDate = this.convertToDate(order.expectedDeliveryDateString);
-        order.actualDeliveryDate = this.convertToDate(order.actualDeliveryDateString);
-        this.opForm.setValue(order); 
-      })
+      if (Object.keys(param).length > 0) {
+        this.orderPlacementService.findById(param.id).subscribe((order: OrderPlacement) => {
+          this.details = order.details;
+          order.expectedDeliveryDate = this.convertToDate(order.expectedDeliveryDateString);
+          order.actualDeliveryDate = this.convertToDate(order.actualDeliveryDateString);
+          this.filterCUpplierDateils(order.supplierId);
+          this.opForm.setValue(order); 
+        })
+      }
     });
   }
 
@@ -277,5 +284,14 @@ export class OrderPlacementComponent implements OnInit {
       index = this.details.findIndex(detail => detail.rmId == orderPlacementDetail.rmId);
     }
     return index;
+  }
+
+  populateSupplierDetails(event : MatSelectChange) {
+    let val = event.value;
+    this.filterCUpplierDateils(val);
+  }
+
+  filterCUpplierDateils(clientId : String) {
+    this.supplierDetails = this.suppliers.filter(s => s.clientId === clientId)[0].details; 
   }
 }

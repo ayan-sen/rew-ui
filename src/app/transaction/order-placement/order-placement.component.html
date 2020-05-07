@@ -26,8 +26,8 @@
                 </div>
                 <div class="col-md-2">
                   <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Supplier" formControlName="supplierId">
-                      <mat-option *ngFor="let value of suppliers" [value]="value.clientId">
+                    <mat-select placeholder="Supplier" formControlName="supplierId"  (selectionChange)="populateSupplierDetails($event)">
+                      <mat-option *ngFor="let value of suppliers" [value]="value.clientId" >
                         {{value.clientName}}
                       </mat-option>
                     </mat-select>
@@ -35,7 +35,11 @@
                 </div>
                 <div class="col-md-3">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Supplier Address" formControlName="identifier">
+                    <mat-select placeholder="Supplier Address" formControlName="supplierDetailsId">
+                      <mat-option *ngFor="let value of supplierDetails" [value]="value.detailId" >
+                        {{value.identifier}}
+                      </mat-option>
+                    </mat-select>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
