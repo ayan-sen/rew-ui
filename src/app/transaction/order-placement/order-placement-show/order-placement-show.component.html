@@ -23,7 +23,7 @@
                           <td>{{order.orderId}}</td>
                           <td>{{order.projectId}}</td>
                           <td>{{order.supplierName}}</td> 
-                          <td *ngIf="!isMobileMenu()">{{order.expectedDeliveryDate}}</td>
+                          <td *ngIf="!isMobileMenu()">{{order.expectedDeliveryDateString}}</td>
                           <td *ngIf="!isMobileMenu()">{{order.status}}</td>
                           <td>
                             <a [routerLink]="['/orders/edit']" [queryParams]="{ id: order.orderId}"  class="edit" title="" data-toggle="tooltip" data-original-title="Edit">

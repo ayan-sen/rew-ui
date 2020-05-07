@@ -93,7 +93,8 @@ export class OrderPlacementComponent implements OnInit {
       'details': new FormControl(''),
       'expectedDeliveryDateString': new FormControl(''),
       'actualDeliveryDateString': new FormControl(''),
-      'isActive': new FormControl('')
+      'isActive': new FormControl(''),
+      'supplierName': new FormControl('')
     });
 
     this.opDetailForm = new FormGroup({

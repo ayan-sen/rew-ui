@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { OrderPlacement } from './order-placement';
 import { Observable } from 'rxjs';
 
@@ -23,11 +23,13 @@ export class OrderPlacementService {
    }
 
    delete(orderId : string) {
-    return this.http.delete("transaction/orders/" +orderId );
+    return this.http.delete("/transaction/orders/delete" , {"params": {"id": orderId}}  );
    }
 
    deleteDetail(orderId : string, detailId : number) {
-    let url = "transaction/orders/"+orderId + "/detail/" + detailId;
-    return this.http.delete(url);
+    let params = new HttpParams();
+    params = params.append('id', orderId);
+    params = params.append('detailId', detailId.toString());
+    return this.http.delete("/transaction/orders/detail/delete", {"params": params});
    }
 }
