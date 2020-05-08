@@ -1,3 +1,5 @@
+import { ProjectDetails } from './project-details';
+
 export class Project {
     projectId : string;
     amendmentNo : number;
@@ -19,4 +21,8 @@ export class Project {
     cgstAmount: number;
     sgstAmount: number;
     totalAmount : number;
+    isActive : boolean;
+    expectedDeliveryDateString : string;
+    actualDeliveryDateString : string;
+    details : ProjectDetails[] = [];
 }

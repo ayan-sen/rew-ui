@@ -25,6 +25,11 @@ export class RawMaterialComponent implements OnInit {
     {value: true, viewValue: 'Yes'},
     {value: false, viewValue: 'No'}
   ];
+ 
+  types: Dropdown[] = [
+    {value: "R", viewValue: 'Raw Material'},
+    {value: "P", viewValue: 'Product'}
+  ];
 
   constructor(private rawMaterialService : RawMaterialService, 
               private notificationService : NotificationService,
@@ -38,7 +43,8 @@ export class RawMaterialComponent implements OnInit {
       'name': new FormControl('', Validators.required),
       'hsnSacCode': new FormControl('', Validators.required), 
       'unitId': new FormControl('', Validators.required),
-      'isActive': new FormControl('', Validators.required)
+      'isActive': new FormControl('', Validators.required),
+      'type': new FormControl('', Validators.required)
     });
   }
 

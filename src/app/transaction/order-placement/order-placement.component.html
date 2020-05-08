@@ -5,7 +5,12 @@
         <div class="card">
           <div class="card-header card-header-success">
             <h4 class="card-title">Raw material order placement</h4>
-            <p class="card-category">Enter order placement details for raw materials</p>
+            <div *ngIf="orderId">
+              <p class="card-title">Order Id : {{orderId}}</p>
+            </div>
+            <div *ngIf="!orderId">
+              <p class="card-category">Enter order placement details for raw materials</p>
+            </div>
           </div>
           <div class="card-body">
             <form [formGroup]="opForm">

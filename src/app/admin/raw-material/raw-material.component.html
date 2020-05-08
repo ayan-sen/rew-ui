@@ -39,6 +39,18 @@
                 </div>
                 <div class="col-md-2">
                   <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Type" formControlName="type">
+                      <mat-option *ngFor="let value of types" [value]="value.value">
+                        {{value.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="hasError('type', 'required')">Type is required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
                     <mat-select placeholder="Active?" formControlName="isActive">
                       <mat-option *ngFor="let value of activeValues" [value]="value.value">
                         {{value.viewValue}}

@@ -7,6 +7,7 @@ import { ClientComponent } from './admin/client/client.component';
 import { ClientShowComponent } from './admin/client/client-show/client-show.component';
 import { OrderPlacementComponent } from './transaction/order-placement/order-placement.component';
 import { OrderPlacementShowComponent } from './transaction/order-placement/order-placement-show/order-placement-show.component';
+import { ProjectComponent } from './transaction/project/project.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,8 @@ const routes: Routes = [
   { path: 'order-placement/add', component: OrderPlacementComponent },
   { path: 'orders/edit', component: OrderPlacementComponent },
   { path: 'orders', component: OrderPlacementShowComponent },
+  { path: 'project/add', component: ProjectComponent },
+  { path: 'projects/edit', component: ProjectComponent }
 ];
 
 @NgModule({

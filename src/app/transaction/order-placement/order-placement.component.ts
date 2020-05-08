@@ -53,6 +53,8 @@ export class OrderPlacementComponent implements OnInit {
   unitId : string;
   unitName : string;
 
+  orderId : string;
+
   statusValues: Dropdown[] = [
     {value: 'draft', viewValue: 'Draft'},
     {value: 'in_progress', viewValue: 'In Progress'},
@@ -117,8 +119,9 @@ export class OrderPlacementComponent implements OnInit {
           this.details = order.details;
           order.expectedDeliveryDate = this.convertToDate(order.expectedDeliveryDateString);
           order.actualDeliveryDate = this.convertToDate(order.actualDeliveryDateString);
-          this.filterCUpplierDateils(order.supplierId);
+          this.filterSupplierDateils(order.supplierId);
           this.opForm.setValue(order); 
+          this.orderId = order.orderId;
         })
       }
     });
@@ -195,7 +198,7 @@ export class OrderPlacementComponent implements OnInit {
   }
 
   getRawMaterials() {
-    this.rawMaterialService.findAll().subscribe(
+    this.rawMaterialService.findAllRawMaterials().subscribe(
       rawMaterials => {
         this.rawMaterials = rawMaterials;
       }
@@ -288,10 +291,10 @@ export class OrderPlacementComponent implements OnInit {
 
   populateSupplierDetails(event : MatSelectChange) {
     let val = event.value;
-    this.filterCUpplierDateils(val);
+    this.filterSupplierDateils(val);
   }
 
-  filterCUpplierDateils(clientId : String) {
+  filterSupplierDateils(clientId : String) {
     this.supplierDetails = this.suppliers.filter(s => s.clientId === clientId)[0].details; 
   }
 }

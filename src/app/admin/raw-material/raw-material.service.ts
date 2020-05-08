@@ -16,7 +16,15 @@ export class RawMaterialService {
     return this.http.post("admin/raw-material", rawMaterial);
    }
  
-   findAll() : Observable<RawMaterial[]> {
-     return this.http.get<RawMaterial[]>("admin/raw-materials");
-   }
+    findAll() : Observable<RawMaterial[]> {
+     return this.http.get<RawMaterial[]>("admin/materials");
+   } 
+
+   findAllProducts() : Observable<RawMaterial[]> {
+    return this.http.get<RawMaterial[]>("admin/products");
+  }
+
+  findAllRawMaterials() : Observable<RawMaterial[]> {
+    return this.http.get<RawMaterial[]>("admin/raw-materials");
+  }
 }
