@@ -17,6 +17,9 @@ import { RawMaterial } from 'src/app/admin/raw-material/raw-material';
 import { Client } from 'src/app/admin/client/client';
 import { Unit } from 'src/app/admin/unit/unit';
 import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
+import { isNumeric } from 'rxjs/util/isNumeric';
+
+declare const $: any;
 
 @Component({
   selector: 'app-project',
@@ -44,10 +47,21 @@ export class ProjectComponent implements OnInit {
   unitId : string;
   unitName : string;
 
+  projectId : string;
+  amendmentNo : number;
+  amendmentDate: Date;
+
+  headerAmount : string;
+  cgstAmount: string;
+  sgstAmount: string;
+  totalAmount : string;
+
+   detailAmount : string;
+
   statusValues: Dropdown[] = [
     {value: 'draft', viewValue: 'Draft'},
     {value: 'in_progress', viewValue: 'In Progress'},
-    {value: 'submit', viewValue: 'Submit'}
+    {value: 'complete', viewValue: 'Complete'}
   ];
   
   constructor(private projectService : ProjectService,
@@ -59,6 +73,11 @@ export class ProjectComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+
+    this.getCustomers();
+    this.getConsignees();
+    this.getRawMaterials();
+
     this.projectForm = new FormGroup({
       'projectId': new FormControl(''),
       'amendmentNo': new FormControl(''),
@@ -68,8 +87,11 @@ export class ProjectComponent implements OnInit {
       'customerName': new FormControl(''),
       'consigneeId': new FormControl(''),
       'consigneeName': new FormControl(''),
+      'projectStartDate': new FormControl(null),
+      'projectStartDateString': new FormControl(''),
       'purchaseOrderNo': new FormControl(''),
       'purchaseOrderDate': new FormControl(null),
+      'purchaseOrderDateString' : new FormControl(''),
       'workOrderReference' : new FormControl(''),
       'expectedDeliveryDate': new FormControl(null, Validators.required),
       'actualDeliveryDate': new FormControl(null),
@@ -82,7 +104,9 @@ export class ProjectComponent implements OnInit {
       'sgstAmount': new FormControl(0),
       'totalAmount': new FormControl(0),
       'isActive': new FormControl(''),
-      'details': new FormControl('')
+      'details': new FormControl(''),
+      'amendmentDateString': new FormControl('')
+      
     });
 
     this.projectDetailForm = new FormGroup({
@@ -123,7 +147,21 @@ export class ProjectComponent implements OnInit {
         this.project.isActive = true;
       }
       this.project.expectedDeliveryDateString = this.project.expectedDeliveryDate.toLocaleDateString();
-      this.project.actualDeliveryDateString = this.project.actualDeliveryDate.toLocaleDateString();
+      if(this.projectForm.value.actualDeliveryDate != null) {
+        this.project.actualDeliveryDateString = this.project.actualDeliveryDate.toLocaleDateString();
+      }
+      if(this.projectForm.value.purchaseOrderDate != null) {
+        this.project.purchaseOrderDateString = this.project.purchaseOrderDate.toLocaleDateString();
+      }
+      if(this.projectForm.value.projectStartDate != null) {
+        this.project.projectStartDateString = this.project.projectStartDate.toLocaleDateString();
+      }
+
+      if(this.projectForm.value.amendmentDate == null) {
+        this.project.amendmentDateString = (new Date()).toLocaleDateString();
+        this.project.amendmentNo = 0;
+      }
+
       this.projectService.save(this.project).subscribe(
         (response: ServerResponse) => {
           this.notificationService.openSnackBar(response.message, response.status);
@@ -155,16 +193,23 @@ export class ProjectComponent implements OnInit {
       console.log("last index >>" + index);
       if (index != -1) {
         this.details[index] = this.projectDetailForm.value;
-        this.notificationService.openSnackBar("Project details updated successfully", "success");
+        this.notificationService.openSnackBar("Project details updated successfully", "success"); 
       } else {
         this.details.push(this.projectDetailForm.value);
         this.notificationService.openSnackBar("Project details added successfully", "success");
       }
+      this.calculateTotalDetailAmount();
       this.projectDetailForm.reset();
       frame.hide();
     } else {
       this.notificationService.openSnackBar("Error occurred, please review and submit again", "danger");
     }
+  }
+
+  calculateTotalDetailAmount() {
+    let sum = this.details.map(d => d.amount).reduce((p, n) => Number.parseFloat(p.toString()) + Number.parseFloat(n.toString()), 0.0);
+    this.headerAmount = Number.parseFloat(sum.toString()).toFixed(2);
+    this.calculateFromGrid();
   }
 
   getRawMaterials() {
@@ -235,6 +280,7 @@ export class ProjectComponent implements OnInit {
       this.projectService.deleteDetail(projectDetail.projectId, projectDetail.amendmentNo, projectDetail.detailId)
       .subscribe((response: ServerResponse) => {
         this.details.splice(index, 1);
+        this.calculateTotalDetailAmount();
         this.notificationService.openSnackBar(response.message, response.status);
       }, (errorMsg: HttpErrorResponse) => {
         this.notificationService.openSnackBar(errorMsg.error.message, errorMsg.error.status);
@@ -244,6 +290,7 @@ export class ProjectComponent implements OnInit {
     } else {
       if (index !== -1) {
         this.details.splice(index, 1);
+        this.calculateTotalDetailAmount();
         this.notificationService.openSnackBar("Order details removed successfully", "success");
       }
     }
@@ -257,6 +304,54 @@ export class ProjectComponent implements OnInit {
       index = this.details.findIndex(detail => detail.rmId == projectDetail.rmId);
     }
     return index;
+  }
+
+  calculateHeader() {
+    let amount = this.projectForm.value.amount;
+    this.calculate(amount);
+
+  }
+
+  calculateFromGrid() {
+    let amount = this.headerAmount;
+    this.calculate(amount);
+
+  }
+  
+  calculate(amount : string) {
+    let otherCharges = this.projectForm.value.otherCharges;
+
+    let totalAmountWithOutGst: number = 0;
+    if(isNumeric(amount) ) {
+      totalAmountWithOutGst = totalAmountWithOutGst + Number.parseFloat(amount.toString());
+    }
+    if(isNumeric(otherCharges) ) {
+      totalAmountWithOutGst = totalAmountWithOutGst + Number.parseFloat(otherCharges.toString());
+    }
+
+    this.cgstAmount = ((totalAmountWithOutGst * 9) / 100).toFixed(2);
+    this.sgstAmount = ((totalAmountWithOutGst * 9) / 100).toFixed(2);
+
+    this.totalAmount = (totalAmountWithOutGst + Number.parseFloat(this.cgstAmount) + Number.parseFloat(this.sgstAmount)).toFixed(2);
+
+  }
+
+  calculateDetail() {
+    let quantity = this.projectDetailForm.value.quantity;
+    let rate = this.projectDetailForm.value.rate;
+
+    if(isNumeric(quantity) && isNumeric(rate) ) {
+      this.detailAmount = (Number.parseFloat(rate.toString()) * Number.parseFloat(quantity.toString())).toFixed(2);
+    }
+
+  }
+
+
+  isMobileMenu() {
+    if ($(window).width() > 991) {
+      return false;
+    }
+    return true;
   }
 
 }

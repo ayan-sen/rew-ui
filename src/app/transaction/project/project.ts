@@ -24,5 +24,9 @@ export class Project {
     isActive : boolean;
     expectedDeliveryDateString : string;
     actualDeliveryDateString : string;
+    purchaseOrderDateString : string;
+    amendmentDateString : string;
+    projectStartDate : Date;
+    projectStartDateString : string;
     details : ProjectDetails[] = [];
 }
