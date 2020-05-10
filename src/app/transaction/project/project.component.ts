@@ -76,7 +76,7 @@ export class ProjectComponent implements OnInit {
 
     this.getCustomers();
     this.getConsignees();
-    this.getRawMaterials();
+    this.findAllProducts();
 
     this.projectForm = new FormGroup({
       'projectId': new FormControl(''),
@@ -105,7 +105,8 @@ export class ProjectComponent implements OnInit {
       'totalAmount': new FormControl(0),
       'isActive': new FormControl(''),
       'details': new FormControl(''),
-      'amendmentDateString': new FormControl('')
+      'amendmentDateString': new FormControl(''),
+      'notes': new FormControl('') 
       
     });
 
@@ -120,6 +121,21 @@ export class ProjectComponent implements OnInit {
       'quantity': new FormControl(0, Validators.required),
       'rate': new FormControl(0),
       'amount': new FormControl(0)
+    });
+
+    this.route.queryParams.subscribe(param => {
+      if (Object.keys(param).length > 0) {
+        this.projectService.findById(param.id, param.amendmentNo).subscribe((project: Project) => {
+          this.details = project.details;
+          project.expectedDeliveryDate = this.convertToDate(project.expectedDeliveryDateString);
+          project.actualDeliveryDate = this.convertToDate(project.actualDeliveryDateString);
+          project.amendmentDate = this.convertToDate(project.amendmentDateString);
+          project.projectStartDate = this.convertToDate(project.projectStartDateString);
+          project.purchaseOrderDate = this.convertToDate(project.purchaseOrderDateString);
+          this.projectForm.setValue(project); 
+          this.projectId = project.projectId;
+        })
+      }
     });
   }
 
@@ -160,6 +176,8 @@ export class ProjectComponent implements OnInit {
       if(this.projectForm.value.amendmentDate == null) {
         this.project.amendmentDateString = (new Date()).toLocaleDateString();
         this.project.amendmentNo = 0;
+      } else {
+        this.project.amendmentDateString = this.project.amendmentDate.toLocaleDateString();
       }
 
       this.projectService.save(this.project).subscribe(
@@ -212,8 +230,8 @@ export class ProjectComponent implements OnInit {
     this.calculateFromGrid();
   }
 
-  getRawMaterials() {
-    this.rawMaterialService.findAllRawMaterials().subscribe(
+  findAllProducts() {
+    this.rawMaterialService.findAllProducts().subscribe(
       rawMaterials => {
         this.rawMaterials = rawMaterials;
       }

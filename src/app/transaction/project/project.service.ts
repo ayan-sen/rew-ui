@@ -19,14 +19,17 @@ export class ProjectService {
     return this.http.post("transaction/project", project);
    }
  
-   findById(projectId : string) : Observable<Project> {   
-    return this.http.get<Project>("transaction/projects/find" , {"params": {"id": projectId}} );
+   findById(projectId : string, amemdmentNo : number) : Observable<Project> {   
+    let params = new HttpParams();
+    params = params.append('id', projectId);
+    params = params.append('amendmentNo', amemdmentNo.toString());
+    return this.http.get<Project>("transaction/projects/find" , {"params": params} );
    }
 
    delete(projectId : string, amemdmentNo : number) {
     let params = new HttpParams();
     params = params.append('id', projectId);
-    params = params.append('amemdmentNo', amemdmentNo.toString());
+    params = params.append('amendmentNo', amemdmentNo.toString());
     return this.http.delete("/transaction/projects/delete" ,  {"params": params}  );
    }
 

@@ -34,7 +34,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angular-bootstrap-md';
 import { ProjectComponent } from './transaction/project/project.component';
-import { OrderPlacementShowComponent } from './transaction/order-placement/order-placement-show/order-placement-show.component'
+import { OrderPlacementShowComponent } from './transaction/order-placement/order-placement-show/order-placement-show.component';
+import { ProjectShowComponent } from './transaction/project/project-show/project-show.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +53,7 @@ import { OrderPlacementShowComponent } from './transaction/order-placement/order
     OrderPlacementComponent,
     ProjectComponent,
     OrderPlacementShowComponent,
+    ProjectShowComponent,
   ],
   imports: [
     BrowserModule,

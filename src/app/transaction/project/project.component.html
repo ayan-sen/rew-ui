@@ -192,7 +192,7 @@
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead class="text-primary">
-                                    <th>Raw Material</th>
+                                    <th>Product</th>
                                     <th>Quantity</th>
                                     <th>Unit</th>
                                     <th *ngIf="!isMobileMenu()">Rate</th>
@@ -249,7 +249,7 @@
                                             <input matInput placeholder="amendmentNo" formControlName="amendmentNo">
                                     </mat-form-field>
                                     <mat-form-field class="example-full-width">
-                                        <mat-select placeholder="Raw Material" formControlName="rmId">
+                                        <mat-select placeholder="Product" formControlName="rmId">
                                             <mat-option *ngFor="let value of rawMaterials" [value]="value.code"
                                                 (onSelectionChange)="populateUnit(value)">
                                                 {{value.name}}
