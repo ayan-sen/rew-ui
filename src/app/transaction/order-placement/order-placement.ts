@@ -17,4 +17,8 @@ export class OrderPlacement {
     siteId : string;
     details : OrderPlacementDetails[] = [];
     isActive : boolean;
+    orderDate : Date;
+    orderDateString : string;
+    freightChargeType : string;
+    paymentTerms : string;
 }

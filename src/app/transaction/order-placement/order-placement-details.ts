@@ -6,4 +6,6 @@ export class OrderPlacementDetails {
     quantity : string;
     rmName : string;
     unitName : string;
+    rate : number;
+    amount : number;
 }

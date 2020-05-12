@@ -22,6 +22,7 @@ import { ActivatedRoute } from '@angular/router';
 import { OrderPlacementShowComponent } from './order-placement-show/order-placement-show.component';
 import { ClientDetails } from 'src/app/admin/client/client-detail';
 import { MatSelectChange } from '@angular/material/select';
+import { isNumeric } from 'rxjs/util/isNumeric';
 
 @Component({
   selector: 'app-order-placement',
@@ -55,6 +56,8 @@ export class OrderPlacementComponent implements OnInit {
 
   orderId : string;
 
+  detailAmount : string;
+
   statusValues: Dropdown[] = [
     {value: 'draft', viewValue: 'Draft'},
     {value: 'in_progress', viewValue: 'In Progress'},
@@ -64,6 +67,11 @@ export class OrderPlacementComponent implements OnInit {
   workUnits: Dropdown[] = [
     {value: 'DUMDUM', viewValue: 'Dum dum unit'},
     {value: 'SINGUR', viewValue: 'Singur Unit'}
+  ];
+
+  freightCharges: Dropdown[] = [
+    {value: 'Inclusive', viewValue: 'Inclusive'},
+    {value: 'Exclisive', viewValue: 'Exclisive'}
   ];
 
   constructor(private orderPlacementService : OrderPlacementService,
@@ -91,7 +99,7 @@ export class OrderPlacementComponent implements OnInit {
       'expectedDeliveryDate': new FormControl(null, Validators.required),
       'actualDeliveryDate': new FormControl(null),
       'status': new FormControl('', Validators.required),
-      'notes': new FormControl('', Validators.required),
+      'notes': new FormControl(''),
       'projectId' : new FormControl('', Validators.required),
       'description' : new FormControl(''),
       'identifier': new FormControl(''),
@@ -100,7 +108,11 @@ export class OrderPlacementComponent implements OnInit {
       'expectedDeliveryDateString': new FormControl(''),
       'actualDeliveryDateString': new FormControl(''),
       'isActive': new FormControl(''),
-      'supplierName': new FormControl('')
+      'supplierName': new FormControl(''),
+      'orderDate': new FormControl(new Date(), Validators.required),
+      'orderDateString': new FormControl(''),
+      'freightChargeType': new FormControl(''),
+      'paymentTerms': new FormControl('Against Delivery else @ 18% interest from the date of delivery', Validators.required)
     });
 
     this.opDetailForm = new FormGroup({
@@ -110,7 +122,9 @@ export class OrderPlacementComponent implements OnInit {
       'rmName': new FormControl(''),
       'unitId': new FormControl(''),
       'unitName': new FormControl('', Validators.required),
-      'quantity': new FormControl(0, Validators.required) 
+      'quantity': new FormControl(0, Validators.required),
+      'rate': new FormControl(0, Validators.required) ,
+      'amount': new FormControl(0, Validators.required) 
     });
 
     this.route.queryParams.subscribe(param => {
@@ -119,6 +133,7 @@ export class OrderPlacementComponent implements OnInit {
           this.details = order.details;
           order.expectedDeliveryDate = this.convertToDate(order.expectedDeliveryDateString);
           order.actualDeliveryDate = this.convertToDate(order.actualDeliveryDateString);
+          order.orderDate = this.convertToDate(order.orderDateString);
           this.filterSupplierDateils(order.supplierId);
           this.opForm.setValue(order); 
           this.orderId = order.orderId;
@@ -153,7 +168,8 @@ export class OrderPlacementComponent implements OnInit {
         this.orderPlacement.isActive = true;
       }
       this.orderPlacement.expectedDeliveryDateString = this.orderPlacement.expectedDeliveryDate.toLocaleDateString();
-      this.orderPlacement.actualDeliveryDateString = this.orderPlacement.actualDeliveryDate.toLocaleDateString();
+     // this.orderPlacement.actualDeliveryDateString = this.orderPlacement.actualDeliveryDate.toLocaleDateString();
+      this.orderPlacement.orderDateString = this.orderPlacement.orderDate.toLocaleDateString();
       this.orderPlacementService.save(this.orderPlacement).subscribe(
         (response: ServerResponse) => {
           this.notificationService.openSnackBar(response.message, response.status);
@@ -168,8 +184,9 @@ export class OrderPlacementComponent implements OnInit {
           console.log(errorMsg.message);
         }
       );
+    } else {
+      return;
     }
-    console.log(this.opForm.value);
   }
 
   onDetailSubmit(frame : ModalDirective) {
@@ -296,5 +313,15 @@ export class OrderPlacementComponent implements OnInit {
 
   filterSupplierDateils(clientId : String) {
     this.supplierDetails = this.suppliers.filter(s => s.clientId === clientId)[0].details; 
+  }
+
+  calculateDetail() {
+    let quantity = this.opDetailForm.value.quantity;
+    let rate = this.opDetailForm.value.rate;
+
+    if(isNumeric(quantity) && isNumeric(rate) ) {
+      this.detailAmount = (Number.parseFloat(rate.toString()) * Number.parseFloat(quantity.toString())).toFixed(2);
+    }
+
   }
 }

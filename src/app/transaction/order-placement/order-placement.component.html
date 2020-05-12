@@ -27,6 +27,7 @@
                         {{value.projectId}} | {{value.description}}
                       </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="hasError('projectId', 'required')">Project is required</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
@@ -36,6 +37,7 @@
                         {{value.clientName}}
                       </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="hasError('supplierId', 'required')">Supplier is required</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-md-3">
@@ -58,15 +60,25 @@
                 </div>
                 <div class="col-md-2">
                   <mat-form-field>
-                    <mat-label>Expected Delivary Date</mat-label>
-                    <input matInput [matDatepicker]="picker1" formControlName="expectedDeliveryDate">
-                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-label>Order Date</mat-label>
+                    <input matInput [matDatepicker]="picker3" formControlName="orderDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                    <mat-error *ngIf="hasError('expectedDeliveryDate', 'required')">Order date is required</mat-error>
                   </mat-form-field>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
+                  <mat-form-field>
+                    <mat-label>Expected Delivary Date</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="expectedDeliveryDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error *ngIf="hasError('expectedDeliveryDate', 'required')">Expected delivary date is required</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Status" formControlName="status">
                       <mat-option *ngFor="let value of statusValues" [value]="value.value">
@@ -75,15 +87,24 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div class="col-md-3">
-                  <mat-form-field>
-                    <mat-label>Actual Delivary Date</mat-label>
-                    <input matInput [matDatepicker]="picker2" formControlName="actualDeliveryDate">
-                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                    <mat-datepicker #picker2></mat-datepicker>
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Freight Charges" formControlName="freightChargeType">
+                      <mat-option *ngFor="let value of freightCharges" [value]="value.value">
+                        {{value.viewValue}}
+                      </mat-option>
+                    </mat-select>
                   </mat-form-field>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6"> 
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Payment Terms" formControlName="paymentTerms">
+                    <mat-error *ngIf="hasError('paymentTerms', 'required')">Payment terms is required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Notes" formControlName="notes">
                   </mat-form-field>
@@ -153,7 +174,7 @@
     <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
       aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width:100%">
+        <div class="modal-content" style="width:150%">
           <div class="modal-header text-center">
             <h4 class="modal-title w-100 font-weight-bold">Order Placement Details</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close(frame)">
@@ -178,7 +199,7 @@
                       <mat-error *ngIf="hasDetailError('rmId', 'required')">Raw material is required</mat-error>
                     </mat-form-field>
                 </div> 
-                <div class="col-md-4">
+                <div class="col-md-2">
                   <mat-form-field class="invisible example-full-width">
                     <input matInput placeholder="Unit" formControlName="unitId" [(ngModel)]='unitId' >
                 </mat-form-field>
@@ -187,12 +208,27 @@
                     <mat-error *ngIf="hasDetailError('unitName', 'required')">Unit is required</mat-error>
                   </mat-form-field>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Quantity" formControlName="quantity">
+                    <input matInput placeholder="Quantity" formControlName="quantity"  (change)="calculateDetail()">
                     <mat-error *ngIf="hasDetailError('quantity', 'required')">Quantity is required</mat-error>
                   </mat-form-field>
                 </div>
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Rate" formControlName="rate" style="text-align: right;"  (change)="calculateDetail()">
+                      <mat-error *ngIf="hasDetailError('rate', 'required')">Rate is required
+                      </mat-error>
+                  </mat-form-field>
+              </div>
+
+              <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Amount" formControlName="amount" [readonly]="true" [(ngModel)]="detailAmount" style="text-align: right;">
+                      <mat-error *ngIf="hasDetailError('amount', 'required')">Amount is required
+                      </mat-error>
+                  </mat-form-field>
+              </div>
               </div>
               <div class="modal-footer d-flex justify-content-right">
                 <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="onDetailSubmit(frame)">Save</button>

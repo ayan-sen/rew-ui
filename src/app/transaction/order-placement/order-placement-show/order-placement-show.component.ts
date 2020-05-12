@@ -63,4 +63,17 @@ export class OrderPlacementShowComponent implements OnInit {
     }
     return true;
   }
+
+  downloadInvoice(orderId : string) {
+    this.orderPlacementService.downloadInvoice(orderId);
+  }
+
+  downloadFile(data: Blob) {
+   // const blob = new Blob([data], { type: 'application/pdf' });
+    const url= window.URL.createObjectURL(data);
+    let pwa = window.open(url);
+        if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+            alert( 'Please disable your Pop-up blocker and try again.');
+        }
+  }
 }
