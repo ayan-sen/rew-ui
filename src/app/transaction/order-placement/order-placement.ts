@@ -8,8 +8,6 @@ export class OrderPlacement {
     identifier : string;
     expectedDeliveryDate : Date;
     expectedDeliveryDateString : string;
-    actualDeliveryDate : Date;
-    actualDeliveryDateString : string;
     status : string;
     notes : string;
     projectId : string;

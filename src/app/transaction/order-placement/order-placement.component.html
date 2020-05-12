@@ -138,6 +138,8 @@
                   <th>Raw Material</th>
                   <th>Quantity</th>
                   <th>Unit</th>
+                  <th>Rate</th>
+                  <th>Amount</th>
                   <th>Action</th>
                 </thead>
                 <tbody *ngFor="let dtl of details">
@@ -145,6 +147,8 @@
                     <td>{{dtl.rmId}}</td>
                     <td>{{dtl.quantity}}</td>
                     <td>{{dtl.unitId}}</td>
+                    <td>{{dtl.rate}}</td>
+                    <td>{{dtl.amount}}</td>
                     <td>
                       <a (click)="editDetail(dtl, frame)" style="cursor: pointer;"
                           class="edit" title="" data-toggle="tooltip"

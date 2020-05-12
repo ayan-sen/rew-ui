@@ -97,7 +97,6 @@ export class OrderPlacementComponent implements OnInit {
       'supplierId': new FormControl(''),
       'supplierDetailsId': new FormControl(''),
       'expectedDeliveryDate': new FormControl(null, Validators.required),
-      'actualDeliveryDate': new FormControl(null),
       'status': new FormControl('', Validators.required),
       'notes': new FormControl(''),
       'projectId' : new FormControl('', Validators.required),
@@ -106,7 +105,6 @@ export class OrderPlacementComponent implements OnInit {
       'siteId': new FormControl('', Validators.required),
       'details': new FormControl(''),
       'expectedDeliveryDateString': new FormControl(''),
-      'actualDeliveryDateString': new FormControl(''),
       'isActive': new FormControl(''),
       'supplierName': new FormControl(''),
       'orderDate': new FormControl(new Date(), Validators.required),
@@ -132,7 +130,6 @@ export class OrderPlacementComponent implements OnInit {
         this.orderPlacementService.findById(param.id).subscribe((order: OrderPlacement) => {
           this.details = order.details;
           order.expectedDeliveryDate = this.convertToDate(order.expectedDeliveryDateString);
-          order.actualDeliveryDate = this.convertToDate(order.actualDeliveryDateString);
           order.orderDate = this.convertToDate(order.orderDateString);
           this.filterSupplierDateils(order.supplierId);
           this.opForm.setValue(order); 
@@ -168,7 +165,6 @@ export class OrderPlacementComponent implements OnInit {
         this.orderPlacement.isActive = true;
       }
       this.orderPlacement.expectedDeliveryDateString = this.orderPlacement.expectedDeliveryDate.toLocaleDateString();
-     // this.orderPlacement.actualDeliveryDateString = this.orderPlacement.actualDeliveryDate.toLocaleDateString();
       this.orderPlacement.orderDateString = this.orderPlacement.orderDate.toLocaleDateString();
       this.orderPlacementService.save(this.orderPlacement).subscribe(
         (response: ServerResponse) => {
