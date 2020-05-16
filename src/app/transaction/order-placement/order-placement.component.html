@@ -13,7 +13,7 @@
             </div>
           </div>
           <div class="card-body">
-            <form [formGroup]="opForm">
+            <form [formGroup]="opForm" (ngSubmit)="onSubmit()" #headerForm="ngForm">
               <div class="row">
                 <div class="col-md-3">
                   <mat-form-field class="invisible example-full-width">
@@ -170,7 +170,7 @@
       </div>
     </div>
     <!-- Details Grid : End -->
-    <button mat-raised-button type="submit" (click)="onSubmit()" class="btn btn-success pull-right">Save</button>
+    <button mat-raised-button type="submit" [disabled]="!headerForm.form.valid" (click)="headerForm.ngSubmit.emit()" class="btn btn-success pull-right">Save</button>
     <div class="clearfix"></div>
     <!-- MODAL -->
 
