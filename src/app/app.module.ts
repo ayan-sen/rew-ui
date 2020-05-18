@@ -35,7 +35,8 @@ import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angular-bootstrap-md';
 import { ProjectComponent } from './transaction/project/project.component';
 import { OrderPlacementShowComponent } from './transaction/order-placement/order-placement-show/order-placement-show.component';
-import { ProjectShowComponent } from './transaction/project/project-show/project-show.component'
+import { ProjectShowComponent } from './transaction/project/project-show/project-show.component';
+import { OrderDeliveryComponent } from './transaction/order-delivery/order-delivery.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +55,7 @@ import { ProjectShowComponent } from './transaction/project/project-show/project
     ProjectComponent,
     OrderPlacementShowComponent,
     ProjectShowComponent,
+    OrderDeliveryComponent,
   ],
   imports: [
     BrowserModule,

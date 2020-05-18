@@ -4,7 +4,7 @@ export class OrderPlacement {
     orderId : string;
     supplierId : string;
     supplierName : string;
-    supplierDetailsId : string;
+    supplierDetailsId : number;
     identifier : string;
     expectedDeliveryDate : Date;
     expectedDeliveryDateString : string;

@@ -302,7 +302,7 @@ export class OrderPlacementComponent implements OnInit {
     return index;
   }
 
-  populateSupplierDetails(event : MatSelectChange) {
+  populateSupplierDetails(event : MatSelectChange) { 
     let val = event.value;
     this.filterSupplierDateils(val);
   }

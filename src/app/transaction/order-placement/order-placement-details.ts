@@ -3,7 +3,7 @@ export class OrderPlacementDetails {
     orderDetailsId : number;
     rmId : string;
     unitId : string;
-    quantity : string;
+    quantity : number;
     rmName : string;
     unitName : string;
     rate : number;

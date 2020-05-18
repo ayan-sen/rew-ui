@@ -12,26 +12,26 @@ export class OrderPlacementService {
 
   save(order : OrderPlacement) {
     return this.http.post("transaction/order", order);
-   }
+  }
  
-   findAll() : Observable<OrderPlacement[]> {
+  findAll() : Observable<OrderPlacement[]> {
      return this.http.get<OrderPlacement[]>("transaction/orders");
-   }
+  }
 
-   findById(orderId : string) : Observable<OrderPlacement> {   
+  findById(orderId : string) : Observable<OrderPlacement> {   
     return this.http.get<OrderPlacement>("transaction/orders/find" , {"params": {"id": orderId}} );
-   }
+  }
 
-   delete(orderId : string) {
+  delete(orderId : string) {
     return this.http.delete("/transaction/orders/delete" , {"params": {"id": orderId}}  );
-   }
+  }
 
-   deleteDetail(orderId : string, detailId : number) {
+  deleteDetail(orderId : string, detailId : number) {
     let params = new HttpParams();
     params = params.append('id', orderId);
     params = params.append('detailId', detailId.toString());
     return this.http.delete("/transaction/orders/detail/delete", {"params": params});
-   }
+  }
 
    downloadInvoice(orderId : string) {   
     this.http.get("transaction/orders/invoice",{responseType: 'blob'  as 'json', "params": {"id": orderId}} )
