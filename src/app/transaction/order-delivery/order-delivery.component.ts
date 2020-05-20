@@ -34,7 +34,7 @@ export class OrderDeliveryComponent implements OnInit {
   deliveryDetailsForm: FormGroup;
 
   orderDelivery : OrderDelivery;
-
+ 
   details : OrderDeliveryDetails[] = [];
 
   orders : OrderPlacement [] =[];
@@ -46,6 +46,11 @@ export class OrderDeliveryComponent implements OnInit {
   
   deliveryId : string;
   detailAmount : string;
+
+  headerAmount : string;
+  cgstAmount: string;
+  sgstAmount: string;
+  totalAmount : string;
 
   od : OrderDelivery = new OrderDelivery();
 
@@ -121,7 +126,9 @@ export class OrderDeliveryComponent implements OnInit {
       if(this.deliveryForm.value.isActive == null || this.deliveryForm.value.isActive == '') {
         this.orderDelivery.isActive = true;
       }
-      this.orderDelivery.billDateString = this.orderDelivery.billDate.toLocaleDateString();
+      if(this.deliveryForm.value.billDate != null) {
+        this.orderDelivery.billDateString = this.orderDelivery.billDate.toLocaleDateString();
+      }
       this.orderDeliveryService.save(this.orderDelivery).subscribe(
         (response: ServerResponse) => {
           this.notificationService.openSnackBar(response.message, response.status);
@@ -160,6 +167,8 @@ export class OrderDeliveryComponent implements OnInit {
         this.notificationService.openSnackBar("Order details added successfully", "success");
       }
       this.deliveryDetailsForm.reset();
+      this.headerAmount = this.calculateTotalDetailAmount();
+      this.calculate(this.headerAmount);
       frame.hide();
     } else {
       this.notificationService.openSnackBar("Error occurred, please review and submit again", "danger");
@@ -171,7 +180,7 @@ export class OrderDeliveryComponent implements OnInit {
   }
 
   editDetail(orderDeliveryDetails: OrderDeliveryDetails, frame : ModalDirective) {
-    this.deliveryDetailsForm.setValue(orderDeliveryDetails);
+    this.deliveryDetailsForm.patchValue(orderDeliveryDetails);
     frame.show();
   }
 
@@ -245,14 +254,14 @@ export class OrderDeliveryComponent implements OnInit {
   }
 
   populateOrderDelivery(op : OrderPlacement) {
+
+    this.details = [];
     this.od.supplierId = op.supplierId;
     this.od.supplierName = op.supplierName;
     this.od.supplierDetailsId = op.supplierDetailsId;
     this.od.supplierIdentifier = op.identifier;
     this.od.siteId = op.siteId;
-
-    let details : OrderDeliveryDetails[] = [];
-
+   
     let opDetails : OrderPlacementDetails [] = op.details;
     opDetails.forEach(d => {
       let dtl : OrderDeliveryDetails = new OrderDeliveryDetails();
@@ -260,11 +269,18 @@ export class OrderDeliveryComponent implements OnInit {
       dtl.rmName = d.rmName;
       dtl.unitId = d.unitId;
       dtl.unitName = d.unitName;
-
-      details.push(dtl);
+      dtl.quantity = d.quantity;
+      dtl.amount = d.amount;
+      dtl.rate = d.rate;
+      this.details.push(dtl);
     });
+    this.headerAmount = this.calculateTotalDetailAmount();
+    this.calculate(this.headerAmount);
+  }
 
-    this.od.details.push.apply(details);
+  calculateTotalDetailAmount() : string {
+    let sum = this.details.map(d => d.amount).reduce((p, n) => Number.parseFloat(p.toString()) + Number.parseFloat(n.toString()), 0.0);
+    return Number.parseFloat(sum.toString()).toFixed(2);
   }
 
   getConsignees() {
@@ -282,5 +298,29 @@ export class OrderDeliveryComponent implements OnInit {
 
   filterConsigneeDateils(clientId : String) {
     this.consigneeDetails = this.consignees.filter(s => s.clientId === clientId)[0].details; 
+  }
+
+  calculateHeader() {
+    let amount = this.deliveryForm.value.amount;
+    this.calculate(amount);
+
+  }
+
+  calculate(amount : string) {
+    let freightCharges = this.deliveryForm.value.freightCharges;
+
+    let totalAmountWithOutGst: number = 0;
+    if(isNumeric(amount) ) {
+      totalAmountWithOutGst = totalAmountWithOutGst + Number.parseFloat(amount.toString());
+    }
+    if(isNumeric(freightCharges) ) {
+      totalAmountWithOutGst = totalAmountWithOutGst + Number.parseFloat(freightCharges.toString());
+    }
+
+    this.cgstAmount = ((totalAmountWithOutGst * 9) / 100).toFixed(2);
+    this.sgstAmount = ((totalAmountWithOutGst * 9) / 100).toFixed(2);
+
+    this.totalAmount = (totalAmountWithOutGst + Number.parseFloat(this.cgstAmount) + Number.parseFloat(this.sgstAmount)).toFixed(2);
+
   }
 }

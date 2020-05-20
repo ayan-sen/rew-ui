@@ -36,7 +36,9 @@ import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angula
 import { ProjectComponent } from './transaction/project/project.component';
 import { OrderPlacementShowComponent } from './transaction/order-placement/order-placement-show/order-placement-show.component';
 import { ProjectShowComponent } from './transaction/project/project-show/project-show.component';
-import { OrderDeliveryComponent } from './transaction/order-delivery/order-delivery.component'
+import { OrderDeliveryComponent } from './transaction/order-delivery/order-delivery.component';
+import { ChartistModule } from 'ng-chartist';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +83,8 @@ import { OrderDeliveryComponent } from './transaction/order-delivery/order-deliv
     PopoverModule,
     ButtonsModule,
     MatNativeDateModule,
-    MatRippleModule
+    MatRippleModule,
+    ChartistModule 
   ],
   providers: [
     { provide: "BASE_API_URL", useValue: environment.baseUrl },

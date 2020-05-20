@@ -125,10 +125,11 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <mat-form-field class="example-full-width">
-                                            <input matInput placeholder="Amount" formControlName="amount" [(ngModel)]="headerAmount" [readonly]="true"
-                                                style="text-align: right;" (change)="calculateHeader()">
+                                            <input matInput placeholder="Amount" formControlName="amount"
+                                                [(ngModel)]="headerAmount" [readonly]="true" style="text-align: right;"
+                                                (change)="calculateHeader()">
                                             <mat-error *ngIf="hasError('amount', 'required')">Amount is required
-                                            </mat-error> 
+                                            </mat-error>
                                         </mat-form-field>
                                     </div>
 
@@ -206,17 +207,16 @@
                                         <td>{{dtl.unitId}}</td>
                                         <td *ngIf="!isMobileMenu()">{{dtl.rate}}</td>
                                         <td *ngIf="!isMobileMenu()">{{dtl.amount}}</td>
-                                            <td>
-                                                <a (click)="editDetail(dtl, frame)" style="cursor: pointer;"
-                                                    class="edit" title="" data-toggle="tooltip"
-                                                    data-original-title="Edit">
-                                                    <mat-icon class="routeIcon">edit</mat-icon>
-                                                </a>
-                                                <a (click)="openDialog(dtl)" style="cursor: pointer;" class="delete"
-                                                    title="" data-toggle="tooltip" data-original-title="Delete">
-                                                    <mat-icon class="routeIcon">delete</mat-icon>
-                                                </a>
-                                            </td>
+                                        <td>
+                                            <a (click)="editDetail(dtl, frame)" style="cursor: pointer;" class="edit"
+                                                title="" data-toggle="tooltip" data-original-title="Edit">
+                                                <mat-icon class="routeIcon">edit</mat-icon>
+                                            </a>
+                                            <a (click)="openDialog(dtl)" style="cursor: pointer;" class="delete"
+                                                title="" data-toggle="tooltip" data-original-title="Delete">
+                                                <mat-icon class="routeIcon">delete</mat-icon>
+                                            </a>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -246,7 +246,7 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="invisible example-full-width">
                                         <input matInput placeholder="projectId" formControlName="projectId">
-                                            <input matInput placeholder="amendmentNo" formControlName="amendmentNo">
+                                        <input matInput placeholder="amendmentNo" formControlName="amendmentNo">
                                     </mat-form-field>
                                     <mat-form-field class="example-full-width">
                                         <mat-select placeholder="Product" formControlName="rmId">
@@ -273,14 +273,16 @@
                                 </div>
                                 <div class="col-md-2">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Quantity" formControlName="quantity" style="text-align: right;" (change)="calculateDetail()">
+                                        <input matInput placeholder="Quantity" formControlName="quantity"
+                                            style="text-align: right;" (change)="calculateDetail()">
                                         <mat-error *ngIf="hasDetailError('quantity', 'required')">Quantity is required
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-2">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Rate" formControlName="rate" style="text-align: right;" (change)="calculateDetail()">
+                                        <input matInput placeholder="Rate" formControlName="rate"
+                                            style="text-align: right;" (change)="calculateDetail()">
                                         <mat-error *ngIf="hasDetailError('rate', 'required')">Rate is required
                                         </mat-error>
                                     </mat-form-field>
@@ -288,7 +290,8 @@
 
                                 <div class="col-md-2">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Amount" formControlName="amount" [(ngModel)]="detailAmount" [readonly]="true" style="text-align: right;">
+                                        <input matInput placeholder="Amount" formControlName="amount"
+                                            [(ngModel)]="detailAmount" [readonly]="true" style="text-align: right;">
                                         <mat-error *ngIf="hasDetailError('amount', 'required')">Amount is required
                                         </mat-error>
                                     </mat-form-field>
@@ -296,7 +299,7 @@
                             </div>
                             <div class="modal-footer d-flex justify-content-right">
                                 <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect
-                                    (click)="onDetailSubmit(frame)">Save</button> 
+                                    (click)="onDetailSubmit(frame)">Save</button>
                             </div>
                         </form>
                     </div>
