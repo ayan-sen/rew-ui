@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { OrderDelivery } from './order-delivery';
 import { OrderDeliveryDetails } from './order-delivery-details';
 import { Dropdown } from 'src/app/components/common-service/common-model/dropdown';
@@ -21,6 +21,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { OrderPlacementDetails } from '../order-placement/order-placement-details';
 import { Client } from 'src/app/admin/client/client';
 import { ClientDetails } from 'src/app/admin/client/client-detail';
+import { lessThanValueValidator } from 'src/app/components/common-commponents/validators/number-compare';
 
 @Component({
   selector: 'app-order-delivery',
@@ -65,7 +66,8 @@ export class OrderDeliveryComponent implements OnInit {
               private clientService : ClientService,
               private unitService : UnitService,
               public dialog: MatDialog,
-              private route: ActivatedRoute
+              private route: ActivatedRoute,
+              private fb: FormBuilder
     ) { }
 
   ngOnInit(): void {
@@ -98,17 +100,20 @@ export class OrderDeliveryComponent implements OnInit {
       'details': new FormControl('')
     });
 
-    this.deliveryDetailsForm = new FormGroup({
+    this.deliveryDetailsForm = this.fb.group({
       'deliveryId': new FormControl(''),
       'detailId': new FormControl(''),
       'rmId': new FormControl('', Validators.required),
       'rmName': new FormControl(''),
       'unitId': new FormControl(''),
       'unitName': new FormControl('', Validators.required),
-      'quantity': new FormControl(0, Validators.required),
+      'quantity': new FormControl(0, [Validators.required]),
       'rate': new FormControl(0),
-      'amount': new FormControl(0)
-    });
+      'amount': new FormControl(0),
+      'remainingQuantity': new FormControl(0),
+    },
+    {validator : lessThanValueValidator('quantity', 'remainingQuantity')}
+    );
   }
 
   public hasError = (controlName: string, errorName: string) =>{
@@ -269,7 +274,8 @@ export class OrderDeliveryComponent implements OnInit {
       dtl.rmName = d.rmName;
       dtl.unitId = d.unitId;
       dtl.unitName = d.unitName;
-      dtl.quantity = d.quantity;
+      dtl.quantity = d.remainingQuantity;
+      dtl.remainingQuantity = d.remainingQuantity;
       dtl.amount = d.amount;
       dtl.rate = d.rate;
       this.details.push(dtl);

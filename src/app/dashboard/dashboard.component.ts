@@ -1,53 +1,63 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as Chartist from 'chartist';
 import * as tooltip from 'chartist-plugin-tooltips';
+import { InventoryService } from '../transaction/inventory.service';
+import { InventoryChart } from './inventory-chart';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() {
+  chartData: InventoryChart;
+  constructor(private inventoryService: InventoryService) {
     var toltip = tooltip;
-   }
+  }
 
   ngOnInit(): void {
 
-    var datawebsiteViewsChart = {
-      labels: ['J', 'F', 'M', 'A'],
-      series: [
-        [542, 443, 320, 780],
-        [326, 434, 568, 610]
-      ]
+    this.inventoryService.getInventoryStatus().subscribe(inv => {
+      this.chartData = inv;
 
-    };
-    var optionswebsiteViewsChart = {
-      axisX: {
-        showGrid: false
-      },
-      low: 0,
-      high: 1000,
-      chartPadding: { top: 0, right: 5, bottom: 0, left: 0 },
-      plugins: [
-        Chartist.plugins.tooltip()
-      ]
-    };
-    var responsiveOptions: any[] = [
-      ['screen and (max-width: 800px)', {
-        seriesBarDistance: 5, 
+      var datawebsiteViewsChart = {
+        labels: this.chartData.labels,
+        series: [
+          this.chartData.dumdum,
+          this.chartData.singur
+        ]
+
+      };
+      var optionswebsiteViewsChart = {
         axisX: {
-          labelInterpolationFnc: function (value) {
-            return value[0];
+          showGrid: false,
+        },
+        axisY: {
+          offset: 50
+        },
+        seriesBarDistance: 15,
+        chartPadding: { top: 0, right: 5, bottom: 0, left: 0 },
+        plugins: [
+          Chartist.plugins.tooltip()
+        ]
+      };
+      var responsiveOptions: any[] = [
+        ['screen and (max-width: 1000px)', {
+          seriesBarDistance: 5,
+          axisX: {
+            labelInterpolationFnc: function (value) {
+              return value;
+            }
           }
-        }
-      }]
-    ];
-    var websiteViewsChart = new Chartist.Bar('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+        }]
+      ];
+      var websiteViewsChart = new Chartist.Bar('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
 
-    //start animation for the Emails Subscription Chart
-    this.startAnimationForBarChart(websiteViewsChart);
+      this.startAnimationForBarChart(websiteViewsChart);
+
+    });
   }
 
   startAnimationForBarChart(chart) {

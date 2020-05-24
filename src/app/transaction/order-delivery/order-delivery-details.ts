@@ -8,5 +8,6 @@ export class OrderDeliveryDetails {
     amount : number;
     rmName : string;
     unitName : string;
+    remainingQuantity : number;
 }
 

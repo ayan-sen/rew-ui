@@ -8,4 +8,5 @@ export class OrderPlacementDetails {
     unitName : string;
     rate : number;
     amount : number;
+    remainingQuantity? : number;
 }

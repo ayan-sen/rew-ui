@@ -22,7 +22,7 @@
                     <input matInput placeholder="isActive" formControlName="isActive">
                     <input matInput placeholder="supplierId" formControlName="supplierId" [(ngModel)]='od.supplierId'>
                     <input matInput placeholder="supplierDetailsId" formControlName="supplierDetailsId" [(ngModel)]='od.supplierDetailsId'>
-                    <input matInput placeholder="siteId" formControlName="supplierDetailsId" [(ngModel)]='od.siteId'>
+                    <input matInput placeholder="siteId" formControlName="siteId" [(ngModel)]='od.siteId'>
                   </mat-form-field>
 
                   <mat-form-field class="example-full-width">
@@ -208,6 +208,7 @@
                   <mat-form-field class="invisible example-full-width">
                     <input matInput placeholder="deliveryId" formControlName="deliveryId">
                     <input matInput placeholder="rmId" formControlName="rmId" >
+                    <input matInput placeholder="remainingQuantity" formControlName="remainingQuantity" >
                   </mat-form-field>
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Raw Material" formControlName="rmName" [readonly]="true">
@@ -227,7 +228,9 @@
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Quantity" formControlName="quantity" style="text-align: right;"
                       (change)="calculateDetail()">
-                    <mat-error *ngIf="hasDetailError('quantity', 'required')">Quantity is required
+                    <mat-error *ngIf="hasDetailError('quantity', 'required')">Quantity is required 
+                    </mat-error>
+                    <mat-error *ngIf="hasDetailError('quantity', 'lessThanValue')">Quantity should be less  than remaining quantity
                     </mat-error>
                   </mat-form-field>
                 </div>

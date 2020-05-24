@@ -1,0 +1,27 @@
+/* 
+.ct-series-a .ct-bar {
+    stroke:  #be1e2d;
+    stroke-width: 30;
+  }
+  .ct-series-b .ct-bar {
+    stroke: #444444;
+    stroke-width: 30;
+  }
+  */
+  .ct-label {
+    color: white;
+    font-weight: bold;
+  } 
+
+ /*  .ct-chart-bar .ct-label .ct-horizontal .ct-end {
+    color: white;
+    font-weight: bold;
+  } */
+
+  .mat-primary {
+    background-color: white;
+  }
+
+  .singur {
+    background-color: rgb(238, 12, 12);
+  }

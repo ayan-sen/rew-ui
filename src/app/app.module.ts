@@ -38,6 +38,7 @@ import { OrderPlacementShowComponent } from './transaction/order-placement/order
 import { ProjectShowComponent } from './transaction/project/project-show/project-show.component';
 import { OrderDeliveryComponent } from './transaction/order-delivery/order-delivery.component';
 import { ChartistModule } from 'ng-chartist';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { ChartistModule } from 'ng-chartist';
     ButtonsModule,
     MatNativeDateModule,
     MatRippleModule,
-    ChartistModule 
+    ChartistModule,
+    MatChipsModule 
   ],
   providers: [
     { provide: "BASE_API_URL", useValue: environment.baseUrl },
