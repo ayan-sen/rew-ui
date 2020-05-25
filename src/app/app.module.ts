@@ -39,6 +39,7 @@ import { ProjectShowComponent } from './transaction/project/project-show/project
 import { OrderDeliveryComponent } from './transaction/order-delivery/order-delivery.component';
 import { ChartistModule } from 'ng-chartist';
 import { MatChipsModule } from '@angular/material/chips';
+import { OrderDeliveryShowComponent } from './transaction/order-delivery/order-delivery-show/order-delivery-show.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { MatChipsModule } from '@angular/material/chips';
     OrderPlacementShowComponent,
     ProjectShowComponent,
     OrderDeliveryComponent,
+    OrderDeliveryShowComponent,
   ],
   imports: [
     BrowserModule,

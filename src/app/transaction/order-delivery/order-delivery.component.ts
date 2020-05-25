@@ -22,6 +22,7 @@ import { OrderPlacementDetails } from '../order-placement/order-placement-detail
 import { Client } from 'src/app/admin/client/client';
 import { ClientDetails } from 'src/app/admin/client/client-detail';
 import { lessThanValueValidator } from 'src/app/components/common-commponents/validators/number-compare';
+import { convertToDate } from 'src/app/components/common-service/common-uutil';
 
 @Component({
   selector: 'app-order-delivery',
@@ -114,6 +115,18 @@ export class OrderDeliveryComponent implements OnInit {
     },
     {validator : lessThanValueValidator('quantity', 'remainingQuantity')}
     );
+
+    this.route.queryParams.subscribe(param => {
+      if (Object.keys(param).length > 0) {
+        this.orderDeliveryService.findById(param.id).subscribe((order: OrderDelivery) => {
+          this.details = order.details;
+          order.billDate = convertToDate(order.billDateString);
+          this.filterConsigneeDateils(order.consigneeId);
+          this.deliveryId = order.deliveryId;
+          this.deliveryForm.setValue(order); 
+        })
+      }
+    });
   }
 
   public hasError = (controlName: string, errorName: string) =>{
@@ -276,8 +289,9 @@ export class OrderDeliveryComponent implements OnInit {
       dtl.unitName = d.unitName;
       dtl.quantity = d.remainingQuantity;
       dtl.remainingQuantity = d.remainingQuantity;
-      dtl.amount = d.amount;
       dtl.rate = d.rate;
+      dtl.amount = Number.parseFloat(d.remainingQuantity.toString()) * Number.parseFloat(d.rate.toString());
+
       this.details.push(dtl);
     });
     this.headerAmount = this.calculateTotalDetailAmount();
@@ -302,8 +316,10 @@ export class OrderDeliveryComponent implements OnInit {
     this.filterConsigneeDateils(val);
   }
 
-  filterConsigneeDateils(clientId : String) {
-    this.consigneeDetails = this.consignees.filter(s => s.clientId === clientId)[0].details; 
+  filterConsigneeDateils(clientId : string) {
+    if(clientId != '') {
+      this.consigneeDetails = this.consignees.filter(s => s.clientId === clientId)[0].details; 
+    } 
   }
 
   calculateHeader() {
