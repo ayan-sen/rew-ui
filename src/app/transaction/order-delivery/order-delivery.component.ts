@@ -112,6 +112,7 @@ export class OrderDeliveryComponent implements OnInit {
       'rate': new FormControl(0),
       'amount': new FormControl(0),
       'remainingQuantity': new FormControl(0),
+      'oldQuantity' : new FormControl(0)
     },
     {validator : lessThanValueValidator('quantity', 'remainingQuantity')}
     );
@@ -198,6 +199,9 @@ export class OrderDeliveryComponent implements OnInit {
   }
 
   editDetail(orderDeliveryDetails: OrderDeliveryDetails, frame : ModalDirective) {
+    /* if(orderDeliveryDetails.detailId != null && orderDeliveryDetails.detailId > 0) {
+      orderDeliveryDetails.oldQuantity = orderDeliveryDetails.quantity;
+    } */
     this.deliveryDetailsForm.patchValue(orderDeliveryDetails);
     frame.show();
   }

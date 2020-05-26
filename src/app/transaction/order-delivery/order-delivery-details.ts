@@ -9,5 +9,6 @@ export class OrderDeliveryDetails {
     rmName : string;
     unitName : string;
     remainingQuantity : number;
+    oldQuantity : number;
 }
 
