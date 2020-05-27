@@ -98,7 +98,8 @@ export class OrderDeliveryComponent implements OnInit {
       'notes': new FormControl(''),
       'siteId': new FormControl(''),
       'isActive': new FormControl(true),
-      'details': new FormControl('')
+      'details': new FormControl(''),
+      'projectId': new FormControl('')
     });
 
     this.deliveryDetailsForm = this.fb.group({
@@ -283,6 +284,7 @@ export class OrderDeliveryComponent implements OnInit {
     this.od.supplierDetailsId = op.supplierDetailsId;
     this.od.supplierIdentifier = op.identifier;
     this.od.siteId = op.siteId;
+    this.od.projectId = op.projectId;
    
     let opDetails : OrderPlacementDetails [] = op.details;
     opDetails.forEach(d => {
