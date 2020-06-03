@@ -28,7 +28,8 @@ export class RawMaterialComponent implements OnInit {
  
   types: Dropdown[] = [
     {value: "R", viewValue: 'Raw Material'},
-    {value: "P", viewValue: 'Product'}
+    {value: "P", viewValue: 'Product'},
+    {value: "S", viewValue: 'Semi-finished Product'}
   ];
 
   constructor(private rawMaterialService : RawMaterialService, 

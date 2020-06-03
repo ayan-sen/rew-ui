@@ -63,9 +63,7 @@ export class OrderDeliveryComponent implements OnInit {
   constructor(private orderDeliveryService : OrderDeliveryService,
               private orderPlacementService : OrderPlacementService,
               private notificationService : NotificationService,
-              private rawMaterialService : RawMaterialService,
               private clientService : ClientService,
-              private unitService : UnitService,
               public dialog: MatDialog,
               private route: ActivatedRoute,
               private fb: FormBuilder

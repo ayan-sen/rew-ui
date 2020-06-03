@@ -40,6 +40,7 @@ import { OrderDeliveryComponent } from './transaction/order-delivery/order-deliv
 import { ChartistModule } from 'ng-chartist';
 import { MatChipsModule } from '@angular/material/chips';
 import { OrderDeliveryShowComponent } from './transaction/order-delivery/order-delivery-show/order-delivery-show.component';
+import { OrderProcessingComponent } from './transaction/order-processing/order-processing.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { OrderDeliveryShowComponent } from './transaction/order-delivery/order-d
     ProjectShowComponent,
     OrderDeliveryComponent,
     OrderDeliveryShowComponent,
+    OrderProcessingComponent,
   ],
   imports: [
     BrowserModule,

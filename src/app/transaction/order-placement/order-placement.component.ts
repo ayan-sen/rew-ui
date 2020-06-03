@@ -198,10 +198,10 @@ export class OrderPlacementComponent implements OnInit {
       console.log("last index >>" + index);
       if (index != -1) {
         this.details[index] = this.opDetailForm.value;
-        this.notificationService.openSnackBar("Order details updated successfully", "success");
+        this.notificationService.openSnackBar("Log updated successfully", "success");
       } else {
         this.details.push(this.opDetailForm.value);
-        this.notificationService.openSnackBar("Order details added successfully", "success");
+        this.notificationService.openSnackBar("Log added successfully", "success");
       }
       this.opDetailForm.reset();
       frame.hide();
