@@ -40,7 +40,7 @@ export class OrderProcessingComponent implements OnInit {
   quantity : string;
   availableQuantity : number;
   remainingQuantity : number;
-  inOutFix : string;
+  processType : string;
 
   details : OrderProcessingDetails[] = [];
 
@@ -89,16 +89,16 @@ export class OrderProcessingComponent implements OnInit {
       'materialName': new FormControl(''),
       'materialUnit': new FormControl('', Validators.required),
       'materialUnitName': new FormControl(''),
-      'quantityProduct': new FormControl(0),
-      'quantityRawSemi': new FormControl(0),
+      'quantity': new FormControl(0, Validators.required),
       'inOutFlag': new FormControl(''),
       'remainingQuantity': new FormControl(0),
       'availableQuantity' : new FormControl(0),
       'notes': new FormControl(''),
-      'inOutFixFlag': new FormControl(''),
-    },
-    {validator : [mandatoryAndlessThanValueValidator('quantityProduct', 'remainingQuantity'), 
-                  mandatoryAndlessThanValueValidator('quantityRawSemi', 'availableQuantity')]}
+      'materialType': new FormControl('')
+    }
+    /* ,
+    {validator : [mandatoryAndlessThanValueValidator('quantity', 'remainingQuantity'), 
+                  mandatoryAndlessThanValueValidator('quantity', 'availableQuantity')]} */
     );
 
     this.route.queryParams.subscribe(param => {
@@ -256,11 +256,11 @@ export class OrderProcessingComponent implements OnInit {
     this.remainingQuantity = pm.remainingQuantity;
 
     if(this.materialType == "P") {
-      this.inOutFix = "IN";
+      this.processType = "IN";
     }
 
     if(this.materialType == "R") {
-      this.inOutFix = "OUT";
+      this.processType = "OUT"; 
     }
   }
 
@@ -270,5 +270,9 @@ export class OrderProcessingComponent implements OnInit {
   
   isSemiProduct(matType : string) : boolean {
     return matType == "S";
+  }
+
+  isProductMat(mat : OrderProcessingDetails) : boolean {
+    return mat.materialType == "P";
   }
 }

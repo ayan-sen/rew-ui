@@ -84,18 +84,18 @@
                   <th>Material</th>
                   <th>Available / Remaining Quantity</th>
                   <th>Unit</th>
-                  <th>Quantity</th>
+                  <th>Processed Quantity</th>
                   <th>Movement</th>
                   <th>Action</th>
                 </thead>
                 <tbody *ngFor="let dtl of details">
                   <tr>
                     <td>{{dtl.materialId}}</td>
-                    <td *ngIf="dtl.materialType != 'P'">{{dtl.availableQuantity}}</td>
-                    <td *ngIf="dtl.materialType == 'P'">{{dtl.remainingQuantity}}</td>
+                    <td *ngIf="!isProductMat(dtl)">{{dtl.availableQuantity}}</td>
+                    <td *ngIf="isProductMat(dtl)">{{dtl.remainingQuantity}}</td>
                     <td>{{dtl.materialUnitName}}</td>
                     <td>{{dtl.quantity}}</td>
-                    <td>{{dtl.inOutFlag}}</td>
+                    <td>{{dtl.processType}}</td>
                     <td>
                       <a (click)="editDetail(dtl, frame)" style="cursor: pointer;" class="edit" title=""
                         data-toggle="tooltip" data-original-title="Edit">
@@ -136,6 +136,7 @@
                   <mat-form-field class="invisible example-full-width">
                     <input matInput placeholder="processId" formControlName="processId">
                     <input matInput placeholder="processDetailsId" formControlName="processDetailsId">
+                    <input matInput placeholder="materialType" formControlName="materialType" [(ngModel)]='materialType'>
                   </mat-form-field>
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Material" formControlName="materialId" (selectionChange)="populateRow($event)">
@@ -168,35 +169,34 @@
                 </div>
                 <div class="col-md-2" *ngIf="isProduct(materialType)">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Quantity" formControlName="quantityProduct" style="text-align: right;">
-                    <mat-error *ngIf="hasDetailError('quantityProduct', 'mandatoryAndlessThanValue')">Quantity is required</mat-error>
+                    <input matInput placeholder="Quantity" formControlName="quantity" style="text-align: right;">
+                    <mat-error *ngIf="hasDetailError('quantity', 'required')">Quantity is required</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2" *ngIf="!isProduct(materialType)">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Quantity" formControlName="quantityRawSemi" style="text-align: right;">
-                    <mat-error *ngIf="hasDetailError('quantityRawSemi', 'mandatoryAndlessThanValue')">Quantity is required</mat-error>
+                    <input matInput placeholder="Quantity" formControlName="quantity" style="text-align: right;">
+                    <mat-error *ngIf="hasDetailError('quantity', 'required')">Quantity is required</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2" *ngIf="isSemiProduct(materialType)">
                   <mat-form-field class="example-full-width">
-                    <mat-select placeholder="In/Out" formControlName="inOutFlag" >
+                    <mat-select placeholder="In/Out" formControlName="processType" >
                       <mat-option *ngFor="let value of inOutValues" [value]="value.value">
                         {{value.viewValue}}
                       </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="hasError('inOutFlag', 'required')">Field value is required</mat-error>
+                    <mat-error *ngIf="hasError('processType', 'required')">Field value is required</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2" *ngIf="!isSemiProduct(materialType)">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="In/Out" formControlName="inOutFixFlag" [readonly]="true" [(ngModel)]='inOutFix'>
+                    <input matInput placeholder="In/Out" formControlName="processType" [readonly]="true" [(ngModel)]='processType'>
                   </mat-form-field>
                 </div>
               </div>
               <div class="modal-footer d-flex justify-content-right">
-                <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect
-                  (click)="onDetailSubmit(frame)">Save</button>
+                <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="onDetailSubmit(frame)">Save</button>
               </div>
             </form>
           </div>
