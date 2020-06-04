@@ -89,18 +89,15 @@ export class OrderProcessingComponent implements OnInit {
       'materialName': new FormControl(''),
       'materialUnit': new FormControl('', Validators.required),
       'materialUnitName': new FormControl(''),
-      'quantity': new FormControl(0, Validators.required),
+      'quantity': new FormControl(null, Validators.required),
       'inOutFlag': new FormControl(''),
       'remainingQuantity': new FormControl(0),
       'availableQuantity' : new FormControl(0),
       'notes': new FormControl(''),
-      'materialType': new FormControl('')
-    }
-    /* ,
-    {validator : [mandatoryAndlessThanValueValidator('quantity', 'remainingQuantity'), 
-                  mandatoryAndlessThanValueValidator('quantity', 'availableQuantity')]} */
+      'materialType': new FormControl(''),
+    },
+    {validator : [mandatoryAndlessThanValueValidator('quantity', 'availableQuantity','remainingQuantity', 'materialType', 'processType')]}
     );
-
     this.route.queryParams.subscribe(param => {
       if (Object.keys(param).length > 0) {
         this.orderProcessingService.findById(param.id).subscribe((orderProcessing : OrderProcessing) => {

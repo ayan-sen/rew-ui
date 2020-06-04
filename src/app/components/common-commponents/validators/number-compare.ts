@@ -21,27 +21,39 @@ export function lessThanValueValidator(targetKey: string, toMatchKey: string): V
       };
 }
 
-export function mandatoryAndlessThanValueValidator(targetKey: string, toMatchKey: string): ValidatorFn {
+export function mandatoryAndlessThanValueValidator(quantityVar: string, availableQuantityVar: string, 
+  remainingQuantityVar : string, itemTypeVar : string, processTypeVar : string): ValidatorFn {
 
   return (group: FormGroup): {[key: string]: any} => {
-      const target = group.controls[targetKey];
-      const toMatch = group.controls[toMatchKey];
-      //if (target.touched || toMatch.touched) {
-        const isLess = target.value <= toMatch.value;
-        target.setErrors({mandatoryAndlessThanValue: targetKey});
-        if(!toMatch.valid) {
-          const message2 = targetKey + ' is required';
-          return {'mandatoryAndlessThanValue': message2};
+      const quantity = group.controls[quantityVar];
+      const availableQuantity = group.controls[availableQuantityVar];
+      const remainingQuantity = group.controls[remainingQuantityVar];
+      const itemType = group.controls[itemTypeVar];
+      const processType = group.controls[processTypeVar];
+
+      if(quantity.valid && availableQuantity.valid && remainingQuantity.valid && itemType.valid && processType.valid) {
+
+        if(itemType.value == "P" &&  quantity.value > remainingQuantity.value) {
+          const message = quantity + ' should be less than or equal to remaining quantity';
+          quantity.setErrors({mandatoryAndlessThanValue: quantity});
+          return {'mandatoryAndlessThanValue': message};
         }
-        if (!isLess && target.valid && toMatch.valid) {
-          const message1 = targetKey + ' should be less than ' + toMatchKey;
-          return {'mandatoryAndlessThanValue': message1};
+
+        if(itemType.value == "R" &&  quantity.value > availableQuantity.value) {
+          const message = quantity + ' should be less than or equal to available quantity';
+          quantity.setErrors({mandatoryAndlessThanValue: quantity});
+          return {'mandatoryAndlessThanValue': message};
         }
-        
-        if (isLess && target.hasError('mandatoryAndlessThanValue')) {
-          target.setErrors(null);  
-        }   
-      //}   
+
+        if(itemType.value == "S" && processType.value == "OUT" &&  quantity.value > availableQuantity.value) {
+          const message = quantity + ' should be less than or equal to available quantity';
+          quantity.setErrors({mandatoryAndlessThanValue: quantity});
+          return {'mandatoryAndlessThanValue': message};
+        }
+      }
+      if (quantity.hasError('mandatoryAndlessThanValue')) {
+        quantity.setErrors(null);  
+      } 
       return null;
     };
 }
