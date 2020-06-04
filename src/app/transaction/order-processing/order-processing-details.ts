@@ -8,7 +8,6 @@ export class OrderProcessingDetails {
     materialUnit : string;
     materialUnitName : string;
     quantity : string;
-    inOutFlag : string;
     availableQuantity : number;
     remainingQuantity : number;
     notes : string;
