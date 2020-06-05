@@ -24,6 +24,8 @@ import { ClientDetails } from 'src/app/admin/client/client-detail';
 import { MatSelectChange } from '@angular/material/select';
 import { isNumeric } from 'rxjs/util/isNumeric';
 
+declare const $: any;
+
 @Component({
   selector: 'app-order-placement',
   templateUrl: './order-placement.component.html',
@@ -319,5 +321,16 @@ export class OrderPlacementComponent implements OnInit {
       this.detailAmount = (Number.parseFloat(rate.toString()) * Number.parseFloat(quantity.toString())).toFixed(2);
     }
 
+  }
+
+  isMobileMenu() {
+    if ($(window).width() > 991) {
+      return false;
+    }
+    return true;
+  }
+
+  modalWIdth() : string {
+    return this.isMobileMenu() ? "100%" : "150%";
   }
 }

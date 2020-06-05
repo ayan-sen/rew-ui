@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8080/rew-portal'
+  baseUrl: 'http://192.168.2.4:8080/rew-portal'
 };
 
 /*

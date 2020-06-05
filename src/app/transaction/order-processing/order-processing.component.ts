@@ -18,7 +18,9 @@ import { ModalDirective } from 'angular-bootstrap-md';
 import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
 import { MatSelectChange } from '@angular/material/select';
 import { ProjectMaterial } from './project-material';
- 
+
+declare const $: any;
+
 @Component({
   selector: 'app-order-processing',
   templateUrl: './order-processing.component.html',
@@ -271,5 +273,16 @@ export class OrderProcessingComponent implements OnInit {
 
   isProductMat(mat : OrderProcessingDetails) : boolean {
     return mat.materialType == "P";
+  }
+
+  isMobileMenu() {
+    if ($(window).width() > 991) {
+      return false;
+    }
+    return true;
+  }
+  
+  modalWIdth() : string {
+    return this.isMobileMenu() ? "100%" : "150%";
   }
 }

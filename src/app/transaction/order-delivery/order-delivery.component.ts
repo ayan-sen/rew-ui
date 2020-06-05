@@ -24,6 +24,8 @@ import { ClientDetails } from 'src/app/admin/client/client-detail';
 import { lessThanValueValidator } from 'src/app/components/common-commponents/validators/number-compare';
 import { convertToDate } from 'src/app/components/common-service/common-uutil';
 
+declare const $: any;
+
 @Component({
   selector: 'app-order-delivery',
   templateUrl: './order-delivery.component.html',
@@ -347,6 +349,16 @@ export class OrderDeliveryComponent implements OnInit {
     this.sgstAmount = ((totalAmountWithOutGst * 9) / 100).toFixed(2);
 
     this.totalAmount = (totalAmountWithOutGst + Number.parseFloat(this.cgstAmount) + Number.parseFloat(this.sgstAmount)).toFixed(2);
+  }
 
+  isMobileMenu() {
+    if ($(window).width() > 991) {
+      return false;
+    }
+    return true;
+  }
+  
+  modalWIdth() : string {
+    return this.isMobileMenu() ? "100%" : "150%";
   }
 }

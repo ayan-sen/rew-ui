@@ -59,9 +59,9 @@ export class ProjectComponent implements OnInit {
    detailAmount : string;
 
   statusValues: Dropdown[] = [
-    {value: 'draft', viewValue: 'Draft'},
-    {value: 'in_progress', viewValue: 'In Progress'},
-    {value: 'complete', viewValue: 'Complete'}
+    {value: 'new', viewValue: 'New'},
+    {value: 'running', viewValue: 'On Going'},
+    {value: 'complete', viewValue: 'Completed'}
   ];
   
   constructor(private projectService : ProjectService,
@@ -370,6 +370,10 @@ export class ProjectComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  modalWIdth() : string {
+    return this.isMobileMenu() ? "100%" : "150%";
   }
 
 }
