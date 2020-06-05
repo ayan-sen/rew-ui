@@ -1,219 +1,215 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <mat-tab-group class="mat-tab-body-content">
-            <mat-tab label="Basic Details">
-                <div class="row-overflow">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header card-header-success">
-                                    <h4 class="card-title">Add/Update Partnar basic information</h4>
-                                    <p class="card-category">Declere Customers & Suppliers here</p>
-                                </div>
-                                <div class="card-body">
-                                    <form [formGroup]="clientForm">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <mat-form-field class="invisible example-full-width">
-                                                    <input matInput placeholder="clientId" formControlName="clientId">
-                                                </mat-form-field>
-
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Partner Name"
-                                                        formControlName="clientName">
-                                                    <mat-error *ngIf="hasError('clientName', 'required')">Name is
-                                                        required</mat-error>
-                                                </mat-form-field>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-select placeholder="Partner type" formControlName="clientType">
-                                                        <mat-option *ngFor="let value of clientTypes"
-                                                            [value]="value.value">
-                                                            {{value.viewValue}}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="GSTIN" formControlName="gstinNo">
-                                                    <mat-error *ngIf="hasError('gstinNo', 'required')">GSTIN is required
-                                                    </mat-error>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Contact"
-                                                        formControlName="primanyContactNo">
-                                                    <mat-error *ngIf="hasError('primanyContactNo', 'required')">Contact
-                                                        Number is required</mat-error>
-                                                </mat-form-field>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Email id"
-                                                        formControlName="primaryEmailId">
-                                                    <mat-error *ngIf="hasError('primaryEmailId', 'required')">Email id
-                                                        is required</mat-error>
-                                                </mat-form-field>
-                                            </div>
-
-                                            <div class="col-md-5">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Comments" formControlName="comments">
-                                                </mat-form-field>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-select placeholder="Active?" formControlName="isActive">
-                                                        <mat-option *ngFor="let value of activeValues"
-                                                            [value]="value.value">
-                                                            {{value.viewValue}}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  <div class="container-fluid">
+    <mat-tab-group class="mat-tab-body-content">
+      <mat-tab label="Basic Details">
+        <div class="row-overflow">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-success">
+                  <h4 class="card-title">Add/Update Partnar basic information
+                    <a routerLink="/clients">
+                      <mat-icon class="gridIcon">web</mat-icon>
+                    </a>
+                  </h4>
+                  <p class="card-category">Declere Customers & Suppliers here</p>
                 </div>
-            </mat-tab>
-            <mat-tab label="Address Details">
-                <div class="row-overflow">
+                <div class="card-body">
+                  <form [formGroup]="clientForm">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header card-header-info">
-                                    <h4 class="card-title">Add/Update Partnar address details</h4>
-                                    <p class="card-category">Declere Customers & Suppliers details here</p>
-                                </div>
-                                <div class="card-body">
-                                    <form [formGroup]="clientDetailsForm">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <mat-form-field class="invisible example-full-width">
-                                                    <input matInput placeholder="clientId" formControlName="clientId">
-                                                </mat-form-field>
+                      <div class="col-md-6">
+                        <mat-form-field class="invisible example-full-width">
+                          <input matInput placeholder="clientId" formControlName="clientId">
+                        </mat-form-field>
 
-                                                <mat-form-field class="invisible example-full-width">
-                                                    <input matInput placeholder="detailId" formControlName="detailId">
-                                                </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Partner Name" formControlName="clientName">
+                          <mat-error *ngIf="hasError('clientName', 'required')">Name is
+                            required</mat-error>
+                        </mat-form-field>
+                      </div>
 
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Address Identifier"
-                                                        formControlName="identifier">
-                                                    <mat-error *ngIf="hasDetailError('identifier', 'required')">Address
-                                                        identifier is required</mat-error>
-                                                    <mat-error *ngIf="hasDetailError('identifier', 'maxLength')">Max
-                                                        length is 15</mat-error>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-7">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Address" formControlName="address">
-                                                    <mat-error *ngIf="hasDetailError('address', 'required')">Address is
-                                                        required</mat-error>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Pincode" formControlName="pincode">
-                                                    <mat-error *ngIf="hasDetailError('pincode', 'required')">Pincode is
-                                                        required</mat-error>
-                                                    <mat-error *ngIf="hasDetailError('pincode', 'maxLength')">Max length
-                                                        is 6</mat-error>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Contact" formControlName="contactNo">
-                                                    <mat-error *ngIf="hasDetailError('contactNo', 'required')">Contact
-                                                        Number is required</mat-error>
-                                                </mat-form-field>
-                                            </div>
+                      <div class="col-md-3">
+                        <mat-form-field class="example-full-width">
+                          <mat-select placeholder="Partner type" formControlName="clientType">
+                            <mat-option *ngFor="let value of clientTypes" [value]="value.value">
+                              {{value.viewValue}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
 
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Email id" formControlName="emailId">
-                                                    <mat-error *ngIf="hasDetailError('emailId', 'required')">Email id is
-                                                        required</mat-error>
-                                                </mat-form-field>
-                                            </div>
-
-                                            <div class="col-md-7">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Comments" formControlName="comments">
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <button mat-raised-button (click)="onDetailsSubmit()"
-                                            class="btn btn-info pull-right">Save</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                      <div class="col-md-3">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="GSTIN" formControlName="gstinNo">
+                          <mat-error *ngIf="hasError('gstinNo', 'required')">GSTIN is required
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="card card-plain">
-                                <div class="card-header card-header-info">
-                                    <h4 class="card-title ">Details</h4>
-                                    <p class="card-category"></p>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover">
-                                            <thead class="text-primary">
-                                                <th>Identifier</th>
-                                                <th *ngIf="!isMobileMenu()">Address</th>
-                                                <th>Email Id</th>
-                                                <th>Contact No</th>
-                                                <th>Action</th>
-                                            </thead>
-                                            <tbody *ngFor="let dtl of details">
-                                                <!-- <tr (click)="editDetail(dtl)" style="cursor: pointer;"> -->
-                                                <tr>
-                                                    <td>{{dtl.identifier}}</td>
-                                                    <td *ngIf="!isMobileMenu()">{{dtl.address}}{{dtl.pincoder}}</td>
-                                                    <td>{{dtl.emailId}}</td>
-                                                    <td>{{dtl.contactNo}}</td>
-                                                    <td>
-                                                        <a (click)="editDetail(dtl)" style="cursor: pointer;"
-                                                            class="edit" title="" data-toggle="tooltip"
-                                                            data-original-title="Edit">
-                                                            <mat-icon class="routeIcon">edit</mat-icon>
-                                                        </a>
-                                                        <a (click)="openDialog(dtl)" style="cursor: pointer;"
-                                                            class="delete" title="" data-toggle="tooltip"
-                                                            data-original-title="Delete">
-                                                            <mat-icon class="routeIcon">delete</mat-icon>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      <div class="col-md-2">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Contact" formControlName="primanyContactNo">
+                          <mat-error *ngIf="hasError('primanyContactNo', 'required')">Contact
+                            Number is required</mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-3">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Email id" formControlName="primaryEmailId">
+                          <mat-error *ngIf="hasError('primaryEmailId', 'required')">Email id
+                            is required</mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-5">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Comments" formControlName="comments">
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-2">
+                        <mat-form-field class="example-full-width">
+                          <mat-select placeholder="Active?" formControlName="isActive">
+                            <mat-option *ngFor="let value of activeValues" [value]="value.value">
+                              {{value.viewValue}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
                     </div>
+                    <div class="clearfix"></div>
+                  </form>
                 </div>
-            </mat-tab>
-            <!-- <mat-tab label="Third"> Content 3 </mat-tab> -->
-        </mat-tab-group>
-        <button mat-raised-button (click)="onSubmit()" class="btn btn-success pull-right">Submit</button>
-    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Address Details">
+        <div class="row-overflow">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-info">
+                  <h4 class="card-title">Add/Update Partnar address details</h4>
+                  <p class="card-category">Declere Customers & Suppliers details here</p>
+                </div>
+                <div class="card-body">
+                  <form [formGroup]="clientDetailsForm">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <mat-form-field class="invisible example-full-width">
+                          <input matInput placeholder="clientId" formControlName="clientId">
+                        </mat-form-field>
+
+                        <mat-form-field class="invisible example-full-width">
+                          <input matInput placeholder="detailId" formControlName="detailId">
+                        </mat-form-field>
+
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="City Name" formControlName="identifier">
+                          <mat-error *ngIf="hasDetailError('identifier', 'required')">Address
+                            identifier is required</mat-error>
+                          <mat-error *ngIf="hasDetailError('identifier', 'maxLength')">Max
+                            length is 15</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-7">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Address" formControlName="address">
+                          <mat-error *ngIf="hasDetailError('address', 'required')">Address is
+                            required</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-2">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Pincode" formControlName="pincode">
+                          <mat-error *ngIf="hasDetailError('pincode', 'required')">Pincode is
+                            required</mat-error>
+                          <mat-error *ngIf="hasDetailError('pincode', 'maxLength')">Max length
+                            is 6</mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Contact" formControlName="contactNo">
+                          <mat-error *ngIf="hasDetailError('contactNo', 'required')">Contact
+                            Number is required</mat-error>
+                          <mat-error *ngIf="hasDetailError('contactNo', 'maxLength')">Max length is 15</mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-3">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Email id" formControlName="emailId">
+                          <mat-error *ngIf="hasDetailError('emailId', 'required')">Email id is
+                            required</mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-7">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Comments" formControlName="comments">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <button mat-raised-button (click)="onDetailsSubmit()" class="btn btn-info pull-right">Save</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card card-plain">
+                <div class="card-header card-header-info">
+                  <h4 class="card-title ">Details</h4>
+                  <p class="card-category"></p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="text-primary">
+                        <th>Identifier</th>
+                        <th *ngIf="!isMobileMenu()">Address</th>
+                        <th>Email Id</th>
+                        <th>Contact No</th>
+                        <th>Action</th>
+                      </thead>
+                      <tbody *ngFor="let dtl of details">
+                        <!-- <tr (click)="editDetail(dtl)" style="cursor: pointer;"> -->
+                        <tr>
+                          <td>{{dtl.identifier}}</td>
+                          <td *ngIf="!isMobileMenu()">{{dtl.address}}{{dtl.pincoder}}</td>
+                          <td>{{dtl.emailId}}</td>
+                          <td>{{dtl.contactNo}}</td>
+                          <td>
+                            <a (click)="editDetail(dtl)" style="cursor: pointer;" class="edit" title=""
+                              data-toggle="tooltip" data-original-title="Edit">
+                              <mat-icon class="routeIcon">edit</mat-icon>
+                            </a>
+                            <a (click)="openDialog(dtl)" style="cursor: pointer;" class="delete" title=""
+                              data-toggle="tooltip" data-original-title="Delete">
+                              <mat-icon class="routeIcon">delete</mat-icon>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <!-- <mat-tab label="Third"> Content 3 </mat-tab> -->
+    </mat-tab-group>
+    <button mat-raised-button (click)="onSubmit()" class="btn btn-success pull-right">Submit</button>
+  </div>
 </div>

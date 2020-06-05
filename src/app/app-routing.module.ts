@@ -12,6 +12,7 @@ import { ProjectShowComponent } from './transaction/project/project-show/project
 import { OrderDeliveryComponent } from './transaction/order-delivery/order-delivery.component';
 import { OrderDeliveryShowComponent } from './transaction/order-delivery/order-delivery-show/order-delivery-show.component';
 import { OrderProcessingComponent } from './transaction/order-processing/order-processing.component';
+import { OrderProcessingShowComponent } from './transaction/order-processing/order-processing-show/order-processing-show.component';
 
 
 const routes: Routes = [
@@ -32,7 +33,7 @@ const routes: Routes = [
   { path: 'deliveries', component: OrderDeliveryShowComponent },
   { path: 'order-delivery/edit', component: OrderDeliveryComponent },
   { path: 'log/add', component: OrderProcessingComponent },
-  { path: 'logs', component: OrderProcessingComponent },
+  { path: 'logs', component: OrderProcessingShowComponent },
   { path: 'log/edit', component: OrderProcessingComponent }
 ];
 

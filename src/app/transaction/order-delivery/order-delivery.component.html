@@ -4,7 +4,11 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-success">
-            <h4 class="card-title">Raw material order delivery</h4>
+            <h4 class="card-title">Raw material order delivery
+              <a routerLink="/deliveries">
+                <mat-icon class="gridIcon">web</mat-icon>
+              </a>
+            </h4>
             <div *ngIf="deliveryId">
               <p class="card-title">Delivery Id : {{deliveryId}}</p>
             </div>

@@ -41,6 +41,7 @@ import { ChartistModule } from 'ng-chartist';
 import { MatChipsModule } from '@angular/material/chips';
 import { OrderDeliveryShowComponent } from './transaction/order-delivery/order-delivery-show/order-delivery-show.component';
 import { OrderProcessingComponent } from './transaction/order-processing/order-processing.component';
+import { OrderProcessingShowComponent } from './transaction/order-processing/order-processing-show/order-processing-show.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { OrderProcessingComponent } from './transaction/order-processing/order-p
     OrderDeliveryComponent,
     OrderDeliveryShowComponent,
     OrderProcessingComponent,
+    OrderProcessingShowComponent,
   ],
   imports: [
     BrowserModule,

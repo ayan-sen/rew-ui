@@ -1,162 +1,165 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
-      
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header card-header-success">
-              <h4 class="card-title">Create and Update Project Details</h4>
-              <div *ngIf="projectId">
-                <p class="card-title">Project Id : {{projectId}}</p>
-              </div>
-              <div *ngIf="!projectId">
-                <p class="card-category">Enter project data</p>
-              </div>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">Create and Update Project Details
+              <a routerLink="/projects">
+                <mat-icon class="gridIcon">web</mat-icon>
+              </a>
+            </h4>
+            <div *ngIf="projectId">
+              <p class="card-title">Project Id : {{projectId}}</p>
             </div>
-
-            <div class="card-body">
-              <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" #headerForm="ngForm">
-                <div class="row">
-                  <div class="col-md-3">
-                    <mat-form-field class="invisible example-full-width">
-                      <input matInput placeholder="projectId" formControlName="projectId">
-                      <input matInput placeholder="amendmentNo" formControlName="amendmentNo">
-                      <input matInput placeholder="amendmentDate" formControlName="amendmentDate">
-                      <input matInput placeholder="isActive" formControlName="isActive">
-                    </mat-form-field>
-
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Project Name" formControlName="description">
-                      <mat-error *ngIf="hasError('description', 'required')">project Name is
-                        required</mat-error>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-2">
-                    <mat-form-field class="example-full-width">
-                      <mat-select placeholder="Customer" formControlName="customerId">
-                        <mat-option *ngFor="let value of customers" [value]="value.clientId">
-                          {{value.clientName}}
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="hasError('customerId', 'required')">Customer is required
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-2">
-                    <mat-form-field class="example-full-width">
-                      <mat-select placeholder="Consignee (If any)" formControlName="consigneeId">
-                        <mat-option *ngFor="let value of consignees" [value]="value.clientId">
-                          {{value.clientName}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-3">
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Purchase Order No" formControlName="purchaseOrderNo">
-                      <mat-error *ngIf="hasError('purchaseOrderNo', 'required')">Purchase Order No
-                        is required</mat-error>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-2">
-                    <mat-form-field>
-                      <mat-label>Purchase Order Date</mat-label>
-                      <input matInput [matDatepicker]="picker1" formControlName="purchaseOrderDate">
-                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                      <mat-datepicker #picker1></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-3">
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Offer Reference No" formControlName="workOrderReference">
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-2">
-                    <mat-form-field>
-                      <mat-label>Project Start Date</mat-label>
-                      <input matInput [matDatepicker]="picker2" formControlName="projectStartDate">
-                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                      <mat-datepicker #picker2></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-2">
-                    <mat-form-field>
-                      <mat-label>PO Delivery Date</mat-label>
-                      <input matInput [matDatepicker]="picker3" formControlName="expectedDeliveryDate">
-                      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                      <mat-datepicker #picker3></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-3">
-                    <mat-form-field class="example-full-width">
-                      <mat-select placeholder="Status" formControlName="status">
-                        <mat-option *ngFor="let value of statusValues" [value]="value.value">
-                          {{value.viewValue}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-2">
-                    <mat-form-field>
-                      <mat-label>Actual Delivery Date</mat-label>
-                      <input matInput [matDatepicker]="picker4" formControlName="actualDeliveryDate">
-                      <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-                      <mat-datepicker #picker4></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-2">
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Amount" formControlName="amount" [(ngModel)]="headerAmount"
-                        [readonly]="true" style="text-align: right;" (change)="calculateHeader()">
-                      <mat-error *ngIf="hasError('amount', 'required')">Amount is required
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-2">
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Other Charges (if any)" formControlName="otherCharges"
-                        style="text-align: right;" (change)="calculateHeader()">
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-2">
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="CGST" formControlName="cgstAmount" style="text-align: right;"
-                        [readonly]="true" [(ngModel)]='cgstAmount'>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-2">
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="SGST" formControlName="sgstAmount" style="text-align: right;"
-                        [readonly]="true" [(ngModel)]='sgstAmount'>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-2">
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Total Amount" formControlName="totalAmount"
-                        style="text-align: right;" [readonly]="true" [(ngModel)]='totalAmount'>
-                    </mat-form-field>
-                  </div>
-                </div>
-              </form>
+            <div *ngIf="!projectId">
+              <p class="card-category">Enter project data</p>
             </div>
           </div>
+
+          <div class="card-body">
+            <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" #headerForm="ngForm">
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="invisible example-full-width">
+                    <input matInput placeholder="projectId" formControlName="projectId">
+                    <input matInput placeholder="amendmentNo" formControlName="amendmentNo">
+                    <input matInput placeholder="amendmentDate" formControlName="amendmentDate">
+                    <input matInput placeholder="isActive" formControlName="isActive">
+                  </mat-form-field>
+
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Project Name" formControlName="description">
+                    <mat-error *ngIf="hasError('description', 'required')">project Name is
+                      required</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Customer" formControlName="customerId">
+                      <mat-option *ngFor="let value of customers" [value]="value.clientId">
+                        {{value.clientName}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="hasError('customerId', 'required')">Customer is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Consignee (If any)" formControlName="consigneeId">
+                      <mat-option *ngFor="let value of consignees" [value]="value.clientId">
+                        {{value.clientName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Purchase Order No" formControlName="purchaseOrderNo">
+                    <mat-error *ngIf="hasError('purchaseOrderNo', 'required')">Purchase Order No
+                      is required</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+                  <mat-form-field>
+                    <mat-label>Purchase Order Date</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="purchaseOrderDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Offer Reference No" formControlName="workOrderReference">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <mat-form-field>
+                    <mat-label>Project Start Date</mat-label>
+                    <input matInput [matDatepicker]="picker2" formControlName="projectStartDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+                  <mat-form-field>
+                    <mat-label>PO Delivery Date</mat-label>
+                    <input matInput [matDatepicker]="picker3" formControlName="expectedDeliveryDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Status" formControlName="status">
+                      <mat-option *ngFor="let value of statusValues" [value]="value.value">
+                        {{value.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+                  <mat-form-field>
+                    <mat-label>Actual Delivery Date</mat-label>
+                    <input matInput [matDatepicker]="picker4" formControlName="actualDeliveryDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Amount" formControlName="amount" [(ngModel)]="headerAmount"
+                      [readonly]="true" style="text-align: right;" (change)="calculateHeader()">
+                    <mat-error *ngIf="hasError('amount', 'required')">Amount is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Other Charges (if any)" formControlName="otherCharges"
+                      style="text-align: right;" (change)="calculateHeader()">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="CGST" formControlName="cgstAmount" style="text-align: right;"
+                      [readonly]="true" [(ngModel)]='cgstAmount'>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="SGST" formControlName="sgstAmount" style="text-align: right;"
+                      [readonly]="true" [(ngModel)]='sgstAmount'>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Total Amount" formControlName="totalAmount" style="text-align: right;"
+                      [readonly]="true" [(ngModel)]='totalAmount'>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -218,7 +221,7 @@
       </div>
     </div>
     <!-- Detail Grid End -->
-    <button mat-raised-button type="submit" [disabled]="!headerForm.form.valid" (click)="headerForm.ngSubmit.emit()" 
+    <button mat-raised-button type="submit" [disabled]="!headerForm.form.valid" (click)="headerForm.ngSubmit.emit()"
       class="btn btn-success pull-right">Save</button>
     <div class="clearfix"></div>
     <!-- MODAL -->

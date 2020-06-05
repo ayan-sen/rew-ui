@@ -24,3 +24,8 @@
     height: 0;
     width: 0;
 }
+
+.gridIcon {
+  vertical-align: middle;
+  float: right;
+}

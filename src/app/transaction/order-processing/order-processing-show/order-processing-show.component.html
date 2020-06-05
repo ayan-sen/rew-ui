@@ -1,0 +1,48 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-plain">
+          <div class="card-header card-header-info">
+            <h4 class="card-title ">Daily work log
+              <a routerLink="/order-processing/add">
+                <mat-icon class="gridIcon">add</mat-icon>
+              </a>
+            </h4>
+            <p class="card-category"></p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="text-primary">
+                  <th>Site</th>
+                  <th>Date</th>
+                  <th>Project</th>
+                  <th>Notes</th>
+                </thead>
+                <tbody *ngFor="let p of processes">
+                  <tr>
+                    <td>{{p.siteId}}</td>
+                    <td>{{p.processDate | date:'yyyy-MM-dd'}}</td>
+                    <td>{{p.projectId}}</td>
+                    <td>{{p.notes}}</td>
+                    <!-- <td>
+                      <a [routerLink]="['/order-delivery/edit']" [queryParams]="{ id: dl.deliveryId}" class="edit"
+                        title="" data-toggle="tooltip" data-original-title="Edit">
+                        <mat-icon class="routeIcon">edit</mat-icon>
+                      </a>
+                      <a (click)="openDialog(dl)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip"
+                        data-original-title="Delete">
+                        <mat-icon class="routeIcon">delete</mat-icon>
+                      </a>
+                    </td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

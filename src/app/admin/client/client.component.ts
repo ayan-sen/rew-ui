@@ -60,8 +60,8 @@ export class ClientComponent implements OnInit {
       'address': new FormControl('', Validators.required),
       'pincode': new FormControl('', [Validators.required, Validators.maxLength(6)]),
       'identifier': new FormControl('', [Validators.required, Validators.maxLength(15)]),
-      'emailId': new FormControl('', [Validators.required, , Validators.email]),
-      'contactNo': new FormControl(''),
+      'emailId': new FormControl('', [Validators.required, Validators.email]),
+      'contactNo': new FormControl('',[Validators.required, Validators.maxLength(15)]),
       'comments': new FormControl(''),
       'clientId': new FormControl(''),
       'detailId': new FormControl('')
