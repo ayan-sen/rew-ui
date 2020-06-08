@@ -5,7 +5,7 @@
               <div class="card card-plain">
                 <div class="card-header card-header-info">
                   <h4 class="card-title ">Partners details
-                    <a routerLink="/client/add">
+                    <a routerLink="/admin/client/add">
                       <mat-icon class="gridIcon">add</mat-icon>
                     </a>
                   </h4>
@@ -30,7 +30,7 @@
                           <td *ngIf="!isMobileMenu()">{{cli.primaryEmailId}}</td>
                           <td *ngIf="!isMobileMenu()">{{cli.gstinNo}}</td>
                           <td>
-                            <a [routerLink]="['/clients', cli.clientId]" class="edit" title="" data-toggle="tooltip" data-original-title="Edit">
+                            <a [routerLink]="['/admin/clients', cli.clientId]" class="edit" title="" data-toggle="tooltip" data-original-title="Edit">
                               <mat-icon class="routeIcon">edit</mat-icon>
                             </a>
                               <a (click)="openDialog(cli)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip" data-original-title="Delete">
