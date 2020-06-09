@@ -25,3 +25,11 @@
   .singur {
     background-color: rgb(238, 12, 12);
   }
+
+  .ct-label.ct-label.ct-horizontal {
+    position: fixed;
+    justify-content: flex-end;
+    text-align: right;
+    transform-origin: 100% 0;
+    transform: translate(-100%) rotate(-45deg);  
+  }
