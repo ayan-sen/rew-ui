@@ -14,19 +14,8 @@ import { OrderProcessingShowComponent } from './transaction/order-processing/ord
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'order-placement/add', component: OrderPlacementComponent },
-  { path: 'orders/edit', component: OrderPlacementComponent },
-  { path: 'orders', component: OrderPlacementShowComponent },
-  { path: 'project/add', component: ProjectComponent },
-  { path: 'projects/edit', component: ProjectComponent },
-  { path: 'projects', component: ProjectShowComponent },
-  { path: 'order-delivery/add', component: OrderDeliveryComponent },
-  { path: 'deliveries', component: OrderDeliveryShowComponent },
-  { path: 'order-delivery/edit', component: OrderDeliveryComponent },
-  { path: 'log/add', component: OrderProcessingComponent },
-  { path: 'logs', component: OrderProcessingShowComponent },
-  { path: 'log/edit', component: OrderProcessingComponent },
-  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) }
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+  { path: 'transaction', loadChildren: () => import('./transaction/transaction.module').then(m => m.TransactionModule) }
 ];
 
 @NgModule({

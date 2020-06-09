@@ -1,47 +1,35 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar'
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatDialogModule} from '@angular/material/dialog';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MenuListItemComponent } from './components/menu-list-item/menu-list-item.component';
-import { HttpClientModule, HTTP_INTERCEPTORS }    from '@angular/common/http';
-import { UnitComponent } from './admin/unit/unit.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { RawMaterialComponent } from './admin/raw-material/raw-material.component';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { ClientComponent } from './admin/client/client.component';
-import { ClientShowComponent } from './admin/client/client-show/client-show.component';
-import { CommonDialogComponent } from './components/common-commponents/common-dialog/common-dialog.component';
-import { environment } from 'src/environments/environment';
-import { ApiInceptorService } from './components/common-service/api-inceptor.service';
-import { OrderPlacementComponent } from './transaction/order-placement/order-placement.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
-import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angular-bootstrap-md';
-import { ProjectComponent } from './transaction/project/project.component';
-import { OrderPlacementShowComponent } from './transaction/order-placement/order-placement-show/order-placement-show.component';
-import { ProjectShowComponent } from './transaction/project/project-show/project-show.component';
-import { OrderDeliveryComponent } from './transaction/order-delivery/order-delivery.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ButtonsModule, ModalModule, PopoverModule, TooltipModule } from 'angular-bootstrap-md';
 import { ChartistModule } from 'ng-chartist';
-import { MatChipsModule } from '@angular/material/chips';
-import { OrderDeliveryShowComponent } from './transaction/order-delivery/order-delivery-show/order-delivery-show.component';
-import { OrderProcessingComponent } from './transaction/order-processing/order-processing.component';
-import { OrderProcessingShowComponent } from './transaction/order-processing/order-processing-show/order-processing-show.component';
+import { environment } from 'src/environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CommonDialogComponent } from './components/common-commponents/common-dialog/common-dialog.component';
+import { ApiInceptorService } from './components/common-service/api-inceptor.service';
+import { FooterComponent } from './components/footer/footer.component';
+import { MenuListItemComponent } from './components/menu-list-item/menu-list-item.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
 @NgModule({
   declarations: [
@@ -52,15 +40,7 @@ import { OrderProcessingShowComponent } from './transaction/order-processing/ord
     FooterComponent,
     DashboardComponent,
     MenuListItemComponent,
-    CommonDialogComponent,
-    OrderPlacementComponent,
-    ProjectComponent,
-    OrderPlacementShowComponent,
-    ProjectShowComponent,
-    OrderDeliveryComponent,
-    OrderDeliveryShowComponent,
-    OrderProcessingComponent,
-    OrderProcessingShowComponent,
+    CommonDialogComponent
   ],
   imports: [
     BrowserModule,

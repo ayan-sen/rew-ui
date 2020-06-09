@@ -124,7 +124,9 @@ export class OrderPlacementComponent implements OnInit {
       'unitName': new FormControl('', Validators.required),
       'quantity': new FormControl(0, Validators.required),
       'rate': new FormControl(0, Validators.required) ,
-      'amount': new FormControl(0, Validators.required) 
+      'amount': new FormControl(0, Validators.required),
+      'alreadyOrderedQuantity': new FormControl(null),
+      'remainingQuantity': new FormControl(null),
     });
 
     this.route.queryParams.subscribe(param => {

@@ -5,7 +5,7 @@
               <div class="card card-plain">
                 <div class="card-header card-header-info">
                   <h4 class="card-title ">Project details
-                    <a routerLink="/project/add">
+                    <a routerLink="/transaction/project/add">
                       <mat-icon class="gridIcon">add</mat-icon>
                     </a>
                   </h4>
@@ -30,7 +30,7 @@
                           <td *ngIf="!isMobileMenu()">{{project.expectedDeliveryDateString}}</td>
                           <td *ngIf="!isMobileMenu()">{{project.status}}</td>
                           <td>
-                            <a [routerLink]="['/projects/edit']" [queryParams]="{ id: project.projectId, amendmentNo : project.amendmentNo}" class="edit" title="" data-toggle="tooltip" data-original-title="Edit">
+                            <a [routerLink]="['/transaction/projects/edit']" [queryParams]="{ id: project.projectId, amendmentNo : project.amendmentNo}" class="edit" title="" data-toggle="tooltip" data-original-title="Edit">
                               <mat-icon class="routeIcon">edit</mat-icon>
                             </a>
                               <a (click)="openDialog(project)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip" data-original-title="Delete">

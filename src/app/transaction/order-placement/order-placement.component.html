@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-header card-header-success">
             <h4 class="card-title">Raw material order placement
-              <a routerLink="/orders">
+              <a routerLink="/transaction/orders">
                 <mat-icon class="gridIcon" alt="Show All">web</mat-icon>
               </a>
             </h4>
@@ -196,6 +196,9 @@
                   <mat-form-field class="invisible example-full-width">
                     <input matInput placeholder="orderId" formControlName="orderId">
                     <input matInput placeholder="orderDetailsId" formControlName="orderDetailsId">
+                    <input matInput placeholder="alreadyOrderedQuantity" formControlName="alreadyOrderedQuantity">
+                    <input matInput placeholder="remainingQuantity" formControlName="remainingQuantity">
+                    
                   </mat-form-field>
                     <mat-form-field class="example-full-width">
                       <mat-select placeholder="Raw Material" formControlName="rmId">
