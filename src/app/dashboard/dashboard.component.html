@@ -1,28 +1,59 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card card-chart" >
-                    <div class="card-header card-header-info">
-                        <div class="ct-chart" id="websiteViewsChart"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Current Raw-Material Status</h4>
-                        <!-- <p class="card-category"> -->
-                            <mat-chip-list aria-label="Site">
-                                <mat-chip color="secondary" selected>Dum Dum Site</mat-chip>
-                                <mat-chip color="accent" selected>Singur Site</mat-chip> 
-                            </mat-chip-list>
-                           
-                        <!-- </p> -->
-                    </div>
-                    <!-- <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">access_time</i> campaign sent 2 days ago
-                        </div>
-                    </div> -->
-                </div>
-            </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-chart">
+          <div class="card-header card-header-info">
+            <div class="ct-chart" id="websiteViewsChart"></div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Current Raw-Material Status</h4>
+            <mat-chip-list aria-label="Site">
+              <mat-chip color="secondary" selected>Dum Dum Site</mat-chip>
+              <mat-chip color="accent" selected>Singur Site</mat-chip>
+            </mat-chip-list>
+          </div>
         </div>
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-6">
+
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Project" (selectionChange)="renderProjectProgressChart($event)">
+            <mat-option *ngFor="let value of projects" [value]="value.projectId">
+              {{value.projectId}} | {{value.description}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+    </div>
+    <div class="row" *ngIf="project">
+      <div class="col-md-6">
+        <div class="card card-chart">
+          <div class="card-header card-header-success">
+            <div class="ct-chart" id="dailySalesChart"></div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Daily Progress</h4>
+              <p class="card-category">
+                Project start date : {{project.projectStartDateString}}
+              </p>
+              <p class="card-category">
+               PO delivery date : {{project.expectedDeliveryDateString}}
+              </p>
+            
+          </div>
+          <!-- <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> updated 4 minutes ago
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>

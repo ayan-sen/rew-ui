@@ -13,4 +13,9 @@ export class InventoryService {
   getInventoryStatus() : Observable<InventoryChart> {
     return this.http.get<InventoryChart>("transaction/inventory");
  }
+
+ getProjectProjetUpdate(projectId : string) : Observable<Map<string, any>> {
+  return this.http.get<Map<string, any>>("transaction/inventory/project-status", {"params": {"projectId": projectId}});
+ }
 }
+ 

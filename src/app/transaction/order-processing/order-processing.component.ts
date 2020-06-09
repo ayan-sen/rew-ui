@@ -118,7 +118,7 @@ export class OrderProcessingComponent implements OnInit {
       if(this.opForm.value.isActive == null || this.opForm.value.isActive == '') {
         this.orderProcessing.isActive = true;
       }
-      if(this.opForm.value.billDate != null) {
+      if(this.opForm.value.processDate != null) {
         this.orderProcessing.processDateString = this.orderProcessing.processDate.toLocaleDateString();
       }
       this.orderProcessingService.save(this.orderProcessing).subscribe(

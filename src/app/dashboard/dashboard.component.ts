@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as Chartist from 'chartist';
 import * as tooltip from 'chartist-plugin-tooltips';
+import legend from 'chartist-plugin-legend';
 import { InventoryService } from '../transaction/inventory.service';
 import { InventoryChart } from './inventory-chart';
+import { Project } from '../transaction/project/project';
+import { ProjectService } from '../transaction/project/project.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,12 +17,25 @@ import { InventoryChart } from './inventory-chart';
 export class DashboardComponent implements OnInit {
 
   chartData: InventoryChart;
-  constructor(private inventoryService: InventoryService) {
+  projectData: any;
+
+  projects: Project[] = [];
+
+  project : Project;
+
+  constructor(private inventoryService: InventoryService,
+    private projectService: ProjectService) {
     var toltip = tooltip;
+    var legend = legend;
   }
 
   ngOnInit(): void {
+    this.renderMaterialBarChart();
+    this.findAllProjects();
+   // this.renderProjectProgressChart();
+  }
 
+  renderMaterialBarChart() {
     this.inventoryService.getInventoryStatus().subscribe(inv => {
       this.chartData = inv;
 
@@ -83,4 +100,81 @@ export class DashboardComponent implements OnInit {
 
     seq2 = 0;
   };
+
+  renderProjectProgressChart(event : MatSelectChange) {
+    let val = event.value;
+    this.project = this.projects.filter(p => p.projectId == val)[0];
+    
+    this.inventoryService.getProjectProjetUpdate(val).subscribe(data => {
+      this.projectData = data;
+
+      const dataDailySalesChart: any = {
+        labels: this.projectData.labels,
+        series: this.projectData.series
+      };
+
+      const optionsDailySalesChart: any = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0
+        }),
+        low: 0,
+        high: (this.projectData.max)[0], // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+        chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
+        plugins: [
+          Chartist.plugins.tooltip(),
+          legend({
+            clickable: false
+          })
+        ]
+      }
+      var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+      this.startAnimationForLineChart(dailySalesChart);
+    });
+
+
+
+
+
+
+  }
+
+  startAnimationForLineChart(chart) {
+    let seq: any, delays: any, durations: any;
+    seq = 0;
+    delays = 80;
+    durations = 500;
+
+    chart.on('draw', function (data) {
+      if (data.type === 'line' || data.type === 'area') {
+        data.element.animate({
+          d: {
+            begin: 600,
+            dur: 700,
+            from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+            to: data.path.clone().stringify(),
+            easing: Chartist.Svg.Easing.easeOutQuint
+          }
+        });
+      } else if (data.type === 'point') {
+        seq++;
+        data.element.animate({
+          opacity: {
+            begin: seq * delays,
+            dur: durations,
+            from: 0,
+            to: 1,
+            easing: 'ease'
+          }
+        });
+      }
+    });
+
+    seq = 0;
+  };
+
+  findAllProjects() { 
+    this.projectService.findAll().subscribe(projects => {
+      this.projects = projects;
+    });
+  }
 }
