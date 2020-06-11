@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   //baseUrl: 'http://DESKTOP-7GNG499:8080/rew-portal'
-  baseUrl: 'http://192.168.2.6:8080/rew-portal'
+  baseUrl: 'http://localhost:8080/rew-portal'
 };
 
 /*

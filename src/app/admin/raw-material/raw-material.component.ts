@@ -8,6 +8,10 @@ import { Unit } from '../unit/unit';
 import { Dropdown } from 'src/app/components/common-service/common-model/dropdown';
 import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+
+declare const $: any;
 
 @Component({
   selector: 'app-raw-material',
@@ -34,14 +38,16 @@ export class RawMaterialComponent implements OnInit {
 
   constructor(private rawMaterialService : RawMaterialService, 
               private notificationService : NotificationService,
-              private unitService : UnitService) { }
+              private unitService : UnitService,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getAllUnits();
     this.findAll();
     this.rmForm = new FormGroup({
-      'code': new FormControl('', Validators.required),
+      'code': new FormControl(''),
       'name': new FormControl('', Validators.required),
+      'description': new FormControl('', Validators.required),
       'hsnSacCode': new FormControl('', Validators.required), 
       'unitId': new FormControl('', Validators.required),
       'isActive': new FormControl('', Validators.required),
@@ -87,4 +93,39 @@ export class RawMaterialComponent implements OnInit {
     );
   }
 
+  delete(material : RawMaterial) {
+    this.rawMaterialService.delete(material.code).subscribe(
+      (response : ServerResponse) => {
+        console.log("Delete Response >>>>");
+        console.log(response);
+        this.notificationService.openSnackBar(response.message, response.status);
+        this.findAll();
+    });
+  }
+
+  openDialog(material : RawMaterial): void {
+    const dialogRef = this.dialog.open(CommonDialogComponent, {
+      width: '250px',
+      data: { header : "Confirm",
+              content : "Are you sure to delete?" 
+            }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.delete(material);
+      }
+    });
+  }
+
+  isMobileMenu() {
+    if ($(window).width() > 991) {
+      return false;
+    }
+    return true;
+  }
+
+  edit(material : RawMaterial) {
+    this.rmForm.setValue(material);
+  }
 }

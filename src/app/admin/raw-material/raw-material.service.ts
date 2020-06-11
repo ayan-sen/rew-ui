@@ -27,4 +27,8 @@ export class RawMaterialService {
   findAllRawMaterials() : Observable<RawMaterial[]> {
     return this.http.get<RawMaterial[]>("admin/raw-materials");
   }
+
+  delete(rmId : string) {
+    return this.http.delete("/admin/materials/" +rmId );
+   }
 }
