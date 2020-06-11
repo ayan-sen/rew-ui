@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
+import { ModalDirective } from 'angular-bootstrap-md';
 
 declare const $: any;
 
@@ -107,7 +108,7 @@ export class ClientComponent implements OnInit {
     console.log(this.clientForm.value);
   }
 
-  onDetailsSubmit() {
+  onDetailsSubmit(frame : ModalDirective) {
     if (this.clientDetailsForm.valid) {
       let newDetail: ClientDetails = this.clientDetailsForm.value;
       let clientId = newDetail.clientId;
@@ -126,6 +127,7 @@ export class ClientComponent implements OnInit {
         this.notificationService.openSnackBar("Address details added successfully", "success");
       }
       this.clientDetailsForm.reset();
+      frame.hide();
     } else {
       this.notificationService.openSnackBar("Error occurred, please review and submit again", "danger");
     }
@@ -139,9 +141,10 @@ export class ClientComponent implements OnInit {
     }
     return true;
   }
-
-  editDetail(clientDetail: ClientDetails) {
+ 
+  editDetail(clientDetail: ClientDetails, frame : ModalDirective) {
     this.clientDetailsForm.setValue(clientDetail);
+    frame.show();
   }
 
   deleteDetail(clientDetail: ClientDetails) {
@@ -188,4 +191,11 @@ export class ClientComponent implements OnInit {
     });
   }
 
+  close(frame : ModalDirective)  {
+    frame.hide();
+  }
+
+  modalWIdth() : string {
+    return this.isMobileMenu() ? "100%" : "150%";
+  }
 }

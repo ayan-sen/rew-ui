@@ -18,7 +18,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonsModule, ModalModule, PopoverModule, TooltipModule } from 'angular-bootstrap-md';
-import { ChartistModule } from 'ng-chartist';
+
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -67,7 +67,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     ButtonsModule,
     MatNativeDateModule,
     MatRippleModule,
-    ChartistModule,
+   // ChartistModule,
     MatChipsModule 
   ],
   providers: [
