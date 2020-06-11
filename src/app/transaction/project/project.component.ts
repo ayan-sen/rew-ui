@@ -247,6 +247,7 @@ export class ProjectComponent implements OnInit {
   }
 
   getConsignees() {
+    
     this.clientService.findAll().subscribe(
       consignees => {
         this.consignees = consignees;
