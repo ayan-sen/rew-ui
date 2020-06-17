@@ -7,4 +7,5 @@ export class ProjectDetails {
     quantity : number;
     rate : number;
     amount : number;
+    rmName : string;
 }
