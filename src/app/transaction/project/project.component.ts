@@ -44,6 +44,7 @@ export class ProjectComponent implements OnInit {
 
   units : Unit[] =[];
 
+  rmName : string;
   unitId : string;
   unitName : string;
 
@@ -271,6 +272,7 @@ export class ProjectComponent implements OnInit {
 
     this.unitId = material.unit.unitId;
     this.unitName = material.unit.unitName;
+    this.rmName = material.name;
   }
 
   editDetail(projectDetail: ProjectDetails, frame : ModalDirective) {

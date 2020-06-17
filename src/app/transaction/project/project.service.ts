@@ -30,7 +30,7 @@ export class ProjectService {
     let params = new HttpParams();
     params = params.append('id', projectId);
     params = params.append('amendmentNo', amendmentNo.toString());
-    return this.http.delete("/transaction/projects/delete" ,  {"params": params}  );
+    return this.http.delete("transaction/projects/delete" ,  {"params": params}  );
    }
 
    deleteDetail(projectId : string, amendmentNo : number, detailId : number) {
@@ -38,6 +38,6 @@ export class ProjectService {
     params = params.append('id', projectId);
     params = params.append('amendmentNo', amendmentNo.toString());
     params = params.append('detailId', detailId.toString());
-    return this.http.delete("/transaction/projetcs/detail/delete", {"params": params});
+    return this.http.delete("transaction/projects/detail/delete", {"params": params});
    }
 }
