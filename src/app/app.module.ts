@@ -31,6 +31,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { DatePipe } from '@angular/common';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { DatePipe } from '@angular/common';
     FooterComponent,
     DashboardComponent,
     MenuListItemComponent,
-    CommonDialogComponent
+    CommonDialogComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

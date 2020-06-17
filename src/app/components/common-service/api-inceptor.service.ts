@@ -10,12 +10,18 @@ export class ApiInceptorService implements HttpInterceptor {
   ) { }
   intercept(req: import("@angular/common/http").HttpRequest<any>, next: import("@angular/common/http").HttpHandler): import("rxjs").Observable<import("@angular/common/http").HttpEvent<any>> {
     
-    let finalUrl = this.baseUrl + req.url;
-    console.log("finalurl >>"+finalUrl);
-    const apiReq = req.clone({ url: `${this.baseUrl}/${req.url}` });
-    //const apiReq = req.clone({ url: finalUrl }); 
-    return next.handle(apiReq);
-     
+    if (sessionStorage.getItem('username') && sessionStorage.getItem('token')) {
+      const apiReq = req.clone({
+        url: `${this.baseUrl}/${req.url}`,
+        setHeaders: {
+          Authorization: sessionStorage.getItem('token') 
+        }
+      })
+      return next.handle(apiReq);
+    } else {
+      const apiReq = req.clone({ url: `${this.baseUrl}/${req.url}` });
+      return next.handle(apiReq);
+    }
     throw new Error("Method not implemented.");
   }
 }
