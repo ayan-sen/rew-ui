@@ -24,14 +24,14 @@ export class OrderProcessingService {
   }
 
   delete(processId : number) {
-    return this.http.delete("/transaction/processes/delete" , {"params": {"id": processId.toString()}}  );
+    return this.http.delete("transaction/processes/delete" , {"params": {"id": processId.toString()}}  );
   }
 
   deleteDetail(processId : number, detailId : number) {
     let params = new HttpParams();
     params = params.append('id', processId.toString());
     params = params.append('detailId', detailId.toString());
-    return this.http.delete("/transaction/processes/detail/delete", {"params": params});
+    return this.http.delete("transaction/processes/detail/delete", {"params": params});
   }
 
   findMaterialsByProjectIdAndSiteId(projectId: string, siteId : string) : Observable<ProjectMaterial[]> {

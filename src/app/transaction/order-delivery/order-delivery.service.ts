@@ -23,14 +23,14 @@ export class OrderDeliveryService {
   }
 
   delete(deliveryId : string) {
-    return this.http.delete("/transaction/deliveries/delete" , {"params": {"id": deliveryId}}  );
+    return this.http.delete("transaction/deliveries/delete" , {"params": {"id": deliveryId}}  );
   }
 
   deleteDetail(deliveryId : string, detailId : number) {
     let params = new HttpParams();
     params = params.append('id', deliveryId);
     params = params.append('detailId', detailId.toString());
-    return this.http.delete("/transaction/deliveries/detail/delete", {"params": params});
+    return this.http.delete("transaction/deliveries/detail/delete", {"params": params});
   }
 
 }

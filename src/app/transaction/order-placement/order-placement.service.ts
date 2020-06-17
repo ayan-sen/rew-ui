@@ -23,14 +23,14 @@ export class OrderPlacementService {
   }
 
   delete(orderId : string) {
-    return this.http.delete("/transaction/orders/delete" , {"params": {"id": orderId}}  );
+    return this.http.delete("transaction/orders/delete" , {"params": {"id": orderId}}  );
   }
 
   deleteDetail(orderId : string, detailId : number) {
     let params = new HttpParams();
     params = params.append('id', orderId);
     params = params.append('detailId', detailId.toString());
-    return this.http.delete("/transaction/orders/detail/delete", {"params": params});
+    return this.http.delete("transaction/orders/detail/delete", {"params": params});
   }
 
    downloadInvoice(orderId : string) {   

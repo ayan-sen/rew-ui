@@ -29,6 +29,6 @@ export class RawMaterialService {
   }
 
   delete(rmId : string) {
-    return this.http.delete("/admin/materials/" +rmId );
+    return this.http.delete("admin/materials/" +rmId );
    }
 }
