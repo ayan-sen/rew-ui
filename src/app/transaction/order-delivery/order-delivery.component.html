@@ -79,8 +79,8 @@
                 <div class="col-md-2">
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Bill No" formControlName="billNo">
+                    <mat-error *ngIf="hasError('billNo', 'required')">Bill no is required</mat-error>
                   </mat-form-field>
-                  <mat-error *ngIf="hasError('billNo', 'required')">Bill no is required</mat-error>
                 </div>
 
                 <div class="col-md-2">

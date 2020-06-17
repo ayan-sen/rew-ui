@@ -1,28 +1,27 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
+import { ActivatedRoute } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md';
-import { OrderPlacement } from './order-placement';
-import { OrderPlacementDetails } from './order-placement-details';
-import { NotificationService } from 'src/app/components/notification/notification.service';
-import { RawMaterialService } from 'src/app/admin/raw-material/raw-material.service';
-import { RawMaterial } from 'src/app/admin/raw-material/raw-material';
-import { ClientService } from 'src/app/admin/client/client.service';
+import { isNumeric } from 'rxjs/util/isNumeric';
 import { Client } from 'src/app/admin/client/client';
-import { OrderPlacementService } from './order-placement.service';
-import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Dropdown } from 'src/app/components/common-service/common-model/dropdown';
-import { ProjectService } from '../project/project.service';
-import { Project } from '../project/project';
+import { ClientDetails } from 'src/app/admin/client/client-detail';
+import { ClientService } from 'src/app/admin/client/client.service';
+import { RawMaterial } from 'src/app/admin/raw-material/raw-material';
+import { RawMaterialService } from 'src/app/admin/raw-material/raw-material.service';
 import { Unit } from 'src/app/admin/unit/unit';
 import { UnitService } from 'src/app/admin/unit/unit.service';
 import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { OrderPlacementShowComponent } from './order-placement-show/order-placement-show.component';
-import { ClientDetails } from 'src/app/admin/client/client-detail';
-import { MatSelectChange } from '@angular/material/select';
-import { isNumeric } from 'rxjs/util/isNumeric';
+import { Dropdown } from 'src/app/components/common-service/common-model/dropdown';
+import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
+import { NotificationService } from 'src/app/components/notification/notification.service';
+import { Project } from '../project/project';
+import { ProjectService } from '../project/project.service';
+import { OrderPlacement } from './order-placement';
+import { OrderPlacementDetails } from './order-placement-details';
+import { OrderPlacementService } from './order-placement.service';
 
 declare const $: any;
 
@@ -53,6 +52,7 @@ export class OrderPlacementComponent implements OnInit {
 
   supplierDetails : ClientDetails[] = [];
 
+  rmName : string;
   unitId : string;
   unitName : string;
 
@@ -251,7 +251,7 @@ export class OrderPlacementComponent implements OnInit {
   }
 
   populateUnit(material : RawMaterial) {
-
+    this.rmName = material.name;
     this.unitId = material.unit.unitId;
     this.unitName = material.unit.unitName;
   }

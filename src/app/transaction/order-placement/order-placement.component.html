@@ -148,7 +148,7 @@
                 </thead>
                 <tbody *ngFor="let dtl of details">
                   <tr>
-                    <td>{{dtl.rmId}}</td>
+                    <td>{{dtl.rmName}}</td>
                     <td>{{dtl.quantity}}</td>
                     <td>{{dtl.unitId}}</td>
                     <td>{{dtl.rate}}</td>
@@ -197,6 +197,9 @@
                     <input matInput placeholder="alreadyOrderedQuantity" formControlName="alreadyOrderedQuantity">
                     <input matInput placeholder="remainingQuantity" formControlName="remainingQuantity">
                     
+                  </mat-form-field>
+                  <mat-form-field class="invisible example-full-width">
+                    <input matInput formControlName="rmName" [(ngModel)]='rmName' >
                   </mat-form-field>
                     <mat-form-field class="example-full-width">
                       <mat-select placeholder="Raw Material" formControlName="rmId">
