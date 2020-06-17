@@ -30,6 +30,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     FooterComponent,
     DashboardComponent,
     MenuListItemComponent,
-    CommonDialogComponent
+    CommonDialogComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { Component, ElementRef, HostBinding, OnInit, ViewChild, AfterViewInit } 
 import { Router } from '@angular/router';
 import { SideBarItem } from './sidebar-item';
 import { SidebarService } from './sidebar.service';
+import { LoginService } from '../login/login.service';
 
 declare const $: any;
 
@@ -18,22 +19,37 @@ export class SidebarComponent implements OnInit,AfterViewInit {
   depth: number = 0;
   sideBarItems: SideBarItem[] = [];
 
-  constructor(public sidebarService: SidebarService,
+  constructor(public sidebarService: SidebarService, private loginService : LoginService,
     public router: Router) { 
 
-      this.sidebarService.getMenu().subscribe(
+      this.loadMenu();
+
+    }
+
+    loadMenu() {
+      this.sidebarService.getMenu().subscribe( 
         items => {
           this.sideBarItems = items;
         }
       );
-
     }
   
   ngAfterViewInit(): void {
       this.sidebarService.appDrawer = this.appDrawer;
+      this.loginService.brodcast.subscribe(d => {
+        if(d) {
+          this.loadMenu();
+        }
+      });
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.loginService.brodcast.subscribe(d => {
+      if(d) {
+        this.loadMenu();
+      }
+    });
+  }
   
   isMobileMenu() {
       if ($(window).width() > 991) {
