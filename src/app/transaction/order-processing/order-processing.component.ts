@@ -1,23 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { OrderProcessing } from './order-processing';
-import { OrderProcessingDetails } from './order-processing-details';
-import { Dropdown } from 'src/app/components/common-service/common-model/dropdown';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { OrderProcessingService } from './order-processing.service';
-import { ProjectService } from '../project/project.service';
-import { InventoryService } from '../inventory.service';
-import { Project } from '../project/project';
-import { lessThanValueValidator, mandatoryAndlessThanValueValidator } from 'src/app/components/common-commponents/validators/number-compare';
-import { convertToDate } from 'src/app/components/common-service/common-uutil';
-import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
-import { NotificationService } from 'src/app/components/notification/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
+import { ActivatedRoute } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
-import { MatSelectChange } from '@angular/material/select';
+import { mandatoryAndlessThanValueValidator } from 'src/app/components/common-commponents/validators/number-compare';
+import { Dropdown } from 'src/app/components/common-service/common-model/dropdown';
+import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
+import { convertToDate } from 'src/app/components/common-service/common-uutil';
+import { NotificationService } from 'src/app/components/notification/notification.service';
+import { InventoryService } from '../inventory.service';
+import { Project } from '../project/project';
+import { ProjectService } from '../project/project.service';
+import { OrderProcessing } from './order-processing';
+import { OrderProcessingDetails } from './order-processing-details';
+import { OrderProcessingService } from './order-processing.service';
 import { ProjectMaterial } from './project-material';
+import { DatePipe } from '@angular/common';
 
 declare const $: any;
 
@@ -64,11 +65,11 @@ export class OrderProcessingComponent implements OnInit {
 
   constructor(private orderProcessingService : OrderProcessingService,
               private projectService : ProjectService,
-              private inventoryService : InventoryService,
               public dialog: MatDialog,
               private route: ActivatedRoute,
               private notificationService : NotificationService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.getProjects();
@@ -119,7 +120,7 @@ export class OrderProcessingComponent implements OnInit {
         this.orderProcessing.isActive = true;
       }
       if(this.opForm.value.processDate != null) {
-        this.orderProcessing.processDateString = this.orderProcessing.processDate.toLocaleDateString();
+        this.orderProcessing.processDateString = this.datePipe.transform(this.orderProcessing.processDate, 'dd/MM/yyyy');
       }
       this.orderProcessingService.save(this.orderProcessing).subscribe(
         (response: ServerResponse) => {

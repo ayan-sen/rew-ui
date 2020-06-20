@@ -30,6 +30,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
   ],
   providers: [
     { provide: "BASE_API_URL", useValue: environment.baseUrl },
-    { provide: HTTP_INTERCEPTORS, useClass: ApiInceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInceptorService, multi: true },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

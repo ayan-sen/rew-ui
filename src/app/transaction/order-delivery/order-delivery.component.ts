@@ -23,6 +23,7 @@ import { Client } from 'src/app/admin/client/client';
 import { ClientDetails } from 'src/app/admin/client/client-detail';
 import { lessThanValueValidator } from 'src/app/components/common-commponents/validators/number-compare';
 import { convertToDate } from 'src/app/components/common-service/common-uutil';
+import { DatePipe } from '@angular/common';
 
 declare const $: any;
 
@@ -68,7 +69,8 @@ export class OrderDeliveryComponent implements OnInit {
               private clientService : ClientService,
               public dialog: MatDialog,
               private route: ActivatedRoute,
-              private fb: FormBuilder
+              private fb: FormBuilder,
+              private datePipe: DatePipe
     ) { }
 
   ngOnInit(): void {
@@ -147,7 +149,7 @@ export class OrderDeliveryComponent implements OnInit {
         this.orderDelivery.isActive = true;
       }
       if(this.deliveryForm.value.billDate != null) {
-        this.orderDelivery.billDateString = this.orderDelivery.billDate.toLocaleDateString();
+        this.orderDelivery.billDateString = this.datePipe.transform(this.orderDelivery.billDate, 'dd/MM/yyyy');
       }
       this.orderDeliveryService.save(this.orderDelivery).subscribe(
         (response: ServerResponse) => {

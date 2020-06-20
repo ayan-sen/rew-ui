@@ -22,6 +22,7 @@ import { ProjectService } from '../project/project.service';
 import { OrderPlacement } from './order-placement';
 import { OrderPlacementDetails } from './order-placement-details';
 import { OrderPlacementService } from './order-placement.service';
+import { DatePipe } from '@angular/common';
 
 declare const $: any;
 
@@ -83,7 +84,8 @@ export class OrderPlacementComponent implements OnInit {
               private projectService : ProjectService,
               private unitService : UnitService,
               public dialog: MatDialog,
-              private route: ActivatedRoute) { 
+              private route: ActivatedRoute,
+              private datePipe: DatePipe) { 
   }
   
 
@@ -168,8 +170,8 @@ export class OrderPlacementComponent implements OnInit {
       if(this.opForm.value.isActive == null || this.opForm.value.isActive == '') {
         this.orderPlacement.isActive = true;
       }
-      this.orderPlacement.expectedDeliveryDateString = this.orderPlacement.expectedDeliveryDate.toLocaleDateString();
-      this.orderPlacement.orderDateString = this.orderPlacement.orderDate.toLocaleDateString();
+      this.orderPlacement.expectedDeliveryDateString = this.datePipe.transform(this.orderPlacement.expectedDeliveryDate, 'dd/MM/yyyy');
+      this.orderPlacement.orderDateString = this.datePipe.transform(this.orderPlacement.orderDate, 'dd/MM/yyyy');
       this.orderPlacementService.save(this.orderPlacement).subscribe(
         (response: ServerResponse) => {
           this.notificationService.openSnackBar(response.message, response.status);

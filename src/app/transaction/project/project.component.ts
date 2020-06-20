@@ -18,6 +18,7 @@ import { Client } from 'src/app/admin/client/client';
 import { Unit } from 'src/app/admin/unit/unit';
 import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
 import { isNumeric } from 'rxjs/util/isNumeric';
+import { DatePipe } from '@angular/common';
 
 declare const $: any;
 
@@ -71,7 +72,8 @@ export class ProjectComponent implements OnInit {
               private clientService : ClientService,
               private unitService : UnitService,
               public dialog: MatDialog,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private datePipe: DatePipe) { }
 
   ngOnInit(): void {
 
@@ -163,22 +165,22 @@ export class ProjectComponent implements OnInit {
       if(this.projectForm.value.isActive == null || this.projectForm.value.isActive == '') {
         this.project.isActive = true;
       }
-      this.project.expectedDeliveryDateString = this.project.expectedDeliveryDate.toLocaleDateString();
+      this.project.expectedDeliveryDateString = this.datePipe.transform(this.project.expectedDeliveryDate, 'dd/MM/yyyy');
       if(this.projectForm.value.actualDeliveryDate != null) {
-        this.project.actualDeliveryDateString = this.project.actualDeliveryDate.toLocaleDateString();
+        this.project.actualDeliveryDateString = this.datePipe.transform(this.project.actualDeliveryDate, 'dd/MM/yyyy');
       }
       if(this.projectForm.value.purchaseOrderDate != null) {
-        this.project.purchaseOrderDateString = this.project.purchaseOrderDate.toLocaleDateString();
+        this.project.purchaseOrderDateString = this.datePipe.transform(this.project.purchaseOrderDate, 'dd/MM/yyyy');
       }
       if(this.projectForm.value.projectStartDate != null) {
-        this.project.projectStartDateString = this.project.projectStartDate.toLocaleDateString();
+        this.project.projectStartDateString = this.datePipe.transform(this.project.projectStartDate, 'dd/MM/yyyy');
       }
 
       if(this.projectForm.value.amendmentDate == null) {
-        this.project.amendmentDateString = (new Date()).toLocaleDateString();
+        this.project.amendmentDateString = this.datePipe.transform((new Date()), 'dd/MM/yyyy');
         this.project.amendmentNo = 0;
       } else {
-        this.project.amendmentDateString = this.project.amendmentDate.toLocaleDateString();
+        this.project.amendmentDateString = this.datePipe.transform(this.project.amendmentDate, 'dd/MM/yyyy');
       }
 
       this.projectService.save(this.project).subscribe(
@@ -187,6 +189,7 @@ export class ProjectComponent implements OnInit {
           console.log("success response ::");
           console.log(response);
           this.projectForm.reset();
+          this.projectId = '';
           this.details = [];
         },
         (errorMsg: HttpErrorResponse) => {
