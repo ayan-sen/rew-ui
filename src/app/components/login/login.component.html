@@ -1,42 +1,34 @@
-<!-- Default form login -->
-<form [formGroup]="loginForm" class="text-center border border-light p-5" (ngSubmit)="onSubmit()" #headerForm="ngForm">
-    <p class="h4 mb-4">Sign in</p>
-    <!-- Email -->
-    <input matInput class="form-control mb-4" placeholder="User Name" formControlName="username" >
-    <!-- Password -->
-    <input matInput class="form-control mb-4" type="password" placeholder="Pass" formControlName="password" >
-    <!-- <div class="d-flex justify-content-around">
-      <div>
-        <mdb-checkbox [default]="true">Remember me</mdb-checkbox>
+  <div class="row div-center">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header card-header-info">
+          <h4 class="card-title">Login</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="loginForm" (keydown.enter)="onSubmit()"(ngSubmit)="onSubmit()" #headerForm="ngForm">
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="User Name" formControlName="username">
+                  <!-- <mat-error *ngIf="hasError('username', 'required')">User Name is required</mat-error> -->
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field class="example-full-width">
+                  <input matInput type="password" placeholder="Password" formControlName="password">
+                  <!-- <mat-error *ngIf="hasError('password', 'required')">password is required</mat-error> -->
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button mdbBtn color="info" block="true" class="my-4" type="submit">Sign in</button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-      <div>
-        <a href="">Forgot password?</a>
-      </div>
-    </div> -->
-  
-    <!-- Sign in button -->
-    <button mdbBtn color="info" block="true" class="my-4" type="submit">Sign in</button>
-  
-    <!-- 
-    <p>Not a member?
-      <a href="">Register</a>
-    </p>
-  
-   
-    <p>or sign in with:</p>
-  
-    <a type="button" class="light-blue-text mx-2">
-      <mdb-icon fab icon="facebook"></mdb-icon>
-    </a>
-    <a type="button" class="light-blue-text mx-2">
-      <mdb-icon fab icon="twitter"></mdb-icon>
-    </a>
-    <a type="button" class="light-blue-text mx-2">
-      <mdb-icon fab icon="linkedin"></mdb-icon>
-    </a>
-    <a type="button" class="light-blue-text mx-2">
-      <mdb-icon fab icon="github"></mdb-icon>
-    </a> -->
-  
-  </form>
-  <!-- Default form login -->
+    </div>
+  </div>
