@@ -5,6 +5,7 @@ import { SidebarService } from '../sidebar/sidebar.service';
 import { LoginService } from '../login/login.service';
 
 @Component({
+
 	selector: 'app-navbar',
 	templateUrl: './navbar.component.html',
 	styleUrls: ['./navbar.component.css']
@@ -121,4 +122,5 @@ export class NavbarComponent implements OnInit {
 		this.loginService.logOut();
 		this.router.navigate(['/login']);
 	}
+
 } 
