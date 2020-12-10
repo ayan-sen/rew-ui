@@ -58,4 +58,8 @@ export class SidebarComponent implements OnInit,AfterViewInit {
       return true;
   }
 
+  logout() {
+		this.loginService.logOut();
+		this.router.navigate(['/login']);
+	}
 }

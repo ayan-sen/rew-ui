@@ -23,7 +23,7 @@
                 <tbody *ngFor="let p of processes">
                   <tr>
                     <td>{{p.siteId}}</td>
-                    <td>{{p.processDate | date:'yyyy-MM-dd'}}</td>
+                    <td>{{p.processDateString}}</td>
                     <td>{{p.projectId}}</td>
                     <td>{{p.notes}}</td>
                     <!-- <td>

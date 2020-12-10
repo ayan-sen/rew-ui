@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       let username = this.loginForm.value.username;
       let password = this.loginForm.value.password;
-      console.log(username + "   " + password);
+     
       this.loading = true;
       this.loginService.authenticate(username, password)
         .pipe(first())
@@ -47,4 +47,9 @@ export class LoginComponent implements OnInit {
     }
 
   }
+
+  public hasError = (controlName: string, errorName: string) =>{
+    return this.loginForm.controls[controlName].hasError(errorName); 
+  } 
+
 }
