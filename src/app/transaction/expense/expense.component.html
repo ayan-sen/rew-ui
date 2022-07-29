@@ -1,0 +1,92 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title">Create Expense Record</h4>
+              <p class="card-category">Declere expenses here</p>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="exForm">
+                <div class="row">
+                    <div class="col-md-2">
+                        <mat-form-field>
+                            <mat-label>Expense Date</mat-label>
+                            <input matInput [matDatepicker]="picker1"
+                                formControlName="expenseDate">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field class="example-full-width">
+                          <mat-select placeholder="Category" formControlName="categoryId">
+                            <mat-option *ngFor="let category of expenseCategories" [value]="category.categoryId">
+                              {{category.categoryName}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Description" formControlName="description">
+                      <mat-error *ngIf="hasError('description', 'required')">Description is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Amount" formControlName="amount" style="text-align: right;">
+                      <mat-error *ngIf="hasError('amount', 'required')">Amount is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <button mat-raised-button type="submit" (click)="onSubmit()" class="btn btn-success pull-right">Save</button>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-plain">
+            <div class="card-header card-header-info">
+              <h4 class="card-title ">Expenses</h4>
+              <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="text-primary">
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                  </thead>
+                  <tbody *ngFor="let ex of expenses">
+                    <tr>
+                      <td>{{ex.expenseDateString}}</td>
+                      <td>{{ex.categoryName}}</td>
+                      <td>{{ex.description}}</td>
+                      <td>{{ex.amount}}</td>
+                      <!-- <td>
+                        <a (click)="edit(ex)" class="edit" title="" style="cursor: pointer;" data-toggle="tooltip" data-original-title="Edit">
+                          <mat-icon class="routeIcon">edit</mat-icon>
+                        </a> 
+                          <a (click)="openDialog(ex)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip" data-original-title="Delete">
+                          <mat-icon class="routeIcon">delete</mat-icon>
+                        </a>
+                      </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>

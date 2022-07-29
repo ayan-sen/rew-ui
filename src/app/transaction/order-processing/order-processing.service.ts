@@ -38,6 +38,6 @@ export class OrderProcessingService {
     let params = new HttpParams();
     params = params.append('projectId', projectId);
     params = params.append('siteId', siteId);
-    return this.http.get<ProjectMaterial[]>("/transaction/processes/materials", {"params": params});
+    return this.http.get<ProjectMaterial[]>("transaction/processes/materials", {"params": params});
   }
 }

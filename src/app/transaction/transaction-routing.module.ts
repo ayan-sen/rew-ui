@@ -8,6 +8,7 @@ import { OrderDeliveryComponent } from './order-delivery/order-delivery.componen
 import { OrderDeliveryShowComponent } from './order-delivery/order-delivery-show/order-delivery-show.component';
 import { OrderProcessingComponent } from './order-processing/order-processing.component';
 import { OrderProcessingShowComponent } from './order-processing/order-processing-show/order-processing-show.component';
+import { ExpenseComponent } from './expense/expense.component';
 
 const routes: Routes = [
   { path: 'order-placement/add', component: OrderPlacementComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: 'order-delivery/edit', component: OrderDeliveryComponent },
   { path: 'log/add', component: OrderProcessingComponent },
   { path: 'logs', component: OrderProcessingShowComponent },
-  { path: 'log/edit', component: OrderProcessingComponent }
+  { path: 'log/edit', component: OrderProcessingComponent },
+  { path: 'expense/add', component: ExpenseComponent }
 ];
 
 @NgModule({

@@ -27,6 +27,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angular-bootstrap-md';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
+import { ExpenseComponent } from './expense/expense.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { MatChipsModule } from '@angular/material/chips';
     OrderDeliveryComponent,
     OrderDeliveryShowComponent,
     OrderProcessingComponent,
-    OrderProcessingShowComponent
+    OrderProcessingShowComponent,
+    ExpenseComponent
   ],
   imports: [
     CommonModule,
