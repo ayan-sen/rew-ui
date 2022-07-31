@@ -9,23 +9,45 @@
                 <mat-icon class="gridIcon">add</mat-icon>
               </a>
             </h4>
-            <p class="card-category"></p>
+            
           </div>
           <div class="card-body">
-            <div class="table-responsive">
+            <form [formGroup]="opForm" (ngSubmit)="onSubmit()" #headerForm="ngForm">
+              <div class="row">
+                <div class="col-md-2">
+                  <mat-form-field>
+                    <mat-label>Log Date</mat-label>
+                    <input matInput [matDatepicker]="picker3" formControlName="processDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                    <mat-error *ngIf="hasError('processDate', 'required')">Log date is required</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <button mat-raised-button type="submit" [disabled]="!headerForm.form.valid" (click)="headerForm.ngSubmit.emit()"
+                  class="btn btn-success pull-right">Search</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive" *ngFor="let work of works | keyvalue">
+              <p class="mat-card-title">Project id : {{work.key}}</p>
               <table class="table table-hover">
                 <thead class="text-primary">
-                  <th>Site</th>
-                  <th>Date</th>
-                  <th>Project</th>
-                  <th>Notes</th>
+                  <th>Item</th>
+                  <th>Unit</th>
+                  <th>Quantity</th>
+                  <th>In/Out</th>
                 </thead>
-                <tbody *ngFor="let p of processes">
+                <tbody *ngFor="let log of work.value">
+                  
                   <tr>
-                    <td>{{p.siteId}}</td>
-                    <td>{{p.processDate | date:'yyyy-MM-dd'}}</td>
-                    <td>{{p.projectId}}</td>
-                    <td>{{p.notes}}</td>
+                    <td>{{log.materialName}}</td>
+                    <td>{{log.materialUnit}}</td>
+                    <td>{{log.quantity}}</td>
+                    <td>{{log.processType}}</td>
+                    
                     <!-- <td>
                       <a [routerLink]="['/order-delivery/edit']" [queryParams]="{ id: dl.deliveryId}" class="edit"
                         title="" data-toggle="tooltip" data-original-title="Edit">
