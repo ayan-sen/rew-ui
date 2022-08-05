@@ -1,0 +1,86 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-plain">
+          <div class="card-header card-header-info">
+            <h4 class="card-title ">Expense details
+              <a routerLink="/transaction/expense/add">
+                <mat-icon class="gridIcon">add</mat-icon>
+              </a>
+            </h4>
+
+          </div>
+          <div class="card-body">
+            <form [formGroup]="expForm" (ngSubmit)="onSubmit()" #headerForm="ngForm">
+              <div class="row">
+                <div class="col-md-2">
+                  <mat-form-field>
+                    <mat-label>From Date/Expanse Date</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="fromDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error *ngIf="hasError('fromDate', 'required')">From date is required</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <mat-form-field>
+                    <mat-label>To Date</mat-label>
+                    <input matInput [matDatepicker]="picker2" formControlName="toDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <!-- <mat-error *ngIf="hasError('fromDate', 'required')">To date is required</mat-error> -->
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <button mat-raised-button type="submit" [disabled]="!headerForm.form.valid"
+                    (click)="headerForm.ngSubmit.emit()" class="btn btn-success pull-right">Search</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div *ngIf="isSearched">
+            <h4 class="text-primary"><b>Expanse during this date range : {{totalExpense}}</b></h4>
+            <h4 class="text-primary"><b>Expanse Summary :</b></h4>
+            <div class="col-md-6">
+              <div class="card-body">
+                <div class="table-responsive" *ngFor="let cat of catagoriseExpenses | keyvalue">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr class="text-primary">
+                        <td class="col"><b>{{cat.key}}</b></td>
+                        <td class="col text-right">{{cat.value}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <h4 class="text-primary"><b>Expanse Details :</b></h4>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="text-primary">
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                  </thead>
+                  <tbody *ngFor="let exp of expenses">
+                    <tr>
+                      <td>{{exp.expenseDateString}}</td>
+                      <td>{{exp.categoryName}}</td>
+                      <td>{{exp.description}}</td>
+                      <td>{{exp.amount}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

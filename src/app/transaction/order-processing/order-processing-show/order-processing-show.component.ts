@@ -33,7 +33,7 @@ export class OrderProcessingShowComponent implements OnInit {
       'processDate': new FormControl(null, Validators.required),
       'processDateString': new FormControl('')
     });
-    this.findAll();
+    //this.findAll();
   }
 
   findAll() {

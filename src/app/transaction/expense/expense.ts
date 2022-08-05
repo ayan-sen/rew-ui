@@ -4,4 +4,7 @@ export class Expense {
     expenseDateString : string;
     description : string;
     amount : number;
+    categoryId : number;
+    categoryName : string;
+
 }

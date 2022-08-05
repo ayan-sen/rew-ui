@@ -28,6 +28,7 @@ import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angula
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { ExpenseComponent } from './expense/expense.component';
+import { ExpenseShowComponent } from './expense/expense-show/expense-show.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { ExpenseComponent } from './expense/expense.component';
     OrderDeliveryShowComponent,
     OrderProcessingComponent,
     OrderProcessingShowComponent,
-    ExpenseComponent
+    ExpenseComponent,
+    ExpenseShowComponent
   ],
   imports: [
     CommonModule,
