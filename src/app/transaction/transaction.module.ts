@@ -29,6 +29,8 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { ExpenseComponent } from './expense/expense.component';
 import { ExpenseShowComponent } from './expense/expense-show/expense-show.component';
+import { OrderDespatchComponent } from './order-despatch/order-despatch.component';
+import { OrderDespatchShowComponent } from './order-despatch/order-despatch-show/order-despatch-show.component';
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import { ExpenseShowComponent } from './expense/expense-show/expense-show.compon
     OrderProcessingComponent,
     OrderProcessingShowComponent,
     ExpenseComponent,
-    ExpenseShowComponent
+    ExpenseShowComponent,
+    OrderDespatchComponent,
+    OrderDespatchShowComponent
   ],
   imports: [
     CommonModule,

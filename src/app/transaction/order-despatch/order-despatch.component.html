@@ -1,0 +1,217 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title">Despatch
+                <a routerLink="/transaction/despatch"> 
+                  <mat-icon class="gridIcon">web</mat-icon>
+                </a>
+              </h4>
+              <p class="card-category">Record order despatch details here</p>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="odForm" (ngSubmit)="onSubmit()" #headerForm="ngForm">
+                <div class="row">
+                  <div class="col-md-2">
+                    <mat-form-field class="invisible example-full-width">
+                      <input matInput placeholder="despatchId" formControlName="despatchId">
+                      <!-- <input matInput placeholder="isActive" formControlName="isActive"> -->
+                    </mat-form-field>
+  
+                    <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Work Unit" formControlName="siteId" [(ngModel)]="siteId">
+                        <mat-option *ngFor="let value of workUnits" [value]="value.value">
+                          {{value.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="hasError('siteId', 'required')">Site Id is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    <mat-form-field>
+                      <mat-label>Despatch Date</mat-label>
+                      <input matInput [matDatepicker]="picker3" formControlName="despatchDate">
+                      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                      <mat-datepicker #picker3></mat-datepicker>
+                      <mat-error *ngIf="hasError('despatchDate', 'required')">Despatch date is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Project" formControlName="projectId"
+                        (selectionChange)="populatDetailLists($event)">
+                        <mat-option *ngFor="let value of projects" [value]="value.projectId">
+                          {{value.projectId}} | {{value.description}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="hasError('projectId', 'required')">Project is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    <mat-form-field>
+                      <mat-label>Vehicle No</mat-label>
+                      <input matInput placeholder="Vehicle No"  formControlName="vehicleNo">
+                      <mat-error *ngIf="hasError('vehicleNo', 'required')">Vehicle no is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Notes" formControlName="notes">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Details Grid : Start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-plain">
+            <div class="card-header card-header-info">
+              <table width="100%">
+                <tr>
+                  <td width="90%">
+                    <h4 class="card-title ">Daily work log Dteails</h4>
+                  </td>
+                  <td style="align-content: justify-content-right">
+                    <button type="button" mdbBtn color="unique" rounded="true" data-toggle="modal"
+                      data-target="#basicExample" (click)="frame.show()" mdbWavesEffect>
+                      Add
+                    </button>
+                  </td>
+                </tr>
+              </table>
+              <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="text-primary">
+                    <th>Material</th>
+                    <th>Available Quantity</th>
+                    <th>Processed Quantity</th>
+                    
+                  </thead>
+                  <tbody *ngFor="let dtl of details">
+                    <tr>
+                      <td>{{dtl.materialId}}</td>
+                      <td>{{dtl.availableQuantity}} {{dtl.materialUnitName}}</td>
+                      <td>{{dtl.quantity}} {{dtl.materialUnitName}}</td>
+                      <td>{{dtl.processType}}</td>
+                      <td>
+                        <a (click)="editDetail(dtl, frame)" style="cursor: pointer;" class="edit" title=""
+                          data-toggle="tooltip" data-original-title="Edit">
+                          <mat-icon class="routeIcon">edit</mat-icon>
+                        </a>
+                        <a (click)="openDialog(dtl)" style="cursor: pointer;" class="delete" title=""
+                          data-toggle="tooltip" data-original-title="Delete">
+                          <mat-icon class="routeIcon">delete</mat-icon>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Details Grid : End -->
+      <button mat-raised-button type="submit" [disabled]="!headerForm.form.valid" (click)="headerForm.ngSubmit.emit()"
+        class="btn btn-success pull-right">Save</button>
+      <div class="clearfix"></div>
+      <!-- MODAL -->
+      <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content" [style.width]="modalWIdth()">
+            <div class="modal-header text-center">
+              <h4 class="modal-title w-100 font-weight-bold">Add/Update Work Log</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close(frame)">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="odDetailsForm">
+                <div class="row">
+                  <div class="col-md-4">
+                    <mat-form-field class="invisible example-full-width">
+                      <input matInput placeholder="despatchId" formControlName="despatchId">
+                      <input matInput placeholder="despatchDetailsId" formControlName="despatchDetailsId">
+                      <input matInput placeholder="materialType" formControlName="materialType" [(ngModel)]='materialType'>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Material" formControlName="materialId" (selectionChange)="populateRow($event)">
+                        <mat-option *ngFor="let value of projectMaterialList" [value]="value.code" >
+                          {{value.name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="hasDetailError('materialId', 'required')">Material is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    <mat-form-field class="invisible example-full-width">
+                      <input matInput placeholder="Unit" formControlName="materialUnit" [(ngModel)]='materialUnit'>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Unit" formControlName="materialUnitName" [readonly]="true" [(ngModel)]='materialUnitName'>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2" *ngIf="isProduct(materialType)">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Available Quantity" formControlName="availableQuantity" style="text-align: right;"
+                        [readonly]="true" [(ngModel)]='availableQuantity'>
+                    </mat-form-field>
+                  </div>
+                  <!-- <div class="col-md-2" *ngIf="isProduct(materialType)">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Remaining Quantity" formControlName="remainingQuantity" style="text-align: right;"
+                        [readonly]="true" [(ngModel)]='remainingQuantity'>
+                    </mat-form-field>
+                  </div> -->
+                  <div class="col-md-2" *ngIf="isProduct(materialType)">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Quantity" formControlName="quantity" style="text-align: right;">
+                      <mat-error *ngIf="hasDetailError('quantity', 'required')">Quantity is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <!-- <div class="col-md-2" *ngIf="!isProduct(materialType)">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Quantity" formControlName="quantity" style="text-align: right;">
+                      <mat-error *ngIf="hasDetailError('quantity', 'required')">Quantity is required</mat-error>
+                       <mat-error *ngIf="hasDetailError('quantity', 'mandatoryAndlessThanValue')"></mat-error>
+                    </mat-form-field>
+                  </div> -->
+                  <div class="col-md-2" *ngIf="isSemiProduct(materialType)">
+                    <mat-form-field class="example-full-width">
+                      <mat-select placeholder="In/Out" formControlName="processType" >
+                        <mat-option *ngFor="let value of inOutValues" [value]="value.value">
+                          {{value.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="hasDetailError('processType', 'required')">Field value is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2" *ngIf="!isSemiProduct(materialType)">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="In/Out" formControlName="despatchType" [readonly]="true" [(ngModel)]='despatchType'>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-right">
+                  <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="onDetailSubmit(frame)">Save</button>
+                </div>
+              </form>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <!-- MODAL-->
+    </div>
+  </div>
