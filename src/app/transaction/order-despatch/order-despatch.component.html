@@ -178,6 +178,7 @@
                     <mat-form-field class="example-full-width">
                       <input matInput placeholder="Quantity" formControlName="quantity" style="text-align: right;">
                       <mat-error *ngIf="hasDetailError('quantity', 'required')">Quantity is required</mat-error>
+                      <mat-error *ngIf="hasDetailError('quantity', 'mandatoryAndlessThanValue')"></mat-error>
                     </mat-form-field>
                   </div>
                   <!-- <div class="col-md-2" *ngIf="!isProduct(materialType)">

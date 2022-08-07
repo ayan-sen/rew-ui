@@ -8,7 +8,7 @@ import { ProjectMaterial } from './order-processing/project-material';
   providedIn: 'root'
 })
 export class OrderDespatchService {
-
+  
   constructor(private http: HttpClient) { }
 
   save(orderDespatch : OrderDespatch) {
@@ -40,4 +40,11 @@ export class OrderDespatchService {
     params = params.append('siteId', siteId);
     return this.http.get<ProjectMaterial[]>("transaction/despatches/materials", {"params": params});
   }
+
+  findByProjectId(projectId: string) {
+    let params = new HttpParams();
+    params = params.append('projectId', projectId);
+    return this.http.get<OrderDespatch[]>("transaction/despatches/project", {"params": params});
+  }
+
 }

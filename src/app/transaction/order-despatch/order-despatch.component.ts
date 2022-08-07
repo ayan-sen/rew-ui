@@ -7,6 +7,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { CommonDialogComponent } from 'src/app/components/common-commponents/common-dialog/common-dialog.component';
+import { lessThanValueValidator, mandatoryAndlessThanValueValidator } from 'src/app/components/common-commponents/validators/number-compare';
 import { Dropdown } from 'src/app/components/common-service/common-model/dropdown';
 import { ServerResponse } from 'src/app/components/common-service/common-model/server-response';
 import { convertToDate } from 'src/app/components/common-service/common-uutil';
@@ -95,7 +96,9 @@ export class OrderDespatchComponent implements OnInit {
       'availableQuantity' : new FormControl(0),
       'notes': new FormControl(''),
       'materialType': new FormControl(''),
-    });
+    },
+    {validator : [lessThanValueValidator('quantity', 'availableQuantity')]}
+    );
 
     this.route.queryParams.subscribe(param => {
       if (Object.keys(param).length > 0) {

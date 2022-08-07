@@ -1,1 +1,70 @@
-<p>order-despatch-show works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-plain">
+            <div class="card-header card-header-info">
+              <h4 class="card-title ">Order Despatch Log
+                <a routerLink="/transaction/despatch/add">
+                  <mat-icon class="gridIcon">add</mat-icon>
+                </a>
+              </h4>
+              
+            </div>
+            <div class="card-body">
+              <form [formGroup]="odForm" (ngSubmit)="onSubmit()" #headerForm="ngForm">
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-form-field class="example-full-width">
+                          <mat-select placeholder="Project" formControlName="projectId"
+                            (selectionChange)="populatDetailLists($event)">
+                            <mat-option *ngFor="let value of projects" [value]="value.projectId">
+                              {{value.projectId}} | {{value.description}}
+                            </mat-option>
+                          </mat-select>
+                          <!-- <mat-error *ngIf="hasError('projectId', 'required')">Project is required</mat-error> -->
+                        </mat-form-field>
+                      </div>
+                  <!-- <div class="col-md-2">
+                    <button mat-raised-button type="submit" [disabled]="!headerForm.form.valid" (click)="headerForm.ngSubmit.emit()"
+                    class="btn btn-success pull-right">Search</button>
+                  </div> -->
+                </div>
+              </form>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="text-primary">
+                    <th>Id</th>
+                    <th>Date</th>
+                    <th>Vehicle No</th>
+                    <th>Notes</th>
+                  </thead>
+                  <tbody *ngFor="let d of despatches">
+                    <tr>
+                      <td>{{d.despatchId}}</td>
+                      <td>{{d.despatchDateString}}</td>
+                      <td>{{d.vehicleNo}}</td>
+                      <td>{{d.notes}}</td>
+                      
+                      <!-- <td>
+                        <a [routerLink]="['/order-delivery/edit']" [queryParams]="{ id: dl.deliveryId}" class="edit"
+                          title="" data-toggle="tooltip" data-original-title="Edit">
+                          <mat-icon class="routeIcon">edit</mat-icon>
+                        </a>
+                        <a (click)="openDialog(dl)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip"
+                          data-original-title="Delete">
+                          <mat-icon class="routeIcon">delete</mat-icon>
+                        </a>
+                      </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
