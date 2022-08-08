@@ -20,16 +20,16 @@ export class OrderDespatchService {
   }
 
   findById(despatchId : string) : Observable<OrderDespatch> {   
-    return this.http.get<OrderDespatch>("transaction/despatches/find" , {"params": {"id": despatchId}} );
+    return this.http.get<OrderDespatch>("transaction/despatch/find" , {"params": {"id": despatchId}} );
   }
 
   delete(despatchId : number) {
     return this.http.delete("transaction/processes/delete" , {"params": {"id": despatchId.toString()}}  );
   }
 
-  deleteDetail(despatchId : number, detailId : number) {
+  deleteDetail(despatchId : string, detailId : number) {
     let params = new HttpParams();
-    params = params.append('id', despatchId.toString());
+    params = params.append('id', despatchId);
     params = params.append('detailId', detailId.toString());
     return this.http.delete("transaction/despatches/detail/delete", {"params": params});
   }

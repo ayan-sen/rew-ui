@@ -1,5 +1,5 @@
 export class OrderDespatchDetails {
-    despatchId : number;
+    despatchId : string;
     despatchDetailsId : number;
     despatchType : string;
     materialId : string;
@@ -8,5 +8,6 @@ export class OrderDespatchDetails {
     materialUnit : string;
     materialUnitName : string;
     quantity : string;
-    availableQuantity : number;
+    availableQuantity : number;  
+    test : number;
 }

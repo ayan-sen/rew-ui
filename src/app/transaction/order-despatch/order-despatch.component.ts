@@ -83,19 +83,17 @@ export class OrderDespatchComponent implements OnInit {
     });
 
     this.odDetailsForm = this.fb.group({
-      'despatchId': new FormControl(null),
-      'despatchDetailsId': new FormControl(null),
+      'despatchId': new FormControl(''), 
+      'despatchDetailsId': new FormControl(''),
       'despatchType': new FormControl('', Validators.required),
       'materialId': new FormControl('', Validators.required),
       'materialName': new FormControl(''),
       'materialUnit': new FormControl('', Validators.required),
-      'materialUnitName': new FormControl(''),
+      'materialUnitName': new FormControl(''), 
       'quantity': new FormControl(null, Validators.required),
-      'inOutFlag': new FormControl(''),
-      'remainingQuantity': new FormControl(0),
       'availableQuantity' : new FormControl(0),
-      'notes': new FormControl(''),
       'materialType': new FormControl(''),
+      'remainingQuantity' : new FormControl(0)
     },
     {validator : [lessThanValueValidator('quantity', 'availableQuantity')]}
     );
@@ -106,6 +104,11 @@ export class OrderDespatchComponent implements OnInit {
           this.details = orderDespatch.details;
           orderDespatch.despatchDate = convertToDate(orderDespatch.despatchDateString);
           this.odForm.setValue(orderDespatch); 
+
+          this.orderDespatchService.findMaterialsByProjectIdAndSiteId(orderDespatch.projectId, orderDespatch.siteId)
+          .subscribe(details=> {
+            this.projectMaterialList = details;
+      })
         })
       }
     });
@@ -143,7 +146,7 @@ export class OrderDespatchComponent implements OnInit {
       let newDetail: OrderDespatchDetails = this.odDetailsForm.value;
       let despatchId = newDetail.despatchId;
       let index: number = -1;
-      if (despatchId != null && despatchId > 0) {
+      if (despatchId != null) {
         index = this.details.findIndex(detail => detail.despatchId == despatchId);
       } else {
         index = this.details.findIndex(detail => detail.materialId == newDetail.materialId);
@@ -172,6 +175,9 @@ export class OrderDespatchComponent implements OnInit {
   editDetail(orderDespatchDetails: OrderDespatchDetails, frame : ModalDirective) {
     this.odDetailsForm.setValue(orderDespatchDetails);
     this.availableQuantity = orderDespatchDetails.availableQuantity;
+
+   
+
     frame.show();
   }
 

@@ -95,11 +95,10 @@
                     <th>Material</th>
                     <th>Available Quantity</th>
                     <th>Processed Quantity</th>
-                    
                   </thead>
                   <tbody *ngFor="let dtl of details">
                     <tr>
-                      <td>{{dtl.materialId}}</td>
+                      <td>{{dtl.materialName}}</td>
                       <td>{{dtl.availableQuantity}} {{dtl.materialUnitName}}</td>
                       <td>{{dtl.quantity}} {{dtl.materialUnitName}}</td>
                       <td>{{dtl.processType}}</td>
@@ -144,6 +143,7 @@
                       <input matInput placeholder="despatchId" formControlName="despatchId">
                       <input matInput placeholder="despatchDetailsId" formControlName="despatchDetailsId">
                       <input matInput placeholder="materialType" formControlName="materialType" [(ngModel)]='materialType'>
+                      <input matInput placeholder="materialName" formControlName="materialName" [(ngModel)]='materialName'>
                     </mat-form-field>
                     <mat-form-field class="example-full-width">
                       <mat-select placeholder="Material" formControlName="materialId" (selectionChange)="populateRow($event)">
@@ -168,12 +168,7 @@
                         [readonly]="true" [(ngModel)]='availableQuantity'>
                     </mat-form-field>
                   </div>
-                  <!-- <div class="col-md-2" *ngIf="isProduct(materialType)">
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Remaining Quantity" formControlName="remainingQuantity" style="text-align: right;"
-                        [readonly]="true" [(ngModel)]='remainingQuantity'>
-                    </mat-form-field>
-                  </div> -->
+                  
                   <div class="col-md-2" *ngIf="isProduct(materialType)">
                     <mat-form-field class="example-full-width">
                       <input matInput placeholder="Quantity" formControlName="quantity" style="text-align: right;">

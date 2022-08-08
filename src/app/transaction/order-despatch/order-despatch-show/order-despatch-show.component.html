@@ -48,16 +48,16 @@
                       <td>{{d.vehicleNo}}</td>
                       <td>{{d.notes}}</td>
                       
-                      <!-- <td>
-                        <a [routerLink]="['/order-delivery/edit']" [queryParams]="{ id: dl.deliveryId}" class="edit"
+                      <td>
+                        <a [routerLink]="['/transaction/despatch/edit']" [queryParams]="{ id: d.despatchId}" class="edit"
                           title="" data-toggle="tooltip" data-original-title="Edit">
                           <mat-icon class="routeIcon">edit</mat-icon>
                         </a>
-                        <a (click)="openDialog(dl)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip"
+                        <!-- <a (click)="openDialog(d)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip"
                           data-original-title="Delete">
                           <mat-icon class="routeIcon">delete</mat-icon>
-                        </a>
-                      </td> -->
+                        </a> -->
+                      </td>
                     </tr>
                   </tbody>
                 </table>

@@ -29,7 +29,8 @@ const routes: Routes = [
   { path: 'expense/add', component: ExpenseComponent },
   { path: 'expenses', component: ExpenseShowComponent },
   { path: 'despatch/add', component: OrderDespatchComponent },
-  { path: 'despatches', component: OrderDespatchShowComponent }
+  { path: 'despatches', component: OrderDespatchShowComponent },
+  { path: 'despatch/edit', component: OrderDespatchComponent }
 ];
 
 @NgModule({
