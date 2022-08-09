@@ -9,4 +9,5 @@ export class OrderPlacementDetails {
     rate : number;
     amount : number;
     remainingQuantity? : number;
+    alreadyOrderedQuantity? : number;
 }

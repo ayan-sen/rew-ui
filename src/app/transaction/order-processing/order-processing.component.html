@@ -94,7 +94,7 @@
                 </thead>
                 <tbody *ngFor="let dtl of details">
                   <tr>
-                    <td>{{dtl.materialId}}</td>
+                    <td>{{dtl.materialName}}</td>
                     <td *ngIf="!isProductMat(dtl)">{{dtl.availableQuantity}}</td>
                     <td *ngIf="isProductMat(dtl)">{{dtl.remainingQuantity}}</td>
                     <td>{{dtl.materialUnitName}}</td>
@@ -141,6 +141,7 @@
                     <input matInput placeholder="processId" formControlName="processId">
                     <input matInput placeholder="processDetailsId" formControlName="processDetailsId">
                     <input matInput placeholder="materialType" formControlName="materialType" [(ngModel)]='materialType'>
+                    <input matInput placeholder="materialName" formControlName="materialName" [(ngModel)]='materialName'>
                   </mat-form-field>
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Material" formControlName="materialId" (selectionChange)="populateRow($event)">

@@ -295,10 +295,15 @@ export class OrderDeliveryComponent implements OnInit {
       dtl.rmName = d.rmName;
       dtl.unitId = d.unitId;
       dtl.unitName = d.unitName;
-      dtl.quantity = d.remainingQuantity;
-      dtl.remainingQuantity = d.remainingQuantity;
+      dtl.quantity = d.quantity;
+      if(d.alreadyOrderedQuantity != null) {
+        dtl.remainingQuantity = d.quantity - d.alreadyOrderedQuantity;
+      }else {
+        dtl.remainingQuantity = d.quantity;
+      }
+     
       dtl.rate = d.rate;
-      dtl.amount = Number.parseFloat(d.remainingQuantity.toString()) * Number.parseFloat(d.rate.toString());
+      dtl.amount = Number.parseFloat(dtl.remainingQuantity.toString()) * Number.parseFloat(d.rate.toString());
 
       this.details.push(dtl);
     });
