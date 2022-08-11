@@ -24,6 +24,7 @@ import { ClientDetails } from 'src/app/admin/client/client-detail';
 import { lessThanValueValidator } from 'src/app/components/common-commponents/validators/number-compare';
 import { convertToDate } from 'src/app/components/common-service/common-uutil';
 import { DatePipe } from '@angular/common';
+import { RawMaterial } from 'src/app/admin/raw-material/raw-material';
 
 declare const $: any;
 
@@ -63,6 +64,17 @@ export class OrderDeliveryComponent implements OnInit {
 
   consigneeDetails : ClientDetails[] = [];
 
+  suppliers : Client[] = [];
+  supplierDetails : ClientDetails[] = [];
+
+  rmName : string;
+  unitId : string;
+  unitName : string;
+  rawMaterials : RawMaterial[] = [];
+
+  siteId : string = 'SINGUR';
+  isActive : boolean = true;
+
   constructor(private orderDeliveryService : OrderDeliveryService,
               private orderPlacementService : OrderPlacementService,
               private notificationService : NotificationService,
@@ -70,19 +82,22 @@ export class OrderDeliveryComponent implements OnInit {
               public dialog: MatDialog,
               private route: ActivatedRoute,
               private fb: FormBuilder,
-              private datePipe: DatePipe
+              private datePipe: DatePipe,
+              private rawMaterialService : RawMaterialService
     ) { }
 
   ngOnInit(): void {
     this.getOrders();
     this.getConsignees();
+    this.getSuppliers();
+    this.getRawMaterials();
     
     this.deliveryForm = new FormGroup({
       'deliveryId': new FormControl(''),
       'billNo': new FormControl('', Validators.required),
       'billDate': new FormControl(null, Validators.required),
       'billDateString': new FormControl(''),
-      'orderId': new FormControl('', Validators.required),
+      //'orderId': new FormControl('', Validators.required),
       'supplierId' : new FormControl(''), 
       'supplierName' : new FormControl(''),
       'supplierIdentifier': new FormControl(''),
@@ -92,11 +107,11 @@ export class OrderDeliveryComponent implements OnInit {
       'consigneeDetailsId': new FormControl(''),
       'consigneeIdentifier': new FormControl(''),
       'vehicleNo': new FormControl(''),
-      'amount': new FormControl(0),
-      'freightCharges': new FormControl(0),
-      'cgstAmount': new FormControl(0),
-      'sgstAmount': new FormControl(0),
-      'totalAmount': new FormControl(0),
+      'amount': new FormControl(null),
+      'freightCharges': new FormControl(null),
+      'cgstAmount': new FormControl(null),
+      'sgstAmount': new FormControl(null),
+      'totalAmount': new FormControl(null),
       'notes': new FormControl(''),
       'siteId': new FormControl(''),
       'isActive': new FormControl(true),
@@ -111,13 +126,13 @@ export class OrderDeliveryComponent implements OnInit {
       'rmName': new FormControl(''),
       'unitId': new FormControl(''),
       'unitName': new FormControl('', Validators.required),
-      'quantity': new FormControl(0, [Validators.required]),
-      'rate': new FormControl(0),
-      'amount': new FormControl(0),
-      'remainingQuantity': new FormControl(0),
-      'oldQuantity' : new FormControl(0)
-    },
-    {validator : lessThanValueValidator('quantity', 'remainingQuantity')}
+      'quantity': new FormControl(null, [Validators.required]),
+      'rate': new FormControl(null),
+      'amount': new FormControl(null),
+      //'remainingQuantity': new FormControl(0),
+      'oldQuantity' : new FormControl(null)
+    }//,
+    //{validator : lessThanValueValidator('quantity', 'remainingQuantity')}
     );
 
     this.route.queryParams.subscribe(param => {
@@ -296,14 +311,14 @@ export class OrderDeliveryComponent implements OnInit {
       dtl.unitId = d.unitId;
       dtl.unitName = d.unitName;
       dtl.quantity = d.quantity;
-      if(d.alreadyOrderedQuantity != null) {
-        dtl.remainingQuantity = d.quantity - d.alreadyOrderedQuantity;
-      }else {
-        dtl.remainingQuantity = d.quantity;
-      }
+      // if(d.alreadyOrderedQuantity != null) {
+      //   dtl.remainingQuantity = d.quantity - d.alreadyOrderedQuantity;
+      // }else {
+      //   dtl.remainingQuantity = d.quantity;
+      // }
      
       dtl.rate = d.rate;
-      dtl.amount = Number.parseFloat(dtl.remainingQuantity.toString()) * Number.parseFloat(d.rate.toString());
+      dtl.amount = Number.parseFloat(dtl.quantity.toString()) * Number.parseFloat(d.rate.toString());
 
       this.details.push(dtl);
     });
@@ -367,5 +382,37 @@ export class OrderDeliveryComponent implements OnInit {
   
   modalWIdth() : string {
     return this.isMobileMenu() ? "100%" : "150%";
+  }
+
+  getSuppliers() {
+    this.clientService.findAll().subscribe(
+      suppliers => {
+        this.suppliers = suppliers;
+      }
+    );
+  }
+
+
+  populateSupplierDetails(event : MatSelectChange) { 
+    let val = event.value;
+    this.filterSupplierDateils(val);
+  }
+
+  filterSupplierDateils(clientId : String) {
+    this.supplierDetails = this.suppliers.filter(s => s.clientId === clientId)[0].details; 
+  }
+
+  populateUnit(material : RawMaterial) {
+    this.rmName = material.name;
+    this.unitId = material.unit.unitId;
+    this.unitName = material.unit.unitName;
+  }
+
+  getRawMaterials() {
+    this.rawMaterialService.findAllRawMaterials().subscribe(
+      rawMaterials => {
+        this.rawMaterials = rawMaterials;
+      }
+    );
   }
 }

@@ -23,59 +23,33 @@
                 <div class="col-md-3">
                   <mat-form-field class="invisible example-full-width">
                     <input matInput placeholder="deliveryId" formControlName="deliveryId">
-                    <input matInput placeholder="isActive" formControlName="isActive">
-                    <input matInput placeholder="supplierId" formControlName="supplierId" [(ngModel)]='od.supplierId'>
-                    <input matInput placeholder="supplierDetailsId" formControlName="supplierDetailsId" [(ngModel)]='od.supplierDetailsId'>
-                    <input matInput placeholder="siteId" formControlName="siteId" [(ngModel)]='od.siteId'>
-                    <input matInput placeholder="projectId" formControlName="projectId" [(ngModel)]='od.projectId'>
+                    <input matInput placeholder="isActive" formControlName="isActive" [(ngModel)]='isActive'>
+                    <!-- <input matInput placeholder="supplierId" formControlName="supplierId" [(ngModel)]='supplierId'>
+                    <input matInput placeholder="supplierDetailsId" formControlName="supplierDetailsId" [(ngModel)]='supplierDetailsId'> -->
+                    <input matInput placeholder="siteId" formControlName="siteId" [(ngModel)]='siteId'>
+                    <!-- <input matInput placeholder="projectId" formControlName="projectId" [(ngModel)]='od.projectId'> -->
                   </mat-form-field>
 
                   <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Order" formControlName="orderId" (selectionChange)="populatOrder($event)">
-                      <mat-option *ngFor="let value of orders" [value]="value.orderId">
-                        {{value.orderId}} | {{value.supplierName}}
+                    <mat-select placeholder="Supplier" formControlName="supplierId"  (selectionChange)="populateSupplierDetails($event)">
+                      <mat-option *ngFor="let value of suppliers" [value]="value.clientId" >
+                        {{value.clientName}}
                       </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="hasError('orderId', 'required')">order is required</mat-error>
+                    <mat-error *ngIf="hasError('supplierId', 'required')">Supplier is required</mat-error>
                   </mat-form-field>
+                
                 </div>
 
                 <div class="col-md-3">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Supplier" formControlName="supplierName" [readonly]="true"
-                      [(ngModel)]='od.supplierName'>
-                  </mat-form-field>
-                </div>
-
-                <div class="col-md-2">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Supplier Address" formControlName="supplierIdentifier"
-                      [readonly]="true" [(ngModel)]='od.supplierIdentifier'>
-                  </mat-form-field>
-                </div>
-
-                <div class="col-md-2">
-                  <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Consignee" formControlName="consigneeId"
-                      (selectionChange)="populateConsigneeDetails($event)">
-                      <mat-option *ngFor="let value of consignees" [value]="value.clientId">
-                        {{value.clientName}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div class="col-md-2">
-                  <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Consignee Address" formControlName="consigneeDetailsId">
-                      <mat-option *ngFor="let value of consigneeDetails" [value]="value.detailId">
+                    <mat-select placeholder="Supplier Address" formControlName="supplierDetailsId">
+                      <mat-option *ngFor="let value of supplierDetails" [value]="value.detailId" >
                         {{value.identifier}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
-              </div>
-
-              <div class="row">
                 <div class="col-md-2">
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Bill No" formControlName="billNo">
@@ -91,8 +65,16 @@
                       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                       <mat-datepicker #picker1></mat-datepicker>
                   </mat-form-field>
-              </div>
+                </div>
 
+                <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Vehicle No" formControlName="vehicleNo">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                
                 <div class="col-md-2">
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Amount" formControlName="amount" [(ngModel)]="headerAmount"
@@ -101,7 +83,7 @@
                     </mat-error>
                   </mat-form-field>
                 </div>
-
+                
                 <div class="col-md-2">
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Freight Charges" formControlName="freightCharges"
@@ -147,10 +129,10 @@
                   <h4 class="card-title">Order delivery details</h4>
                 </td>
                 <td style="align-content: justify-content-right">
-                  <!-- <button type="button" mdbBtn color="unique" rounded="true" data-toggle="modal"
+                  <button type="button" mdbBtn color="unique" rounded="true" data-toggle="modal"
                     data-target="#basicExample" (click)="frame.show()" mdbWavesEffect>
                     Add
-                  </button> -->
+                  </button>
                 </td>
               </tr>
             </table>
@@ -213,19 +195,28 @@
                   <mat-form-field class="invisible example-full-width">
                     <input matInput placeholder="deliveryId" formControlName="deliveryId">
                     <input matInput placeholder="rmId" formControlName="rmId" >
-                    <input matInput placeholder="remainingQuantity" formControlName="remainingQuantity" >
+                    <!-- <input matInput placeholder="remainingQuantity" formControlName="remainingQuantity" > -->
                     <input matInput placeholder="oldQuantity" formControlName="oldQuantity" >
                   </mat-form-field>
+                  <mat-form-field class="invisible example-full-width">
+                    <input matInput formControlName="rmName" [(ngModel)]='rmName' >
+                  </mat-form-field>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Raw Material" formControlName="rmName" [readonly]="true">
+                    <mat-select placeholder="Raw Material" formControlName="rmId">
+                      <mat-option *ngFor="let value of rawMaterials" [value]="value.code" 
+                          (onSelectionChange)="populateUnit(value)"> 
+                        {{value.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="hasDetailError('rmId', 'required')">Raw material is required</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
                   <mat-form-field class="invisible example-full-width">
-                    <input matInput placeholder="Unit" formControlName="unitId" >
+                    <input matInput placeholder="Unit" formControlName="unitId" [(ngModel)]='unitId'>
                   </mat-form-field>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Unit" formControlName="unitName" [readonly]="true">
+                    <input matInput placeholder="Unit" formControlName="unitName" [readonly]="true" [(ngModel)]='unitName'>
                     <mat-error *ngIf="hasDetailError('unitName', 'required')">Unit is required
                     </mat-error>
                   </mat-form-field>
