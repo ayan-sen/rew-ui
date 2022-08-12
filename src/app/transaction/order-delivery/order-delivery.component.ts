@@ -71,6 +71,9 @@ export class OrderDeliveryComponent implements OnInit {
   unitId : string;
   unitName : string;
   rawMaterials : RawMaterial[] = [];
+  filteredRawMaterialIds : string[] =[];
+
+  filteredRawMaterials : RawMaterial[] = [];
 
   siteId : string = 'SINGUR';
   isActive : boolean = true;
@@ -90,7 +93,7 @@ export class OrderDeliveryComponent implements OnInit {
     this.getOrders();
     this.getConsignees();
     this.getSuppliers();
-    this.getRawMaterials();
+    this.getRawMaterials(); 
     
     this.deliveryForm = new FormGroup({
       'deliveryId': new FormControl(''),
@@ -140,12 +143,23 @@ export class OrderDeliveryComponent implements OnInit {
         this.orderDeliveryService.findById(param.id).subscribe((order: OrderDelivery) => {
           this.details = order.details;
           order.billDate = convertToDate(order.billDateString);
-          this.filterConsigneeDateils(order.consigneeId);
+          //this.filterConsigneeDateils(order.consigneeId);
+          this.filterSupplierDateilsEdit(order.supplierId);
           this.deliveryId = order.deliveryId;
           this.deliveryForm.setValue(order); 
+
+          this.headerAmount = Number.parseFloat(order.amount.toString()).toFixed(2); ;
+          this.cgstAmount = Number.parseFloat(order.cgstAmount.toString()).toFixed(2); 
+          this.sgstAmount = Number.parseFloat(order.sgstAmount.toString()).toFixed(2); 
+          this.totalAmount = Number.parseFloat(order.totalAmount.toString()).toFixed(2);
+
+          this.filteredRawMaterialIds = this.details.map(detail => detail.rmId);
+
+
         })
       }
     });
+    
   }
 
   public hasError = (controlName: string, errorName: string) =>{
@@ -206,6 +220,7 @@ export class OrderDeliveryComponent implements OnInit {
       this.deliveryDetailsForm.reset();
       this.headerAmount = this.calculateTotalDetailAmount();
       this.calculate(this.headerAmount);
+      this.filteredRawMaterialIds.push(this.deliveryDetailsForm.value.rmId);
       frame.hide();
     } else {
       this.notificationService.openSnackBar("Error occurred, please review and submit again", "danger");
@@ -402,6 +417,16 @@ export class OrderDeliveryComponent implements OnInit {
     this.supplierDetails = this.suppliers.filter(s => s.clientId === clientId)[0].details; 
   }
 
+  filterSupplierDateilsEdit(clientId : String) {
+    this.clientService.findAll().subscribe(
+      suppliers => {
+        this.suppliers = suppliers;
+        this.supplierDetails = this.suppliers.filter(s => s.clientId === clientId)[0].details; 
+      }
+    );
+    
+  }
+
   populateUnit(material : RawMaterial) {
     this.rmName = material.name;
     this.unitId = material.unit.unitId;
@@ -412,7 +437,13 @@ export class OrderDeliveryComponent implements OnInit {
     this.rawMaterialService.findAllRawMaterials().subscribe(
       rawMaterials => {
         this.rawMaterials = rawMaterials;
+        this.filteredRawMaterials =rawMaterials;
+        this.rawMaterials.filter(rm => this.filteredRawMaterialIds.indexOf(rm.code) == -1);
       }
     );
+  }
+
+  filterRawMaterials() {
+    this.filteredRawMaterials = this.rawMaterials.filter(rm => this.filteredRawMaterialIds.indexOf(rm.code) == -1);
   }
 }

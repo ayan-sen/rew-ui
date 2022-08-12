@@ -130,7 +130,7 @@
                 </td>
                 <td style="align-content: justify-content-right">
                   <button type="button" mdbBtn color="unique" rounded="true" data-toggle="modal"
-                    data-target="#basicExample" (click)="frame.show()" mdbWavesEffect>
+                    data-target="#basicExample" (click)="frame.show();filterRawMaterials();" mdbWavesEffect>
                     Add
                   </button>
                 </td>
@@ -156,7 +156,7 @@
                     <td>{{dtl.unitId}}</td>
                     <td>{{dtl.rate}}</td>
                     <td>{{dtl.amount}}</td>
-                    <td>
+                    <td *ngIf="dtl.deliveryId == ''">
                       <a (click)="editDetail(dtl, frame)" style="cursor: pointer;" class="edit" title=""
                         data-toggle="tooltip" data-original-title="Edit">
                         <mat-icon class="routeIcon">edit</mat-icon>
@@ -203,7 +203,7 @@
                   </mat-form-field>
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Raw Material" formControlName="rmId">
-                      <mat-option *ngFor="let value of rawMaterials" [value]="value.code" 
+                      <mat-option *ngFor="let value of filteredRawMaterials" [value]="value.code" 
                           (onSelectionChange)="populateUnit(value)"> 
                         {{value.name}}
                       </mat-option>

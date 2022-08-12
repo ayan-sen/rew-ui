@@ -16,26 +16,26 @@
                     <table class="table table-hover">
                       <thead class="text-primary">
                         <th>DL Code</th>
-                        <th>Project</th>
-                        <th>PO No.</th>
-                        <th>PO Date</th>
                         <th>Supplier</th>
+                        <th>Bill No</th>
+                        <th>Bill Date</th>
+                        <th>Vehicle No</th>
                         <th>Action</th>
                       </thead>
                       <tbody *ngFor="let dl of deliveries">
                         <tr>
                           <td>{{dl.deliveryId}}</td>
-                          <td>{{dl.projectId}}</td>
+                          <td>{{dl.supplierName}}</td>
                           <td>{{dl.billNo}}</td> 
                           <td>{{dl.billDateString}}</td>
-                          <td>{{dl.supplierName}}</td>  
+                          <td>{{dl.vehicleNo}}</td>  
                           <td>
                             <a [routerLink]="['/transaction/order-delivery/edit']" [queryParams]="{ id: dl.deliveryId}"  class="edit" title="" data-toggle="tooltip" data-original-title="Edit">
                               <mat-icon class="routeIcon">edit</mat-icon>
                             </a>
-                            <a (click)="openDialog(dl)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip" data-original-title="Delete">
+                            <!-- <a (click)="openDialog(dl)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip" data-original-title="Delete">
                               <mat-icon class="routeIcon">delete</mat-icon>
-                            </a>
+                            </a> -->
                           </td>
                         </tr>
                       </tbody>
