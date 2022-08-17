@@ -23,7 +23,7 @@ export class InvoiceService {
     return this.http.get<Invoice>("transaction/invoice/find" , {"params": {"id": invoiceId}} );
   }
 
-  delete(invoiceId : number) {
+  delete(invoiceId : string) {
     return this.http.delete("transaction/invoices/delete" , {"params": {"id": invoiceId.toString()}}  );
   }
 

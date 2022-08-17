@@ -4,12 +4,17 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-success">
-              <h4 class="card-title">Despatch
+              <h4 class="card-title">Invoice Generation
                 <a routerLink="/transaction/invoices"> 
                   <mat-icon class="gridIcon">web</mat-icon>
                 </a>
               </h4>
-              <p class="card-category">Record invoice details here</p>
+              <div *ngIf="invoiceId">
+                <p class="card-title">Invoice Id : {{invoiceId}}</p>
+              </div>
+              <div *ngIf="!invoiceId">
+                <p class="card-category">Create new invoice</p>
+              </div>
             </div>
             <div class="card-body">
               <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()" #headerForm="ngForm">

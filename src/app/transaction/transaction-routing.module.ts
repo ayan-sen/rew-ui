@@ -13,6 +13,7 @@ import { ExpenseShowComponent } from './expense/expense-show/expense-show.compon
 import { OrderDespatchComponent } from './order-despatch/order-despatch.component';
 import { OrderDespatchShowComponent } from './order-despatch/order-despatch-show/order-despatch-show.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { InvoiceShowComponent } from './invoice/invoice-show/invoice-show.component';
 
 const routes: Routes = [
   { path: 'order-placement/add', component: OrderPlacementComponent },
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'despatch/edit', component: OrderDespatchComponent },
   { path: 'invoice/add', component: InvoiceComponent },
   { path: 'invoice/edit', component: InvoiceComponent },
+  { path: 'invoices', component: InvoiceShowComponent }
 ];
 
 @NgModule({

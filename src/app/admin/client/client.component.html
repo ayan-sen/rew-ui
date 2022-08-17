@@ -20,6 +20,8 @@
                 <div class="col-md-6">
                   <mat-form-field class="invisible example-full-width">
                     <input matInput placeholder="clientId" formControlName="clientId">
+                    <input matInput placeholder="isActive" formControlName="isActive" [(ngModel)]="isActive">
+                    
                   </mat-form-field>
 
                   <mat-form-field class="example-full-width">
@@ -70,15 +72,7 @@
                   </mat-form-field>
                 </div>
 
-                <div class="col-md-2">
-                  <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Active?" formControlName="isActive">
-                      <mat-option *ngFor="let value of activeValues" [value]="value.value">
-                        {{value.viewValue}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
+                
               </div>
             </form>
           </div>
@@ -110,18 +104,16 @@
               <table class="table table-hover">
                 <thead class="text-primary">
                   <th>Identifier</th>
-                  <th *ngIf="!isMobileMenu()">Address</th>
-                  <th>Email Id</th>
-                  <th>Contact No</th>
+                  <th>Address</th>
+                  <!-- <th>Email Id</th>
+                  <th>Contact No</th> -->
                   <th>Action</th>
                 </thead>
                 <tbody *ngFor="let dtl of details">
                   <!-- <tr (click)="editDetail(dtl)" style="cursor: pointer;"> -->
                   <tr>
                     <td>{{dtl.identifier}}</td>
-                    <td *ngIf="!isMobileMenu()">{{dtl.address}}{{dtl.pincoder}}</td>
-                    <td>{{dtl.emailId}}</td>
-                    <td>{{dtl.contactNo}}</td>
+                    <td>{{dtl.address}} {{dtl.pincode}}</td>
                     <td>
                       <a (click)="editDetail(dtl, frame)" style="cursor: pointer;" class="edit" title="" data-toggle="tooltip"
                         data-original-title="Edit">
@@ -162,6 +154,8 @@
                 <div class="col-md-3">
                   <mat-form-field class="invisible example-full-width">
                     <input matInput placeholder="clientId" formControlName="clientId">
+                    <input matInput placeholder="contactNo" formControlName="contactNo">
+                    <input matInput placeholder="emailId" formControlName="emailId">
                   </mat-form-field>
 
                   <mat-form-field class="invisible example-full-width">
@@ -192,31 +186,12 @@
                       is 6</mat-error>
                   </mat-form-field>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-2">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Contact" formControlName="contactNo">
-                    <mat-error *ngIf="hasDetailError('contactNo', 'required')">Contact
-                      Number is required</mat-error>
-                    <mat-error *ngIf="hasDetailError('contactNo', 'maxLength')">Max length is 15</mat-error>
-                  </mat-form-field>
-                </div>
-
-                <div class="col-md-3">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Email id" formControlName="emailId">
-                    <mat-error *ngIf="hasDetailError('emailId', 'required')">Email id is
-                      required</mat-error>
-                  </mat-form-field>
-                </div>
-
                 <div class="col-md-7">
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Comments" formControlName="comments">
                   </mat-form-field>
                 </div>
-              </div>
+              </div> 
               <button mat-raised-button (click)="onDetailsSubmit(frame)" class="btn btn-info pull-right">Save</button>
             </form>
             

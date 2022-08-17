@@ -444,6 +444,6 @@ export class OrderDeliveryComponent implements OnInit {
   }
 
   filterRawMaterials() {
-    this.filteredRawMaterials = this.rawMaterials.filter(rm => this.filteredRawMaterialIds.indexOf(rm.code) == -1);
+    this.filteredRawMaterials =this.rawMaterials.filter(rm => this.filteredRawMaterialIds.indexOf(rm.code) == -1);
   }
 }

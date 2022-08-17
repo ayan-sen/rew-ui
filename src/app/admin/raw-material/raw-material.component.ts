@@ -24,6 +24,7 @@ export class RawMaterialComponent implements OnInit {
   rmForm: FormGroup;
   rawMaterials : RawMaterial[];
   units : Unit[];
+  isActive : boolean = true;
   
   activeValues: Dropdown[] = [
     {value: true, viewValue: 'Yes'},
@@ -50,7 +51,8 @@ export class RawMaterialComponent implements OnInit {
       'description': new FormControl('', Validators.required),
       'hsnSacCode': new FormControl('', Validators.required), 
       'unitId': new FormControl('', Validators.required),
-      'isActive': new FormControl('', Validators.required),
+      'unitName': new FormControl(''),
+      'isActive': new FormControl(''),
       'type': new FormControl('', Validators.required)
     });
   }

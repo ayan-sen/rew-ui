@@ -1,0 +1,49 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+              <div class="card card-plain">
+                <div class="card-header card-header-info">
+                  <h4 class="card-title ">Invoice details
+                    <a routerLink="/transaction/invoice/add">
+                      <mat-icon class="gridIcon">add</mat-icon>
+                    </a>
+                  </h4>
+                  <p class="card-category"></p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="text-primary">
+                        <th>Invoice Id</th>
+                        <th>Project Id</th>
+                        <th>Invoice Date</th>
+                        <th>Total Amount</th>
+                        <th>Vehicle No</th>
+                        <th>Action</th>
+                      </thead>
+                      <tbody *ngFor="let dl of invoices">
+                        <tr>
+                          <td>{{dl.invoiceId}}</td>
+                          <td>{{dl.projectId}}</td>
+                          <td>{{dl.invoiceDateString}}</td> 
+                          <td>{{dl.totalAmount}}</td>
+                          <td>{{dl.vehicleNo}}</td>  
+                          <td>
+                            <a [routerLink]="['/transaction/invoice/edit']" [queryParams]="{ id: dl.invoiceId}"  class="edit" title="" data-toggle="tooltip" data-original-title="Edit">
+                              <mat-icon class="routeIcon">edit</mat-icon>
+                            </a>
+                            <!-- <a (click)="openDialog(dl)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip" data-original-title="Delete">
+                              <mat-icon class="routeIcon">delete</mat-icon>
+                            </a> -->
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>

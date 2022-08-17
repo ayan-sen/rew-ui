@@ -9,7 +9,7 @@ export class InvoiceDetails {
     rate : number;
     amount : number;
     
-    unitName : string;
+    
 
    
 }

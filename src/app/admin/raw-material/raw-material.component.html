@@ -13,6 +13,8 @@
                 <div class="col-md-3">
                   <mat-form-field class="invisible example-full-width">
                     <input matInput placeholder="code" formControlName="code"> 
+                    <input matInput placeholder="isActive" formControlName="isActive" [(ngModel)]="isActive">
+                    <input matInput placeholder="unitName" formControlName="unitName"> 
                   </mat-form-field>
 
                   <mat-form-field class="example-full-width">
@@ -52,17 +54,7 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-2">
-                  <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Active?" formControlName="isActive">
-                      <mat-option *ngFor="let value of activeValues" [value]="value.value">
-                        {{value.viewValue}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
+              
               <button mat-raised-button type="submit" (click)="onSubmit()" class="btn btn-success pull-right">Save</button>
               <div class="clearfix"></div>
             </form>
@@ -85,7 +77,6 @@
                   <th *ngIf="!isMobileMenu()">Description</th>
                   <th>Unit</th>
                   <th>HSN Code</th>
-                  <th>Active</th>
                   <th>Action</th>
                 </thead>
                 <tbody *ngFor="let rm of rawMaterials">
@@ -94,7 +85,6 @@
                     <td *ngIf="!isMobileMenu()">{{rm.description}}</td>
                     <td>{{rm.unitName}}</td>
                     <td>{{rm.hsnSacCode}}</td>
-                    <td>{{rm.isActive}}</td>
                     <td>
                       <a (click)="edit(rm)" class="edit" title="" style="cursor: pointer;" data-toggle="tooltip" data-original-title="Edit">
                         <mat-icon class="routeIcon">edit</mat-icon>

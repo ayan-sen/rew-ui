@@ -25,6 +25,7 @@ export class ClientComponent implements OnInit {
   clientDetailsForm: FormGroup;
   client: Client;
   details: ClientDetails[] = [];
+  isActive : boolean = true;
 
   activeValues: Dropdown[] = [
     { value: true, viewValue: 'Yes' },
@@ -48,10 +49,10 @@ export class ClientComponent implements OnInit {
       'clientName': new FormControl('', Validators.required),
       'clientType': new FormControl('', Validators.required),
       'gstinNo': new FormControl('', Validators.required),
-      'primanyContactNo': new FormControl('', [Validators.required, Validators.maxLength(15)]),
-      'primaryEmailId': new FormControl('', [Validators.required, , Validators.email]),
+      'primanyContactNo': new FormControl(''),
+      'primaryEmailId': new FormControl('', [Validators.email]),
       'comments': new FormControl(''),
-      'isActive': new FormControl(true, Validators.required),
+      'isActive': new FormControl(true),
       'clientId': new FormControl(''),
       'details': new FormControl('')
       //,'active': new FormControl('')
@@ -61,8 +62,8 @@ export class ClientComponent implements OnInit {
       'address': new FormControl('', Validators.required),
       'pincode': new FormControl('', [Validators.required, Validators.maxLength(6)]),
       'identifier': new FormControl('', [Validators.required, Validators.maxLength(15)]),
-      'emailId': new FormControl('', [Validators.required, Validators.email]),
-      'contactNo': new FormControl('',[Validators.required, Validators.maxLength(15)]),
+      'emailId': new FormControl(''),
+      'contactNo': new FormControl(''),
       'comments': new FormControl(''),
       'clientId': new FormControl(''),
       'detailId': new FormControl('')
