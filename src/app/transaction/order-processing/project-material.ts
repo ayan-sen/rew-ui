@@ -6,4 +6,6 @@ export class ProjectMaterial {
   remainingQuantity : number;
   availableQuantity : number;
   type : string;
+  rate ?: number;
+  quantity ?: number;
 }

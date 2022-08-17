@@ -31,6 +31,7 @@ import { ExpenseComponent } from './expense/expense.component';
 import { ExpenseShowComponent } from './expense/expense-show/expense-show.component';
 import { OrderDespatchComponent } from './order-despatch/order-despatch.component';
 import { OrderDespatchShowComponent } from './order-despatch/order-despatch-show/order-despatch-show.component';
+import { InvoiceComponent } from './invoice/invoice.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { OrderDespatchShowComponent } from './order-despatch/order-despatch-show
     ExpenseComponent,
     ExpenseShowComponent,
     OrderDespatchComponent,
-    OrderDespatchShowComponent
+    OrderDespatchShowComponent,
+    InvoiceComponent
   ],
   imports: [
     CommonModule,
