@@ -58,7 +58,6 @@ export class InvoiceComponent implements OnInit {
   filteredRawMaterials : RawMaterial[] = [];
   projects : Project[] = [];
 
-  siteId : string = 'SINGUR';
   isActive : boolean = true;
 
   projectMaterialList : ProjectMaterial[] = [];
@@ -103,7 +102,7 @@ export class InvoiceComponent implements OnInit {
         'sgstAmount': new FormControl(null),
         'totalAmount': new FormControl(null),
         'notes' : new FormControl(''),
-        'siteId' : new FormControl('')
+        'details': new FormControl('')
         
       });
       
@@ -126,7 +125,8 @@ export class InvoiceComponent implements OnInit {
             this.details = invoice.details;
             invoice.invoiceDate = convertToDate(invoice.invoiceDateString);
             this.invoiceForm.setValue(invoice); 
-            this.invoiceId =invoice.invoiceId;
+            this.invoiceId = invoice.invoiceId;
+            this.populateDetails(invoice.projectId);
           })
         }
       });
@@ -199,7 +199,8 @@ export class InvoiceComponent implements OnInit {
     }
   
     editDetail(invoiceDetails: InvoiceDetails, frame : ModalDirective) {
-      
+      let pm : ProjectMaterial = this.projectMaterialList.filter(d => d.code == invoiceDetails.materialId)[0];
+      this.availableQuantity = pm.availableQuantity;
       this.invoiceDetailsForm.patchValue(invoiceDetails);
       frame.show();
     }
@@ -291,11 +292,16 @@ export class InvoiceComponent implements OnInit {
 
     populatDetailLists(event : MatSelectChange) {
       let projectId = event.value;
-      this.invoiceService.findMaterialsByProjectIdAndSiteId(projectId, this.siteId)
+      this.populateDetails(projectId);
+      this.invoiceDetailsForm.reset();
+    }
+
+    populateDetails(projectId : string) {
+      this.invoiceService.findMaterialsByProjectIdAndSiteId(projectId)
           .subscribe(details=> {
             this.projectMaterialList = details;
+            
       });
-      this.invoiceDetailsForm.reset();
     }
 
     populateRow(event : MatSelectChange) {

@@ -34,10 +34,9 @@ export class InvoiceService {
     return this.http.delete("transaction/invoices/detail/delete", {"params": params});
   }
 
-  findMaterialsByProjectIdAndSiteId(projectId: string, siteId : string) : Observable<ProjectMaterial[]> {
+  findMaterialsByProjectIdAndSiteId(projectId: string) : Observable<ProjectMaterial[]> {
     let params = new HttpParams();
     params = params.append('projectId', projectId);
-    params = params.append('siteId', siteId);
     return this.http.get<ProjectMaterial[]>("transaction/invoice/products", {"params": params});
   }
 

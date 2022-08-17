@@ -17,7 +17,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="invisible example-full-width">
                       <input matInput placeholder="invoiceId" formControlName="invoiceId">
-                      <input matInput placeholder="siteId" formControlName="siteId" [(ngModel)]='siteId'>
+                      
                     </mat-form-field>
   
                     <mat-form-field class="example-full-width">
@@ -54,7 +54,7 @@
                             {{value.viewValue}}
                           </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="hasError('siteId', 'required')">Payment status is required</mat-error>
+                        <mat-error *ngIf="hasError('isPaymentDone', 'required')">Payment status is required</mat-error>
                       </mat-form-field>
                   </div>
                   <div class="col-md-3">
@@ -219,7 +219,7 @@
 
                   <div class="col-md-2">
                     <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Rate" formControlName="rate" style="text-align: right;" [(ngModel)]='rate'>
+                      <input matInput placeholder="Rate" formControlName="rate" style="text-align: right;" [(ngModel)]='rate' (change)="calculateDetail()">
                       <mat-error *ngIf="hasDetailError('rate', 'required')">Rate is required</mat-error>
                       
                     </mat-form-field>

@@ -32,7 +32,8 @@ const routes: Routes = [
   { path: 'despatch/add', component: OrderDespatchComponent },
   { path: 'despatches', component: OrderDespatchShowComponent },
   { path: 'despatch/edit', component: OrderDespatchComponent },
-  { path: 'invoice/add', component: InvoiceComponent }
+  { path: 'invoice/add', component: InvoiceComponent },
+  { path: 'invoice/edit', component: InvoiceComponent },
 ];
 
 @NgModule({
