@@ -260,6 +260,8 @@ export class OrderDeliveryComponent implements OnInit {
       this.orderDeliveryService.deleteDetail(orderDeliveryDetails.deliveryId, orderDeliveryDetails.detailId)
       .subscribe((response: ServerResponse) => {
         this.details.splice(index, 1);
+        this.headerAmount = this.calculateTotalDetailAmount();
+        this.calculate(this.headerAmount);
         this.notificationService.openSnackBar(response.message, response.status);
       }, (errorMsg: HttpErrorResponse) => {
         this.notificationService.openSnackBar(errorMsg.error.message, errorMsg.error.status);
@@ -269,6 +271,8 @@ export class OrderDeliveryComponent implements OnInit {
     } else {
       if (index !== -1) {
         this.details.splice(index, 1);
+        this.headerAmount = this.calculateTotalDetailAmount();
+        this.calculate(this.headerAmount);
         this.notificationService.openSnackBar("Order details removed successfully", "success");
       }
     }
@@ -429,8 +433,8 @@ export class OrderDeliveryComponent implements OnInit {
 
   populateUnit(material : RawMaterial) {
     this.rmName = material.name;
-    this.unitId = material.unit.unitId;
-    this.unitName = material.unit.unitName;
+    this.unitId = material.unitId;
+    this.unitName = material.unitName;
   }
 
   getRawMaterials() {

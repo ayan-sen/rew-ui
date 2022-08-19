@@ -7,6 +7,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { DatePipe } from '@angular/common';
 import { OrderProcessingShowService } from './order-processing-show.service';
 import { OrderProcessingView } from './order-processing-view';
+import { OrderProcessingDetails } from '../order-processing-details';
 
 @Component({
   selector: 'app-order-processing-show',
@@ -20,9 +21,11 @@ export class OrderProcessingShowComponent implements OnInit {
   processDate : Date;
   processDateString : string;
   works : OrderProcessingView;
+  dateWiseWork : Map<string, OrderProcessingDetails[]>;
+  toDate : Date;
+  toDateString : string = "";
 
   constructor(private orderProcessingService : OrderProcessingService,
-              private notificationService : NotificationService,
               private orderProcessingShowService : OrderProcessingShowService,
               private fb: FormBuilder,
               public dialog: MatDialog,
@@ -31,7 +34,9 @@ export class OrderProcessingShowComponent implements OnInit {
   ngOnInit(): void {
     this.opForm = this.fb.group({
       'processDate': new FormControl(null, Validators.required),
-      'processDateString': new FormControl('')
+      'processDateString': new FormControl(''),
+      'toDate': new FormControl(null),
+      'toDateString': new FormControl('')
     });
     //this.findAll();
   }
@@ -49,13 +54,17 @@ export class OrderProcessingShowComponent implements OnInit {
   onSubmit() {
     if (this.opForm.valid) {
       this.processDate = this.opForm.value.processDate;
-      
+      this.toDate = this.opForm.value.toDate;
       if(this.opForm.value.processDate != null) {
         this.processDateString = this.datePipe.transform(this.processDate, 'dd/MM/yyyy');
       }
-      this.orderProcessingShowService.findAllByDate(this.processDateString).subscribe(
+      if(this.opForm.value.toDate != null) {
+        this.toDateString = this.datePipe.transform(this.toDate, 'dd/MM/yyyy');
+      }
+      this.orderProcessingShowService.findAllByDate(this.processDateString, this.toDateString).subscribe(
         works => {
           this.works = works;
+          
         }
       );
       console.log(this.works);  

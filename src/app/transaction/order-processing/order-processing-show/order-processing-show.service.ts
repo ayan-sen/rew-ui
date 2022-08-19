@@ -10,9 +10,10 @@ export class OrderProcessingShowService {
 
   constructor(private http: HttpClient) { }
 
-  findAllByDate(date: string) : Observable<OrderProcessingView> {
+  findAllByDate(date: string, toDate : string) : Observable<OrderProcessingView> {
     let params = new HttpParams();
     params = params.set('logDate', date);
+    params = params.append('toDate', toDate);
     return this.http.get<OrderProcessingView>("transaction/processes/date", {"params": params});
   } 
 }

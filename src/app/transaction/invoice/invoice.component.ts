@@ -227,6 +227,8 @@ export class InvoiceComponent implements OnInit {
         this.invoiceService.deleteDetail(invoiceDetails.invoiceId, invoiceDetails.invoiceDetailsId)
         .subscribe((response: ServerResponse) => {
           this.details.splice(index, 1);
+          this.headerAmount = this.calculateTotalDetailAmount();
+          this.calculate(this.headerAmount);
           this.notificationService.openSnackBar(response.message, response.status);
         }, (errorMsg: HttpErrorResponse) => {
           this.notificationService.openSnackBar(errorMsg.error.message, errorMsg.error.status);
@@ -236,6 +238,8 @@ export class InvoiceComponent implements OnInit {
       } else {
         if (index !== -1) {
           this.details.splice(index, 1);
+          this.headerAmount = this.calculateTotalDetailAmount();
+          this.calculate(this.headerAmount);
           this.notificationService.openSnackBar("Invoice details removed successfully", "success");
         }
       }

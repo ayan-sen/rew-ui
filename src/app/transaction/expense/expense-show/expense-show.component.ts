@@ -14,9 +14,9 @@ export class ExpenseShowComponent implements OnInit {
 
   expForm: FormGroup;
   fromDate : Date;
-  fromDateString : string;
+  fromDateString : string = "";
   toDate : Date;
-  toDateString : string;
+  toDateString : string = "";
   expenses : Expense[] = [];
   summary : ExpenseSummary;
   catagoriseExpenses : Map<string, number>;

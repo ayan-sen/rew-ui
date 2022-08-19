@@ -273,8 +273,8 @@ export class ProjectComponent implements OnInit {
 
   populateUnit(material : RawMaterial) {
 
-    this.unitId = material.unit.unitId;
-    this.unitName = material.unit.unitName;
+    this.unitId = material.unitId;
+    this.unitName = material.unitName;
     this.rmName = material.name;
   }
 

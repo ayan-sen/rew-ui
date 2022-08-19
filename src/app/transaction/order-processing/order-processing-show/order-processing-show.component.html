@@ -9,7 +9,7 @@
                 <mat-icon class="gridIcon">add</mat-icon>
               </a>
             </h4>
-            
+
           </div>
           <div class="card-body">
             <form [formGroup]="opForm" (ngSubmit)="onSubmit()" #headerForm="ngForm">
@@ -24,43 +24,46 @@
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
-                  <button mat-raised-button type="submit" [disabled]="!headerForm.form.valid" (click)="headerForm.ngSubmit.emit()"
-                  class="btn btn-success pull-right">Search</button>
+                  <mat-form-field>
+                    <mat-label>To Date</mat-label>
+                    <input matInput [matDatepicker]="picker2" formControlName="toDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <!-- <mat-error *ngIf="hasError('fromDate', 'required')">To date is required</mat-error> -->
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <button mat-raised-button type="submit" [disabled]="!headerForm.form.valid"
+                    (click)="headerForm.ngSubmit.emit()" class="btn btn-success pull-right">Search</button>
                 </div>
               </div>
             </form>
           </div>
           <div class="card-body">
             <div class="table-responsive" *ngFor="let work of works | keyvalue">
-              <p class="mat-card-title">Project id : {{work.key}}</p>
-              <table class="table table-hover">
-                <thead class="text-primary">
-                  <th>Item</th>
-                  <th>Unit</th>
-                  <th>Quantity</th>
-                  <th>In/Out</th>
-                </thead>
-                <tbody *ngFor="let log of work.value">
-                  
-                  <tr>
-                    <td>{{log.materialName}}</td>
-                    <td>{{log.materialUnit}}</td>
-                    <td>{{log.quantity}}</td>
-                    <td>{{log.processType}}</td>
-                    
-                    <!-- <td>
-                      <a [routerLink]="['/order-delivery/edit']" [queryParams]="{ id: dl.deliveryId}" class="edit"
-                        title="" data-toggle="tooltip" data-original-title="Edit">
-                        <mat-icon class="routeIcon">edit</mat-icon>
-                      </a>
-                      <a (click)="openDialog(dl)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip"
-                        data-original-title="Delete">
-                        <mat-icon class="routeIcon">delete</mat-icon>
-                      </a>
-                    </td> -->
-                  </tr>
-                </tbody>
-              </table>
+              <h4 class="text-primary"><b>Project id : {{work.key}}</b></h4>
+
+              <div *ngFor="let logDate of work.value | keyvalue">
+                <h5 class="text-primary">Date : {{logDate.key}}</h5>
+                <table class="table table-hover">
+                  <thead class="text-primary">
+                    <th>Item</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                    <th>In/Out</th>
+                  </thead>
+
+                  <tbody *ngFor="let log of logDate.value | keyvalue">
+                    <tr>
+                      <td>{{log.value.materialName}}</td>
+                      <td>{{log.value.materialUnit}}</td>
+                      <td>{{log.value.quantity}}</td>
+                      <td>{{log.value.processType}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
             </div>
           </div>
         </div>
