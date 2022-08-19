@@ -45,10 +45,9 @@
 
               <div *ngFor="let logDate of work.value | keyvalue">
                 <h5 class="text-primary">Date : {{logDate.key}}</h5>
-                <table class="table table-hover">
-                  <thead class="text-primary">
+                <table class="table table-striped table-sm">
+                  <thead class="thead-dark">
                     <th>Item</th>
-                    <th>Unit</th>
                     <th>Quantity</th>
                     <th>In/Out</th>
                   </thead>
@@ -56,8 +55,7 @@
                   <tbody *ngFor="let log of logDate.value | keyvalue">
                     <tr>
                       <td>{{log.value.materialName}}</td>
-                      <td>{{log.value.materialUnit}}</td>
-                      <td>{{log.value.quantity}}</td>
+                      <td>{{log.value.quantity}} {{log.value.materialUnit}}</td>
                       <td>{{log.value.processType}}</td>
                     </tr>
                   </tbody>
