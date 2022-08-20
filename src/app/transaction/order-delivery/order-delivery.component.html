@@ -57,7 +57,7 @@
                   </mat-form-field>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-1">
                   <mat-form-field>
                       <mat-label>Bill Date</mat-label>
                       <input matInput [matDatepicker]="picker1"
@@ -72,7 +72,18 @@
                     <input matInput placeholder="Vehicle No" formControlName="vehicleNo">
                   </mat-form-field>
                 </div>
+                <div class="col-md-1">
+                  <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Payment done?" formControlName="isPaymentDone" [(ngModel)]="isPaymentDone">
+                        <mat-option *ngFor="let value of paymentStatusValues" [value]="value.value">
+                          {{value.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="hasError('isPaymentDone', 'required')">Payment status is required</mat-error>
+                    </mat-form-field>
+                </div>
               </div>
+              
               <div class="row">
                 
                 <div class="col-md-2">

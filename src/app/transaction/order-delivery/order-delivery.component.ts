@@ -49,6 +49,11 @@ export class OrderDeliveryComponent implements OnInit {
     {value: 'DUMDUM', viewValue: 'Dum dum unit'},
     {value: 'SINGUR', viewValue: 'Singur Unit'}
   ];
+
+  paymentStatusValues: Dropdown[] = [
+    {value: true, viewValue: 'Yes'},
+    {value: false, viewValue: 'No'}
+  ];
   
   deliveryId : string;
   detailAmount : string;
@@ -77,6 +82,7 @@ export class OrderDeliveryComponent implements OnInit {
 
   siteId : string = 'SINGUR';
   isActive : boolean = true;
+  isPaymentDone : boolean;
 
   constructor(private orderDeliveryService : OrderDeliveryService,
               private orderPlacementService : OrderPlacementService,
@@ -119,7 +125,8 @@ export class OrderDeliveryComponent implements OnInit {
       'siteId': new FormControl(''),
       'isActive': new FormControl(true),
       'details': new FormControl(''),
-      'projectId': new FormControl('')
+      'projectId': new FormControl(''),
+      'isPaymentDone': new FormControl(null, Validators.required)
     });
 
     this.deliveryDetailsForm = this.fb.group({
