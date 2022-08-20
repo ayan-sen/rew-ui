@@ -76,6 +76,7 @@ export class InvoiceComponent implements OnInit {
   isPaymentDone : boolean;
   rate : number;
   amount : string;
+  clientId : string;
 
   constructor(private invoiceService : InvoiceService,
               private projectService : ProjectService,
@@ -95,13 +96,14 @@ export class InvoiceComponent implements OnInit {
         'invoiceDateString': new FormControl(''),
         'projectId' : new FormControl('', Validators.required),
         'vehicleNo': new FormControl('', Validators.required),
-        'isPaymentDone': new FormControl(null),
+        //'isPaymentDone': new FormControl(null),
         'amount': new FormControl(null),
         'freightCharges': new FormControl(null),
         'cgstAmount': new FormControl(null),
         'sgstAmount': new FormControl(null),
         'totalAmount': new FormControl(null),
         'notes' : new FormControl(''),
+        'clientId' : new FormControl(''),
         'details': new FormControl('')
         
       });
@@ -296,6 +298,8 @@ export class InvoiceComponent implements OnInit {
 
     populatDetailLists(event : MatSelectChange) {
       let projectId = event.value;
+      let selectedProject : Project = this.projects.filter(d => d.projectId == projectId)[0];
+      this.clientId = selectedProject.customerId;
       this.populateDetails(projectId);
       this.invoiceDetailsForm.reset();
     }

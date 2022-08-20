@@ -5,7 +5,6 @@ export class Invoice {
     invoiceDate : Date;
     invoiceDateString : string;
     projectId : string;
-    isPaymentDone : boolean;
     vehicleNo: string;
     amount : number;
     freightCharges : number;

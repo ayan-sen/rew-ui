@@ -23,7 +23,6 @@ export class OrderDelivery {
     notes : string;
     siteId : string;
     isActive : boolean;
-    isPaymentDone : boolean;
-	projectId : string;
+    projectId : string;
     details : OrderDeliveryDetails[] = [];
 }

@@ -22,6 +22,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="invisible example-full-width">
                       <input matInput placeholder="invoiceId" formControlName="invoiceId">
+                      <input matInput placeholder="clientId" formControlName="clientId" [(ngModel)]="clientId" >
                       
                     </mat-form-field>
   
@@ -52,17 +53,8 @@
                       <mat-error *ngIf="hasError('vehicleNo', 'required')">Vehicle no is required</mat-error>
                     </mat-form-field>
                   </div>
-                  <div class="col-md-2">
-                    <mat-form-field class="example-full-width">
-                        <mat-select placeholder="Payment done?" formControlName="isPaymentDone" [(ngModel)]="isPaymentDone">
-                          <mat-option *ngFor="let value of paymentStatusValues" [value]="value.value">
-                            {{value.viewValue}}
-                          </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="hasError('isPaymentDone', 'required')">Payment status is required</mat-error>
-                      </mat-form-field>
-                  </div>
-                  <div class="col-md-3">
+                 
+                  <div class="col-md-5">
                     <mat-form-field class="example-full-width">
                       <input matInput placeholder="Notes" formControlName="notes">
                     </mat-form-field>

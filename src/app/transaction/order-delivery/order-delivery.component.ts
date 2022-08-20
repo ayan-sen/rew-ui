@@ -125,8 +125,8 @@ export class OrderDeliveryComponent implements OnInit {
       'siteId': new FormControl(''),
       'isActive': new FormControl(true),
       'details': new FormControl(''),
-      'projectId': new FormControl(''),
-      'isPaymentDone': new FormControl(null, Validators.required)
+      'projectId': new FormControl('')
+      //'isPaymentDone': new FormControl(null, Validators.required)
     });
 
     this.deliveryDetailsForm = this.fb.group({
