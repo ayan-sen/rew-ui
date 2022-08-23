@@ -32,6 +32,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { DatePipe } from '@angular/common';
 
+
 @NgModule({
   declarations: [
     AppComponent,

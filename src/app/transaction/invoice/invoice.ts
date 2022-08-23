@@ -12,5 +12,6 @@ export class Invoice {
     sgstAmount : number;
     totalAmount : number;
     notes: string;
+    clientId : string;
     details : InvoiceDetails[] = [];
 }

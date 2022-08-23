@@ -1,0 +1,186 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title">Payment
+                <a routerLink="/transaction/payment"> 
+                  <mat-icon class="gridIcon">web</mat-icon>
+                </a>
+              </h4>
+              <p class="card-category">Record Payment Records here</p>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="payForm" (ngSubmit)="onSubmit()" #headerForm="ngForm">
+                <div class="row">
+                  <div class="col-md-2">
+                    <mat-form-field class="invisible example-full-width">
+                      <input matInput placeholder="paymentId" formControlName="paymentId">
+                    </mat-form-field>
+  
+                    <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Transaction Type" formControlName="paymentType" [(ngModel)]="paymentType">
+                        <mat-option *ngFor="let value of paymentTypes" [value]="value.value">
+                          {{value.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="hasError('paymentType', 'required')"Transaction type is required></mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    <mat-form-field>
+                      <mat-label>Transaction Date</mat-label>
+                      <input matInput [matDatepicker]="picker3" formControlName="paymentDate">
+                      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                      <mat-datepicker #picker3></mat-datepicker>
+                      <mat-error *ngIf="hasError('paymentDate', 'required')">Transaction date is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Client" formControlName="clientId"
+                        (selectionChange)="populatDetailLists($event)">
+                        <mat-option *ngFor="let value of clients" [value]="value.clientId">
+                          {{value.clientName}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="hasError('clientId', 'required')">Client is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-5">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Notes" formControlName="notes">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Payment from projects" formControlName="projectPayment" [(ngModel)]="projectPayment"
+                        [readonly]="true" style="text-align: right;" (change)="calculateHeader()">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Other Payments" formControlName="otherPayment" [(ngModel)]="otherPayment"
+                        style="text-align: right;" (change)="calculateHeader()">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Total Payments" formControlName="totalPayment" [(ngModel)]="totalpayment"
+                        [readonly]="true" style="text-align: right;" (change)="calculateHeader()">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Details Grid : Start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-plain">
+            <div class="card-header card-header-info">
+              <table width="100%">
+                <tr>
+                  <td width="90%">
+                    <h4 class="card-title ">Daily work log Dteails</h4>
+                  </td>
+                  <td style="align-content: justify-content-right">
+                    <button type="button" mdbBtn color="unique" rounded="true" data-toggle="modal"
+                      data-target="#basicExample" (click)="frame.show()" mdbWavesEffect>
+                      Add
+                    </button>
+                  </td>
+                </tr>
+              </table>
+              <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="text-primary">
+                    <th>Invoice Id</th>
+                    <th>Billed Amount</th>
+                    <th>Alreaid Paid/Received</th>
+                    <th>Amount</th>
+                  </thead>
+                  <tbody *ngFor="let dtl of details">
+                    <tr>
+                      <td>{{dtl.itemId}}</td>
+                      <td>{{dtl.projectAmount}}</td>
+                      <td>{{dtl.paidAmount}}</td>
+                      <td>{{dtl.amount}}</td>
+                      <td>
+                        <a (click)="editDetail(dtl, frame)" style="cursor: pointer;" class="edit" title=""
+                          data-toggle="tooltip" data-original-title="Edit">
+                          <mat-icon class="routeIcon">edit</mat-icon>
+                        </a>
+                        <a (click)="openDialog(dtl)" style="cursor: pointer;" class="delete" title=""
+                          data-toggle="tooltip" data-original-title="Delete">
+                          <mat-icon class="routeIcon">delete</mat-icon>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Details Grid : End -->
+      <button mat-raised-button type="submit" [disabled]="!headerForm.form.valid" (click)="headerForm.ngSubmit.emit()"
+        class="btn btn-success pull-right">Save</button>
+      <div class="clearfix"></div>
+      <!-- MODAL -->
+      <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content" [style.width]="modalWIdth()">
+            <div class="modal-header text-center">
+              <h4 class="modal-title w-100 font-weight-bold">Add/Update Work Log</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close(frame)">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="payDetailsForm">
+                <div class="row">
+                  <div class="col-md-4">
+                    <mat-form-field class="invisible example-full-width">
+                      <input matInput placeholder="paymentId" formControlName="paymentId">
+                      <input matInput placeholder="paymentDetailId" formControlName="paymentDetailId">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Transaction Id" formControlName="itemId"  [readonly]="true" >
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Billed Amount" formControlName="projectAmount" [readonly]="true" style="text-align: right;">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Paid Amount" formControlName="amount" style="text-align: right;" [(ngModel)]="amount" (change)="calculateHeader()">
+                      <mat-error *ngIf="hasDetailError('amount', 'required')">Amount is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-right">
+                  <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="onDetailSubmit(frame)">Save</button>
+                </div>
+              </form>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <!-- MODAL-->
+    </div>
+  </div>
