@@ -19,6 +19,10 @@ import { OrderProcessingDetails } from './order-processing-details';
 import { OrderProcessingService } from './order-processing.service';
 import { ProjectMaterial } from './project-material';
 import { DatePipe } from '@angular/common';
+import { ClientService } from 'src/app/admin/client/client.service';
+import { Client } from 'src/app/admin/client/client';
+import { ClientDetails } from 'src/app/admin/client/client-detail';
+import cli from '@angular/cli';
 
 declare const $: any;
 
@@ -63,16 +67,21 @@ export class OrderProcessingComponent implements OnInit {
   
   siteId : string;
 
+  galvanisers : Client[] = [];
+  galvaniserDetails : ClientDetails[] = [];
+
   constructor(private orderProcessingService : OrderProcessingService,
               private projectService : ProjectService,
               public dialog: MatDialog,
               private route: ActivatedRoute,
               private notificationService : NotificationService,
+              private clientService : ClientService,
               private fb: FormBuilder,
               private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.getProjects();
+    this.getGalvanisers();
 
     this.opForm = this.fb.group({
       'processId': new FormControl(null),
@@ -98,6 +107,8 @@ export class OrderProcessingComponent implements OnInit {
       'availableQuantity' : new FormControl(0),
       'notes': new FormControl(''),
       'materialType': new FormControl(''),
+      'galvaniserId': new FormControl(''),
+      'galvaniserDetailId': new FormControl('')
     },
     {validator : [mandatoryAndlessThanValueValidator('quantity', 'availableQuantity','remainingQuantity', 'materialType', 'processType')]}
     );
@@ -285,5 +296,23 @@ export class OrderProcessingComponent implements OnInit {
   
   modalWIdth() : string {
     return this.isMobileMenu() ? "100%" : "150%";
+  }
+
+  getGalvanisers() {
+    this.clientService.findAll().subscribe(
+      galvanisers => {
+        this.galvanisers = galvanisers;
+      }
+    );
+  }
+
+  populateGalvaniserDetails(event : MatSelectChange) { 
+    let val : string = event.value;
+    this.filterGalvaniserDateils(val);
+  }
+
+  filterGalvaniserDateils(clientId : string) {
+    console.log(clientId);
+    this.galvaniserDetails = this.galvanisers.filter(g => g.clientId === clientId)[0].details;
   }
 }

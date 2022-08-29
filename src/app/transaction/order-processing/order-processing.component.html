@@ -200,6 +200,26 @@
                     <input matInput placeholder="In/Out" formControlName="processType" [readonly]="true" [(ngModel)]='processType'>
                   </mat-form-field>
                 </div>
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Galvaniser" formControlName="galvaniserId"  (selectionChange)="populateGalvaniserDetails($event)">
+                      <mat-option *ngFor="let value of galvanisers" [value]="value.clientId" >
+                        {{value.clientName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Galvaniser Address" formControlName="galvaniserDetailId">
+                      <mat-option *ngFor="let value of galvaniserDetails" [value]="value.detailId" >
+                        {{value.identifier}}  | {{value.detailId}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
               </div>
               <div class="modal-footer d-flex justify-content-right">
                 <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="onDetailSubmit(frame)">Save</button>

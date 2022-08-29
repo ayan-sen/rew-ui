@@ -11,4 +11,7 @@ export class OrderProcessingDetails {
     availableQuantity : number;
     remainingQuantity : number;
     notes : string;
+    galvaniserDetailId : number;
+    galvaniserId : string;
+
 }
