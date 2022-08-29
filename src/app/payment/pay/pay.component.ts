@@ -77,7 +77,9 @@ export class PayComponent implements OnInit {
       'itemId': new FormControl('', Validators.required),
       'projectAmount': new FormControl(''),
       'amount': new FormControl('', Validators.required),
-      'paidAmount': new FormControl('')
+      'paidAmount': new FormControl(''),
+      'deliveryId': new FormControl(''),
+      'invoiceId': new FormControl('')
     }
     );
 
@@ -97,8 +99,8 @@ export class PayComponent implements OnInit {
       this.pay = this.payForm.value;
       this.pay.details = this.details;
 
-      if (this.payForm.value.despatchDate != null) {
-        this.pay.paymentDateString = this.datePipe.transform(this.pay.paymentDate, 'dd/MM/yyyy');
+      if (this.payForm.value.paymentDate != null) {
+        this.pay.paymentDateString = this.datePipe.transform(this.payForm.value.paymentDate, 'dd/MM/yyyy');
       }
       this.payService.save(this.pay).subscribe(
         (response: ServerResponse) => {
@@ -177,6 +179,7 @@ export class PayComponent implements OnInit {
       this.payService.deleteDetail(payDetail.paymentId, payDetail.paymentDetailId)
       .subscribe((response: ServerResponse) => {
         this.details.splice(index, 1);
+        this.calculateHeader();
         this.notificationService.openSnackBar(response.message, response.status);
       }, (errorMsg: HttpErrorResponse) => {
         this.notificationService.openSnackBar(errorMsg.error.message, errorMsg.error.status);
@@ -189,7 +192,7 @@ export class PayComponent implements OnInit {
         this.notificationService.openSnackBar("Details removed successfully", "success");
       }
     }
-    this.calculateHeader();
+   
   }
 
 
@@ -246,6 +249,8 @@ export class PayComponent implements OnInit {
     payDetail.paymentDetailId = null;
     payDetail.amount = 0;
     payDetail.paidAmount = record.paidAmount;
+    payDetail.deliveryId ='';
+    payDetail.invoiceId='';
     return payDetail;
     
   }
@@ -257,5 +262,9 @@ export class PayComponent implements OnInit {
       this.totalpayment =  Number.parseFloat(this.projectPayment.toString()) +  Number.parseFloat(this.otherPayment.toString());
     }
     
+  }
+
+  resetGrid() {
+    this.details = [];
   }
 }

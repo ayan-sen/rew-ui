@@ -5,7 +5,7 @@
           <div class="card">
             <div class="card-header card-header-success">
               <h4 class="card-title">Payment
-                <a routerLink="/transaction/payment"> 
+                <a routerLink="/payment/payments"> 
                   <mat-icon class="gridIcon">web</mat-icon>
                 </a>
               </h4>
@@ -20,7 +20,7 @@
                     </mat-form-field>
   
                     <mat-form-field class="example-full-width">
-                      <mat-select placeholder="Transaction Type" formControlName="paymentType" [(ngModel)]="paymentType">
+                      <mat-select placeholder="Transaction Type" formControlName="paymentType" [(ngModel)]="paymentType" (selectionChange)="resetGrid()">
                         <mat-option *ngFor="let value of paymentTypes" [value]="value.value">
                           {{value.viewValue}}
                         </mat-option>
@@ -88,14 +88,14 @@
               <table width="100%">
                 <tr>
                   <td width="90%">
-                    <h4 class="card-title ">Daily work log Dteails</h4>
+                    <h4 class="card-title ">Payment Details</h4>
                   </td>
-                  <td style="align-content: justify-content-right">
+                  <!-- <td style="align-content: justify-content-right">
                     <button type="button" mdbBtn color="unique" rounded="true" data-toggle="modal"
                       data-target="#basicExample" (click)="frame.show()" mdbWavesEffect>
                       Add
                     </button>
-                  </td>
+                  </td> -->
                 </tr>
               </table>
               <p class="card-category"></p>
@@ -155,6 +155,8 @@
                     <mat-form-field class="invisible example-full-width">
                       <input matInput placeholder="paymentId" formControlName="paymentId">
                       <input matInput placeholder="paymentDetailId" formControlName="paymentDetailId">
+                      <input matInput placeholder="deliveryId" formControlName="deliveryId">
+                      <input matInput placeholder="invoiceId" formControlName="invoiceId">
                     </mat-form-field>
                     <mat-form-field class="example-full-width">
                       <input matInput placeholder="Transaction Id" formControlName="itemId"  [readonly]="true" >
@@ -163,6 +165,11 @@
                   <div class="col-md-2">
                     <mat-form-field class="example-full-width">
                       <input matInput placeholder="Billed Amount" formControlName="projectAmount" [readonly]="true" style="text-align: right;">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Already Paid/Received" formControlName="paidAmount" [readonly]="true" style="text-align: right;">
                     </mat-form-field>
                   </div>
                   <div class="col-md-2">

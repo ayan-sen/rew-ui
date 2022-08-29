@@ -32,19 +32,19 @@ export class PayService {
     let params = new HttpParams();
     params = params.append('id', paymentId);
     params = params.append('detailId', detailId.toString());
-    return this.http.delete("transaction/despatches/detail/delete", { "params": params });
+    return this.http.delete("transaction/payment/detail/delete", { "params": params });
   }
 
   findOrdersByClient(clientId: string, paymentType: string): Observable<TransactionRecord[]> {
     let params = new HttpParams();
     params = params.append('clientId', clientId);
     params = params.append('paymentType', paymentType);
-    return this.http.get<TransactionRecord[]>("transaction/payment/client", { "params": params });
+    return this.http.get<TransactionRecord[]>("transaction/record/client", { "params": params });
   }
 
-  findByProjectId(projectId: string) {
+  findByCLientId(clientId: string) : Observable<Pay[]> {
     let params = new HttpParams();
-    params = params.append('projectId', projectId);
-    return this.http.get<Pay[]>("transaction/despatches/project", { "params": params });
+    params = params.append('clientId', clientId);
+    return this.http.get<Pay[]>("transaction/payment/client", { "params": params });
   }
 }

@@ -1,0 +1,74 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-plain">
+            <div class="card-header card-header-info">
+              <h4 class="card-title ">Payment Records
+                <a routerLink="/payment/payment/add">
+                  <mat-icon class="gridIcon">add</mat-icon>
+                </a>
+              </h4>
+              
+            </div>
+            <div class="card-body">
+              <form [formGroup]="payForm" (ngSubmit)="onSubmit()" #headerForm="ngForm">
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-form-field class="example-full-width">
+                          <mat-select placeholder="Client" formControlName="clientId"
+                            (selectionChange)="populatDetailLists($event)">
+                            <mat-option *ngFor="let value of clients" [value]="value.clientId">
+                              {{value.clientName}}
+                            </mat-option>
+                          </mat-select>
+                          <!-- <mat-error *ngIf="hasError('projectId', 'required')">Project is required</mat-error> -->
+                        </mat-form-field>
+                      </div>
+                  <!-- <div class="col-md-2">
+                    <button mat-raised-button type="submit" [disabled]="!headerForm.form.valid" (click)="headerForm.ngSubmit.emit()"
+                    class="btn btn-success pull-right">Search</button>
+                  </div> -->
+                </div>
+              </form>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="text-primary">
+                    <th>Payment Id</th>
+                    <th>Date</th>
+                    <th>Project Payment</th>
+                    <th>Other Payment</th>
+                    <th>Total Payment</th>
+                    <th>Notes</th>
+                  </thead>
+                  <tbody *ngFor="let d of payments">
+                    <tr>
+                      <td>{{d.paymentId}}</td>
+                      <td>{{d.paymentDateString}}</td>
+                      <td>{{d.projectPayment}}</td>
+                      <td>{{d.otherPayment}}</td>
+                      <td>{{d.totalPayment}}</td>
+                      <td>{{d.notes}}</td>
+                      
+                      <td>
+                        <a [routerLink]="['/payment/payment/edit']" [queryParams]="{ id: d.paymentId}" class="edit"
+                          title="" data-toggle="tooltip" data-original-title="Edit">
+                          <mat-icon class="routeIcon">edit</mat-icon>
+                        </a>
+                        <!-- <a (click)="openDialog(d)" style="cursor: pointer;" class="delete" title="" data-toggle="tooltip"
+                          data-original-title="Delete">
+                          <mat-icon class="routeIcon">delete</mat-icon>
+                        </a> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

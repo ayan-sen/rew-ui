@@ -20,10 +20,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angular-bootstrap-md';
 import { PayComponent } from './pay/pay.component';
+import { PayShowComponent } from './pay/pay-show/pay-show.component';
 
 
 @NgModule({
-  declarations: [PayComponent],
+  declarations: [PayComponent, PayShowComponent],
   imports: [
     CommonModule,
     PaymentRoutingModule,

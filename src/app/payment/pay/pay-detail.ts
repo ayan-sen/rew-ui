@@ -5,5 +5,7 @@ export class PayDetail {
     amount : number;
     itemId : string;
     paidAmount : number;
+    deliveryId? : string;
+    invoiceId? : string; 
 }
 
