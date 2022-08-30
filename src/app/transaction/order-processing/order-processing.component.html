@@ -4,30 +4,31 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-success">
-            <h4 class="card-title">Daily Work Log
+            <h4 class="card-title">Production Record
               <a routerLink="/transaction/logs"> 
                 <mat-icon class="gridIcon">web</mat-icon>
               </a>
             </h4>
-            <p class="card-category">Record daily activities here</p>
+            <p class="card-category">Send to Galvanization and rasw raw material consumtion record update</p>
           </div>
           <div class="card-body">
             <form [formGroup]="opForm" (ngSubmit)="onSubmit()" #headerForm="ngForm">
               <div class="row">
-                <div class="col-md-2">
+                <div>
                   <mat-form-field class="invisible example-full-width">
                     <input matInput placeholder="processId" formControlName="processId">
                     <input matInput placeholder="isActive" formControlName="isActive">
+                    <input matInput placeholder="siteId" formControlName="siteId" [(ngModel)]="siteId">
                   </mat-form-field>
 
-                  <mat-form-field class="example-full-width">
+                  <!-- <mat-form-field class="example-full-width">
                     <mat-select placeholder="Work Unit" formControlName="siteId" [(ngModel)]="siteId">
                       <mat-option *ngFor="let value of workUnits" [value]="value.value">
                         {{value.viewValue}}
                       </mat-option>
                     </mat-select>
                     <mat-error *ngIf="hasError('siteId', 'required')">Site Id is required</mat-error>
-                  </mat-form-field>
+                  </mat-form-field> -->
                 </div>
                 <div class="col-md-2">
                   <mat-form-field>
@@ -87,7 +88,6 @@
                 <thead class="text-primary">
                   <th>Material</th>
                   <th>Available / Remaining Quantity</th>
-                  <th>Unit</th>
                   <th>Processed Quantity</th>
                   <th>Movement</th>
                   <th>Action</th>
@@ -95,10 +95,9 @@
                 <tbody *ngFor="let dtl of details">
                   <tr>
                     <td>{{dtl.materialName}}</td>
-                    <td *ngIf="!isProductMat(dtl)">{{dtl.availableQuantity}}</td>
-                    <td *ngIf="isProductMat(dtl)">{{dtl.remainingQuantity}}</td>
-                    <td>{{dtl.materialUnitName}}</td>
-                    <td>{{dtl.quantity}}</td>
+                    <td *ngIf="!isProductMat(dtl)">{{dtl.availableQuantity}} {{dtl.materialUnitName}}</td>
+                    <td *ngIf="isProductMat(dtl)">{{dtl.remainingQuantity}} {{dtl.materialUnitName}}</td>
+                    <td>{{dtl.quantity}} {{dtl.materialUnitName}}</td>
                     <td>{{dtl.processType}}</td>
                     <td>
                       <a (click)="editDetail(dtl, frame)" style="cursor: pointer;" class="edit" title=""
@@ -185,7 +184,7 @@
                     <mat-error *ngIf="hasDetailError('quantity', 'mandatoryAndlessThanValue')"></mat-error>
                   </mat-form-field>
                 </div>
-                <div class="col-md-2" *ngIf="isSemiProduct(materialType)">
+                <!-- <div class="col-md-2" *ngIf="isSemiProduct(materialType)">
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="In/Out" formControlName="processType" >
                       <mat-option *ngFor="let value of inOutValues" [value]="value.value">
@@ -194,8 +193,8 @@
                     </mat-select>
                     <mat-error *ngIf="hasDetailError('processType', 'required')">Field value is required</mat-error>
                   </mat-form-field>
-                </div>
-                <div class="col-md-2" *ngIf="!isSemiProduct(materialType)">
+                </div> -->
+                <div class="col-md-2">
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="In/Out" formControlName="processType" [readonly]="true" [(ngModel)]='processType'>
                   </mat-form-field>
@@ -214,7 +213,7 @@
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Galvaniser Address" formControlName="galvaniserDetailId">
                       <mat-option *ngFor="let value of galvaniserDetails" [value]="value.detailId" >
-                        {{value.identifier}}  | {{value.detailId}}
+                        {{value.identifier}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>

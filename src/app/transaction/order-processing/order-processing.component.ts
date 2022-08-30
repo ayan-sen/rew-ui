@@ -65,7 +65,7 @@ export class OrderProcessingComponent implements OnInit {
     {value: 'OUT', viewValue: 'Out'}
   ];
   
-  siteId : string;
+  siteId : string = 'SINGUR';
 
   galvanisers : Client[] = [];
   galvaniserDetails : ClientDetails[] = [];
@@ -178,11 +178,13 @@ export class OrderProcessingComponent implements OnInit {
   }
 
   close(frame : ModalDirective)  {
+    this.opDetailsForm.reset();
     frame.hide();
   }
 
   editDetail(orderProcessingDetails: OrderProcessingDetails, frame : ModalDirective) {
     this.opDetailsForm.patchValue(orderProcessingDetails);
+    this.populateDetailForm(orderProcessingDetails.materialId);
     frame.show();
   }
 
@@ -257,6 +259,11 @@ export class OrderProcessingComponent implements OnInit {
 
   populateRow(event : MatSelectChange) {
     let matId = event.value;
+    this.populateDetailForm(matId);
+  }
+
+  populateDetailForm(matId : string) {
+    //let matId = event.value;
     let pm : ProjectMaterial = this.projectMaterialList.filter(d => d.code == matId)[0];
     this.materialId = pm.code;
     this.materialName = pm.name;
