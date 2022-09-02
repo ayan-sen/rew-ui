@@ -112,8 +112,8 @@
                   <tbody *ngFor="let dtl of details">
                     <tr>
                       <td>{{dtl.itemId}}</td>
-                      <td>{{dtl.projectAmount}}</td>
-                      <td>{{dtl.paidAmount}}</td>
+                      <td>{{dtl.projectAmount | currency:'INR'}}</td>
+                      <td>{{dtl.paidAmount | currency:'INR'}}</td>
                       <td>{{dtl.amount}}</td>
                       <td>
                         <a (click)="editDetail(dtl, frame)" style="cursor: pointer;" class="edit" title=""

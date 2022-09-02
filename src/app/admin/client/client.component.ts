@@ -35,6 +35,7 @@ export class ClientComponent implements OnInit {
   clientTypes: Dropdown[] = [
     { value: 'Customer', viewValue: 'Customer' },
     { value: 'Supplier', viewValue: 'Supplier' },
+    { value: 'Galvaniser', viewValue: 'Galvaniser' },
     { value: 'Transporter', viewValue: 'Transporter' }
   ];
 
@@ -48,7 +49,7 @@ export class ClientComponent implements OnInit {
     this.clientForm = new FormGroup({
       'clientName': new FormControl('', Validators.required),
       'clientType': new FormControl('', Validators.required),
-      'gstinNo': new FormControl('', Validators.required),
+      'gstinNo': new FormControl(''),
       'primanyContactNo': new FormControl(''),
       'primaryEmailId': new FormControl('', [Validators.email]),
       'comments': new FormControl(''),
@@ -60,7 +61,7 @@ export class ClientComponent implements OnInit {
 
     this.clientDetailsForm = new FormGroup({
       'address': new FormControl('', Validators.required),
-      'pincode': new FormControl('', [Validators.required, Validators.maxLength(6)]),
+      'pincode': new FormControl(''),
       'identifier': new FormControl('', [Validators.required, Validators.maxLength(15)]),
       'emailId': new FormControl(''),
       'contactNo': new FormControl(''),

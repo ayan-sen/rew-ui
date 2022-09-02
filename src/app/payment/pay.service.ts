@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { TransactionRecord } from '../transaction/transaction-record';
 import { Pay } from './pay/pay';
 import { PaymentLookup } from './pay/payment-lookup';
+import { PaymentSummary } from './pay/payment-summary';
+import { PaymentView } from './pay/payment-view';
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +48,13 @@ export class PayService {
     let params = new HttpParams();
     params = params.append('clientId', clientId);
     return this.http.get<Pay[]>("transaction/payment/client", { "params": params });
+  }
+
+  findPaymentReport(clientId : string, fromDateString : string, toDateString : string) : Observable<PaymentSummary> {
+    let params = new HttpParams();
+    params = params.append('clientId', clientId);
+    params = params.append('fromDate', fromDateString);
+    params = params.append('toDate', toDateString);
+    return this.http.get<PaymentSummary>("transaction/payment/report", { "params": params });
   }
 }

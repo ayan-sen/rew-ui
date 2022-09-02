@@ -40,23 +40,20 @@
             </form>
           </div>
           <div *ngIf="isSearched">
-            <h5 class="text-primary"><b>Expanse during this date range : {{totalExpense}}</b></h5>
-            <h5 class="text-primary"><b>Expanse Summary :</b></h5>
-            <div class="col-md-4">
-              <div class="card-body">
-                <div class="table-responsive" *ngFor="let cat of catagoriseExpenses | keyvalue">
-                  <table class="table table-striped table-sm">
-                    <tbody>
-                      <tr class="text-primary">
-                        <td class="col"><b>{{cat.key}}</b></td>
-                        <td class="col text-right">{{cat.value}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+            <div class="p-1 mb-2 bg-light text-dark">
+              <div class="card-title"><h4><b>Expanse during this date range : {{totalExpense | currency:'INR'}}</b></h4></div>
+              <div class="card-title"><h5><b>Expanse Summary :</b></h5></div>
+                <div>
+                  <div *ngFor="let cat of catagoriseExpenses | keyvalue">
+                    <div class="table table-striped table-sm">
+                        <div class="row">
+                          <div class="col-md-2"><b>{{cat.key}}</b></div>
+                          <div class="col-md-2 text-right">{{cat.value | currency:'INR'}}</div>
+                        </div>
+                    </div>
+                  </div>
               </div>
             </div>
-
             <h4 class="text-primary"><b>Expanse Details :</b></h4>
             <div class="card-body">
               <div class="table-responsive">
@@ -72,7 +69,7 @@
                       <td>{{exp.expenseDateString}}</td>
                       <td>{{exp.categoryName}}</td>
                       <td>{{exp.description}}</td>
-                      <td>{{exp.amount}}</td>
+                      <td style="text-align: right;">{{exp.amount | currency:'INR'}}</td>
                     </tr>
                   </tbody>
                 </table>
